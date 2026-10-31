@@ -45,17 +45,17 @@ window.VN_CHAPTERS.push({
     {
       speaker: "Валерия",
       bgm: "Midnight Boardroom.mp3",
-      sprite: { char: "valeria_human", emotion: "cold_serious", pos: "left" },
+      sprite: { char: "valeria_human", emotion: "angry", pos: "left" },
       text: "Ника, сделай одолжение, помолчи хотя бы две минуты. Ты на выездной ревизии, а не на перерыве."
     },
     {
       speaker: "Ника",
-      sprite: { char: "nika", emotion: "shy", pos: "right" },
+      sprite: { char: "nika", emotion: "annoyed", pos: "right" },
       text: "Да молчу я, молчу. Стою, набираюсь бесценного стажёрского опыта."
     },
     {
       speaker: "Валерия",
-      sprite: { char: "valeria_human", emotion: "playful_smile", pos: "left" },
+      sprite: { char: "valeria_human", emotion: "amused", pos: "left" },
       text: "Добрый день, Александр. Разрешите войти? Обсуждать вопросы вашей дальнейшей судьбы на сквозняке в подъезде было бы крайне неудобно для нас обоих."
     },
     {
@@ -114,7 +114,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Ника",
-      sprite: { char: "nika", emotion: "neutral", pos: "left" },
+      sprite: { char: "nika", emotion: "bored", pos: "left" },
       text: "А я Ника, младший ассистент департамента. Только вы на меня так не смотрите — я ещё стажёр, мне даже земной облик по разряду не выделили, поэтому обычные люди меня в упор не видят."
     },
     {
@@ -124,12 +124,12 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Валерия",
-      sprite: { char: "valeria", emotion: "cold_serious", pos: "right" },
+      sprite: { char: "valeria", emotion: "thoughtful", pos: "right" },
       text: "Самое прямое, мой дорогой друг. Задача любого Хранителя — оберегать своего подопечного ровно до той минуты, которая установлена в реестре как конец его жизненного срока. Вчера в двадцать два часа пятьдесят восемь минут на Заречном перекрёстке ваш срок вышел."
     },
     {
       speaker: "Валерия",
-      sprite: { char: "valeria", emotion: "neutral", pos: "right" },
+      sprite: { char: "valeria", emotion: "cold_serious", pos: "right" },
       text: "Однако ваша крылатая спутница отказалась отойти в сторону по регламенту, вмешалась после финальной черты и тем самым лишилась статуса Хранителя Верхнего круга. По закону о списанных активах любой отстранённый Хранитель автоматически переходит в распоряжение Пекла."
     },
     {
@@ -139,7 +139,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Валерия",
-      sprite: { char: "valeria", emotion: "playful_smile", pos: "right" },
+      sprite: { char: "valeria", emotion: "amused", pos: "right" },
       text: "В том-то и загвоздка, душа моя. Я бы с удовольствием забрала тебя прямо сейчас, но ваши же старинные правила связывают мне руки."
     },
     {
@@ -203,7 +203,7 @@ window.VN_CHAPTERS.push({
               },
               {
                 speaker: "Ника",
-                sprite: { char: "nika", emotion: "happy", pos: "left" },
+                sprite: { char: "nika", emotion: "surprised", pos: "left" },
                 text: "Ого, а парень реально быстро соображает!"
               },
               {
@@ -224,7 +224,7 @@ window.VN_CHAPTERS.push({
               },
               {
                 speaker: "Валерия",
-                sprite: { char: "valeria", emotion: "cold_serious", pos: "right" },
+                sprite: { char: "valeria", emotion: "angry", pos: "right" },
                 text: "Пытаетесь спрятаться за иронией, Александр? Ваше право. Только помните, что песок в часах от этого медленнее не сыплется."
               }
             ]
@@ -294,7 +294,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Ника",
-      sprite: { char: "nika", emotion: "neutral", pos: "right" },
+      sprite: { char: "nika", emotion: "teasing", pos: "right" },
       text: "Ладно, бывай, курьер, мне ещё с шефом к одному клиенту в барбершоп на Мостовом заезжать с бумагами! Держитесь там!"
     },
     {

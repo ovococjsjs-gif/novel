@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261031_9";
+  const ASSET_VER = "20261031_10";
 
   function withVer(url) {
     if (!url) return "";
@@ -34,7 +34,7 @@
     valeria: (emo) => withVer(`assets/characters/valeria/transparent/valeria_${emo || "neutral"}.png`),
     valeria_human: (emo) => withVer(`assets/characters/valeria/transparent/valeria_human_${emo || "neutral"}.png`),
     nika: (emo) => {
-      const valid = ["happy", "neutral", "sad", "shy"];
+      const valid = ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"];
       const mapped = valid.includes(emo) ? emo : "happy";
       return withVer(`assets/characters/nika_${mapped}.png`);
     },
