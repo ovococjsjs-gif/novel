@@ -1,4 +1,4 @@
-// ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО»
+// ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
   const SPRITE_MAP = {
     alexander: (emo) => {
@@ -8,6 +8,17 @@
         return `assets/characters/alexander/transparent/alexandr_${emo}.png`;
       }
       return `assets/characters/alexander/transparent/alexander_${emo || "neutral"}.png`;
+    },
+    alexander_jacket: (emo) => {
+      if (emo === "rain" || emo === "courier_rain") {
+        return "assets/characters/alexander/transparent/alexander_courier_rain.png";
+      }
+      if (emo === "wounded") {
+        return "assets/characters/alexander/transparent/alexander_wounded.png";
+      }
+      const valid = ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked"];
+      const mapped = valid.includes(emo) ? emo : "neutral";
+      return `assets/characters/alexander/transparent/alexander_jacket_${mapped}.png`;
     },
     mirael_angel: (emo) => `assets/characters/mirael/transparent/mirael_angel_${emo || "neutral"}.png`,
     mirael_human: (emo) => `assets/characters/mirael/transparent/mirael_human_${emo || "neutral"}.png`,
@@ -40,6 +51,7 @@
     "Рассказчик": "narrator",
     "Александр": "alexander",
     "Мираэль": "mirael",
+    "Незнакомка": "mirael",
     "Валерия": "valeria",
     "Ника": "nika",
     "Лена": "lena",
@@ -56,6 +68,7 @@
     currentBg: "",
     currentBgm: "",
     weather: "none",
+    camera: "none",
     stats: {
       aff_mirael: 0,
       aff_valeria: 0,
@@ -66,13 +79,13 @@
     },
     choicesMade: {},
     backlog: [],
-    autoPlay: false,
     isTyping: false,
     fullText: "",
     typeTimer: null
   };
 
   // DOM Elements
+  const splashScreen = document.getElementById("splash-screen");
   const titleScreen = document.getElementById("title-screen");
   const bgLayer = document.getElementById("bg-layer");
   const weatherLayer = document.getElementById("weather-layer");
@@ -92,6 +105,104 @@
   const bgmLabel = document.getElementById("bgm-label");
   const bgmVolume = document.getElementById("bgm-volume");
   const bgmToggle = document.getElementById("bgm-toggle");
+
+  // 1. SPLASH SCREEN ($WAG ENTERTAINMENT) & MENU LEAVES ANIMATION
+  function dismissSplash() {
+    if (splashScreen.classList.contains("fade-out")) return;
+    splashScreen.classList.add("fade-out");
+    playBgm("Golden Afternoon Light.mp3");
+    setTimeout(() => {
+      splashScreen.style.display = "none";
+    }, 950);
+  }
+
+  splashScreen.addEventListener("click", dismissSplash);
+  setTimeout(dismissSplash, 3250);
+
+  // Falling leaves & sunlight motes canvas on Main Menu
+  function initMenuLeaves() {
+    const canvas = document.getElementById("menu-leaves-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let w = (canvas.width = window.innerWidth);
+    let h = (canvas.height = window.innerHeight);
+
+    window.addEventListener("resize", () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    });
+
+    const leaves = Array.from({ length: 38 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      size: 7 + Math.random() * 11,
+      speedY: 0.55 + Math.random() * 1.15,
+      speedX: -0.35 + Math.random() * 0.9,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.025,
+      swayAmp: 0.6 + Math.random() * 1.2,
+      swayFreq: 0.01 + Math.random() * 0.02,
+      phase: Math.random() * Math.PI * 2,
+      hue: Math.random() > 0.32 ? "rgba(134, 188, 92, 0.72)" : "rgba(218, 186, 104, 0.75)"
+    }));
+
+    const motes = Array.from({ length: 45 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 1.2 + Math.random() * 2.5,
+      vy: -0.15 - Math.random() * 0.35,
+      vx: -0.2 + Math.random() * 0.4,
+      alpha: 0.2 + Math.random() * 0.55
+    }));
+
+    let tick = 0;
+    function drawFrame() {
+      tick += 1;
+      if (!titleScreen.classList.contains("hidden")) {
+        ctx.clearRect(0, 0, w, h);
+
+        // Draw warm light motes
+        motes.forEach((m) => {
+          m.x += m.vx;
+          m.y += m.vy;
+          if (m.y < -10) m.y = h + 10;
+          if (m.x < -10) m.x = w + 10;
+          if (m.x > w + 10) m.x = -10;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 236, 175, ${m.alpha})`;
+          ctx.fill();
+        });
+
+        // Draw falling summer leaves
+        leaves.forEach((lf) => {
+          lf.y += lf.speedY;
+          lf.x += lf.speedX + Math.sin(tick * lf.swayFreq + lf.phase) * lf.swayAmp;
+          lf.angle += lf.spin;
+          if (lf.y > h + 25) {
+            lf.y = -20;
+            lf.x = Math.random() * w;
+          }
+          if (lf.x > w + 25) lf.x = -20;
+          if (lf.x < -25) lf.x = w + 20;
+
+          ctx.save();
+          ctx.translate(lf.x, lf.y);
+          ctx.rotate(lf.angle);
+          ctx.beginPath();
+          ctx.moveTo(0, -lf.size);
+          ctx.quadraticCurveTo(lf.size * 0.75, 0, 0, lf.size);
+          ctx.quadraticCurveTo(-lf.size * 0.75, 0, 0, -lf.size);
+          ctx.fillStyle = lf.hue;
+          ctx.fill();
+          ctx.restore();
+        });
+      }
+      requestAnimationFrame(drawFrame);
+    }
+    requestAnimationFrame(drawFrame);
+  }
+  initMenuLeaves();
 
   function countChapterWords(ch) {
     let total = 0;
@@ -116,7 +227,7 @@
       state.currentBgm = trackName;
       bgmAudio.pause();
       bgmLabel.textContent = `[Заглушка: ${trackName.slice("placeholder:".length)}]`;
-      bgmToggle.textContent = "♫ Нет трека";
+      bgmToggle.textContent = "♫ Заглушка";
       return;
     }
     if (state.currentBgm === trackName && !bgmAudio.paused) return;
@@ -134,7 +245,7 @@
   bgmToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     if (bgmAudio.paused) {
-      if (!bgmAudio.src && state.currentBgm) {
+      if (!bgmAudio.src && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
         bgmAudio.src = encodeURI(state.currentBgm);
       }
       bgmAudio.play().then(() => {
@@ -145,6 +256,18 @@
       bgmToggle.textContent = "♫ Вкл. звук";
     }
   });
+
+  const titleMusicBtn = document.getElementById("title-music-btn");
+  if (titleMusicBtn) {
+    titleMusicBtn.addEventListener("click", () => {
+      if (bgmAudio.paused) {
+        playBgm("Golden Afternoon Light.mp3");
+      } else {
+        bgmAudio.pause();
+        bgmToggle.textContent = "♫ Вкл. звук";
+      }
+    });
+  }
 
   bgmVolume.addEventListener("input", (e) => {
     bgmAudio.volume = parseFloat(e.target.value);
@@ -161,11 +284,21 @@
     weatherLayer.className = state.weather === "rain" ? "rain" : "";
   }
 
+  function setCamera(mode) {
+    state.camera = mode || "none";
+    bgLayer.classList.remove("cam-ride", "cam-shake");
+    if (mode === "ride") {
+      bgLayer.classList.add("cam-ride");
+    } else if (mode === "shake") {
+      bgLayer.classList.add("cam-shake");
+    }
+  }
+
   function triggerFlash() {
     flashOverlay.classList.add("active");
     setTimeout(() => {
       flashOverlay.classList.remove("active");
-    }, 90);
+    }, 100);
   }
 
   function clearSprites() {
@@ -183,14 +316,12 @@
     }
     if (spriteSpec && spriteSpec.char) {
       const pos = spriteSpec.pos || "center";
-      // If placing in center, clear left/right to avoid overlap; if placing left/right, clear center
       if (pos === "center") {
         state.activeSprites.left = null;
         state.activeSprites.right = null;
       } else {
         state.activeSprites.center = null;
       }
-      // Remove same character from other slots
       ["left", "center", "right"].forEach((slotKey) => {
         if (
           slotKey !== pos &&
@@ -210,6 +341,7 @@
     const speakerCharKey = {
       "Александр": "alexander",
       "Мираэль": "mirael",
+      "Незнакомка": "mirael",
       "Валерия": "valeria",
       "Ника": "nika",
       "Лена": "lena",
@@ -257,6 +389,7 @@
     clearSprites();
     setBackground(ch.bg);
     setWeather(ch.weather || "none");
+    setCamera(ch.camera || "none");
     playBgm(ch.bgm);
     hudDay.textContent = ch.day;
     hudTitle.textContent = ch.title;
@@ -264,17 +397,18 @@
     saveAuto();
   }
 
-  function typeText(text, isThought, isNarrator) {
+  function typeText(text, isThought, speaker) {
     if (state.typeTimer) clearInterval(state.typeTimer);
-    state.fullText = text;
     state.isTyping = true;
-    dialogueText.className = isThought
-      ? "thought-text"
-      : isNarrator
-      ? "narrator-text"
-      : "";
 
-    const formatted = isThought ? `«${text}»` : text;
+    const spClass = SPEAKER_CLASS[speaker] || "narrator";
+    if (isThought) {
+      dialogueText.className = "voice-thought";
+    } else {
+      dialogueText.className = `voice-${spClass}`;
+    }
+
+    const formatted = isThought ? `«${text}»` : speaker === "Рассказчик" ? text : `— ${text}`;
     state.fullText = formatted;
     dialogueText.textContent = "";
     let idx = 0;
@@ -287,7 +421,7 @@
       } else {
         dialogueText.textContent = formatted.slice(0, idx);
       }
-    }, 12);
+    }, 11);
   }
 
   function finishTyping() {
@@ -300,7 +434,6 @@
   function renderCurrentNode() {
     const nodes = state.runtimeNodes;
     if (state.nodeIndex >= nodes.length) {
-      // Move to next chapter if available
       if (state.chapterIndex + 1 < window.VN_CHAPTERS.length) {
         loadChapter(state.chapterIndex + 1, 0);
       } else {
@@ -313,6 +446,7 @@
     if (node.bg) setBackground(node.bg);
     if (node.bgm) playBgm(node.bgm);
     if (node.weather) setWeather(node.weather);
+    if (node.camera) setCamera(node.camera);
     if (node.effect === "flash") triggerFlash();
 
     if (node.choice) {
@@ -324,21 +458,20 @@
 
     const speaker = node.speaker || "Рассказчик";
     speakerTag.textContent = node.thought ? `${speaker} (мысли)` : speaker;
-    speakerTag.className = SPEAKER_CLASS[speaker] || "";
+    speakerTag.className = SPEAKER_CLASS[speaker] || "narrator";
 
     updateSprites(node.sprite, speaker);
-    typeText(node.text || "", !!node.thought, speaker === "Рассказчик");
+    typeText(node.text || "", !!node.thought, speaker);
 
     progressLabel.textContent = `Эпизод ${state.chapterIndex + 1}/${window.VN_CHAPTERS.length} · Сцена ${state.nodeIndex + 1}/${nodes.length}`;
 
-    // Record in backlog
     const lastLog = state.backlog[state.backlog.length - 1];
     if (!lastLog || lastLog.text !== node.text) {
       state.backlog.push({
         speaker: node.thought ? `${speaker} (мысли)` : speaker,
         text: node.text
       });
-      if (state.backlog.length > 160) state.backlog.shift();
+      if (state.backlog.length > 180) state.backlog.shift();
     }
     saveAuto();
   }
@@ -436,7 +569,6 @@
     loadChapter(data.chapterIndex || 0, data.nodeIndex || 0);
   }
 
-  // Modals
   function closeAllModals() {
     document.querySelectorAll(".modal-backdrop").forEach((m) => m.classList.remove("open"));
   }
@@ -452,7 +584,7 @@
 
     const summary = document.createElement("div");
     summary.style.cssText = "padding: 10px 14px; background: rgba(216,185,121,0.1); border: 1px solid rgba(216,185,121,0.3); border-radius: 8px; font-size: 13.5px; color: #e8dec8;";
-    summary.innerHTML = `Доступно глав в текущей сборке: <strong>${chapters.length}</strong> (Пролог: День 0 + Акт I: День 1) · Объём готового текста первой части: <strong>${grandTotalWords.toLocaleString("ru-RU")} слов</strong>`;
+    summary.innerHTML = `Доступно глав в текущей сборке: <strong>${chapters.length}</strong> (Пролог: День 0 + Акт I: День 1) · Объём текста первой части: <strong>${grandTotalWords.toLocaleString("ru-RU")} слов</strong>`;
     container.appendChild(summary);
 
     chapters.forEach((ch, idx) => {
@@ -544,7 +676,6 @@
       <div style="font-weight:700; color:#fff; margin-bottom:6px;">Конец Первой части (Пролог: День 0 + Акт I: День 1)</div>
       <div style="font-size:13.5px; color:#d9e7f7; line-height:1.5;">
         Параметры вашего прохождения: Мираэль (${state.stats.aff_mirael}), Валерия (${state.stats.aff_valeria}), Лена (${state.stats.aff_lena}), Тая (${state.stats.aff_taya}), Внутренний взгляд (${state.stats.inner_sight}).
-        Вы можете переиграть любую главу из списка ниже или продолжить создание Событий 2–4 Первой недели.
       </div>
     `;
     container.prepend(banner);
@@ -579,7 +710,6 @@
     playBgm("Golden Afternoon Light.mp3");
   });
 
-  // Title Screen Buttons
   document.getElementById("title-start-btn").addEventListener("click", () => {
     titleScreen.classList.add("hidden");
     loadChapter(0, 0);
@@ -625,7 +755,6 @@
     }
   });
 
-  // Initialize Title Screen music on first interaction
   window.addEventListener("DOMContentLoaded", () => {
     bgmLabel.textContent = "Golden Afternoon Light";
     state.currentBgm = "Golden Afternoon Light.mp3";
