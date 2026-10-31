@@ -230,14 +230,34 @@ html, body {
 
 .char-slot {
   position: absolute;
-  top: 5vh;
-  height: 134vh;
+  top: 12vh;
+  height: 114vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   transition: opacity 0.26s ease, transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), filter 0.26s ease;
   opacity: 0;
   pointer-events: none;
+}
+
+.char-slot[data-char-group="alexander"] {
+  top: 4vh;
+  height: 136vh;
+}
+
+.char-slot[data-char-group="lena"],
+.char-slot[data-char-group="nika"],
+.char-slot[data-char-group="mirael"],
+.char-slot[data-char-group="taya"] {
+  top: 14vh;
+  height: 110vh;
+}
+
+.char-slot[data-char-group="valeria"],
+.char-slot[data-char-group="artem"],
+.char-slot[data-char-group="dmitry"] {
+  top: 11vh;
+  height: 116vh;
 }
 
 .char-slot.visible {
