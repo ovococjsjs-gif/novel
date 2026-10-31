@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Не смотри на небо — Визуальная новелла</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- BACKGROUND & WEATHER -->
+    <div id="bg-layer"></div>
+    <div id="weather-layer"></div>
+    <div id="flash-overlay"></div>
+
+    <!-- CHARACTER SPRITE STAGE -->
+    <div id="sprite-stage">
+      <div id="slot-left" class="char-slot left"></div>
+      <div id="slot-center" class="char-slot center"></div>
+      <div id="slot-right" class="char-slot right"></div>
+    </div>
+
+    <!-- TOP HUD -->
+    <header id="top-hud">
+      <div class="hud-chapter-info">
+        <div id="hud-day" class="hud-day-badge">ДЕНЬ 0 · ПРОЛОГ</div>
+        <div id="hud-title" class="hud-chapter-title">Глава I. Чайник с накипью и кот в закрытой коробке</div>
+      </div>
+
+      <div class="hud-controls">
+        <div class="bgm-pill">
+          <button id="bgm-toggle" class="hud-btn" style="padding: 4px 10px;">♫ Вкл. звук</button>
+          <span id="bgm-label">Golden Afternoon Light</span>
+          <input id="bgm-volume" type="range" min="0" max="1" step="0.05" value="0.45" title="Громкость музыки" />
+        </div>
+        <button id="btn-chapters" class="hud-btn">Оглавление</button>
+        <button id="btn-log" class="hud-btn">Журнал</button>
+        <button id="btn-saves" class="hud-btn">Сохранения</button>
+        <button id="btn-menu" class="hud-btn">Меню</button>
+      </div>
+    </header>
+
+    <!-- DIALOGUE BOX -->
+    <section id="dialogue-wrapper">
+      <div id="dialogue-box">
+        <div id="speaker-tag">Рассказчик</div>
+        <div id="dialogue-text"></div>
+        <div class="dialogue-footer">
+          <span id="progress-label">Эпизод 1 · Сцена 1</span>
+          <div class="nav-arrows">
+            <button id="btn-prev" class="step-btn">← Назад</button>
+            <button id="btn-next" class="step-btn">Далее → (Пробел / Клик)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANCHING CHOICE OVERLAY -->
+    <div id="choice-overlay">
+      <div class="choice-card">
+        <div id="choice-prompt" class="choice-prompt">Сделайте выбор:</div>
+        <div id="choice-list" class="choice-list"></div>
+      </div>
+    </div>
+
+    <!-- TITLE SCREEN -->
+    <div id="title-screen">
+      <div class="title-content">
+        <div class="title-eyebrow">Визуальная новелла · Метафизическая драма</div>
+        <h1 class="title-main">Не смотри на небо</h1>
+        <div class="title-sub">Don't Look to the Sky</div>
+        <p class="title-desc">
+          Небольшой российский городок в разгар июльской духоты. Двадцать один день кассационной отсрочки между Верхним регистром и Пеклом, где за душу курьера спорят падший ангел-хранитель, древний демон-юрист, горничная с томиком гностиков и часовщица из старого двора.
+        </p>
+        <div class="title-menu">
+          <button id="title-start-btn" class="title-btn primary">
+            <span>Начать с Пролога (День 0)</span>
+            <span>→</span>
+          </button>
+          <button id="title-continue-btn" class="title-btn">
+            <span>Продолжить чтение</span>
+            <span>→</span>
+          </button>
+          <button id="title-chapters-btn" class="title-btn">
+            <span>Выбор главы (Пролог + День 1)</span>
+            <span>7 глав</span>
+          </button>
+          <button id="title-saves-btn" class="title-btn">
+            <span>Сохранения</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAPTER SELECTOR MODAL -->
+    <div id="chapters-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Оглавление (Часть I: День 0 и День 1)</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div id="chapters-modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- BACKLOG MODAL -->
+    <div id="log-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Журнал прочитанных сцен</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div id="log-modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- SAVES MODAL -->
+    <div id="saves-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Сохранение и загрузка</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div id="saves-modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <audio id="bgm-audio" loop preload="auto"></audio>
+  </div>
+
+  <!-- SCRIPT CHAPTERS -->
+  <script src="script/prologue_1_morning.js"></script>
+  <script src="script/prologue_2_city.js"></script>
+  <script src="script/prologue_3_depot.js"></script>
+  <script src="script/prologue_4_crash.js"></script>
+  <script src="script/day1_1_mirael.js"></script>
+  <script src="script/day1_2_valeria.js"></script>
+  <script src="script/day1_3_evening.js"></script>
+  <script src="engine.js"></script>
+</body>
+</html>
