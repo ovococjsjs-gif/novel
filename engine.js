@@ -112,6 +112,13 @@
 
   function playBgm(trackName) {
     if (!trackName) return;
+    if (trackName.startsWith("placeholder:")) {
+      state.currentBgm = trackName;
+      bgmAudio.pause();
+      bgmLabel.textContent = `[Заглушка: ${trackName.slice("placeholder:".length)}]`;
+      bgmToggle.textContent = "♫ Нет трека";
+      return;
+    }
     if (state.currentBgm === trackName && !bgmAudio.paused) return;
     state.currentBgm = trackName;
     bgmAudio.src = encodeURI(trackName);
