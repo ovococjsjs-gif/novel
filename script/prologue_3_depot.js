@@ -121,7 +121,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Лена",
-      sprite: { char: "lena", emotion: "neutral", pos: "right" },
+      sprite: { char: "lena", emotion: "coffee", pos: "right" },
       text: "Двойной чёрный кофе без сахара. Сварила такую дозу, что от одного запаха глаз перестаёт дёргаться. Подставляй стаканчик, пока горячий."
     },
     {
@@ -130,7 +130,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Лена",
-      sprite: { char: "lena", emotion: "snide", pos: "right" },
+      sprite: { char: "lena", emotion: "thoughtful", pos: "right" },
       text: "Чего с утра такой притихший ездишь, профессор педальный? Обычно ты мне на пересменке уже успеваешь рассказать какую-нибудь дичь из своих умных книжек, а сегодня молчишь как партизан."
     },
     {
@@ -175,7 +175,7 @@ window.VN_CHAPTERS.push({
               },
               {
                 speaker: "Лена",
-                sprite: { char: "lena", emotion: "snide", pos: "right" },
+                sprite: { char: "lena", emotion: "thoughtful", pos: "right" },
                 text: "Бесплатный сыр, Саня, сама знаешь по какому ведомству проходит. Когда человеку вдруг начинает ненормально везти во всём подряд, потом обычно выясняется, что счёт за банкет просто отложили до закрытия заведения."
               }
             ]
@@ -191,7 +191,7 @@ window.VN_CHAPTERS.push({
               },
               {
                 speaker: "Лена",
-                sprite: { char: "lena", emotion: "snide", pos: "right" },
+                sprite: { char: "lena", emotion: "angry", pos: "right" },
                 text: "А ты не завидуй, книгочей! Во-первых, в этом чепчике чаевых оставляют в два раза больше, чем твоему унылому лицу. А во-вторых, когда бывшие преподаватели видят меня на улице в таком виде, они в ужасе переходят на другой тротуар и не лезут с тупыми расспросами, почему я бросила учёбу. Сплошная выгода!"
               }
             ]
@@ -214,7 +214,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Лена",
-      sprite: { char: "lena", emotion: "neutral", pos: "left" },
+      sprite: { char: "lena", emotion: "surprised", pos: "left" },
       text: "Дмитрий Валерьевич, давайте я заберу Речную. Мне всё равно в ту сторону через мост возвращаться."
     },
     {
@@ -233,7 +233,7 @@ window.VN_CHAPTERS.push({
               },
               {
                 speaker: "Лена",
-                sprite: { char: "lena", emotion: "snide", pos: "left" },
+                sprite: { char: "lena", emotion: "shy", pos: "left" },
                 text: "Ну смотри, граф Орехов, сам напросился. В следующий раз с тебя двойной эспрессо."
               }
             ]
