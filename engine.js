@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261031_14";
+  const ASSET_VER = "20261031_15";
 
   function withVer(url) {
     if (!url) return "";
@@ -905,13 +905,13 @@
   }
 
   function showEndOfPartModal() {
-    choicePrompt.textContent = "Конец Первой Части (Пролог: День 0 и Акт I: День 1)";
+    choicePrompt.textContent = "Конец текущей части (Пролог: День 0 и Акт I: Дни 1–2)";
     choiceList.innerHTML = "";
 
     const summary = document.createElement("div");
     summary.style.cssText = "color: var(--text-main); font-family: var(--font-serif); line-height: 1.65; margin-bottom: 16px; font-size: 16px;";
     summary.innerHTML = `
-      <p>Вы завершили прохождение <strong>Части I (День 0 и День 1)</strong> визуальной новеллы «Не смотри на небо».</p>
+      <p>Вы завершили прохождение <strong>Пролога (День 0) и Дней 1–2 Первого Акта</strong> визуальной новеллы «Не смотри на небо».</p>
       <p style="margin-top:10px; color: var(--accent-gold);">
         Симпатия Мираэль: ${state.stats.aff_mirael} · Интерес Валерии: ${state.stats.aff_valeria} · Доверие Лены: ${state.stats.aff_lena} · Связь с Таей: ${state.stats.aff_taya} · Внутреннее зрение: ${state.stats.inner_sight}
       </p>
