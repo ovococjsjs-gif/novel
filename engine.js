@@ -1,50 +1,59 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
+  const ASSET_VER = "20261031_5";
+
+  function withVer(url) {
+    if (!url) return "";
+    return url.includes("?") ? `${url}&v=${ASSET_VER}` : `${url}?v=${ASSET_VER}`;
+  }
+
   const SPRITE_MAP = {
     alexander: (emo) => {
       const alexandrEmos = ["determined_anger", "happy", "sad", "shocked", "shocked_terrified", "shy"];
-      if (emo === "serious") return "assets/characters/alexander/transparent/alexandr_determined_anger.png";
+      if (emo === "serious") return withVer("assets/characters/alexander/transparent/alexandr_determined_anger.png");
       if (alexandrEmos.includes(emo)) {
-        return `assets/characters/alexander/transparent/alexandr_${emo}.png`;
+        return withVer(`assets/characters/alexander/transparent/alexandr_${emo}.png`);
       }
-      return `assets/characters/alexander/transparent/alexander_${emo || "neutral"}.png`;
+      const valid = ["neutral", "smile", "stressed", "surprised", "thoughtful", "wounded", "courier_rain"];
+      const mapped = valid.includes(emo) ? emo : "neutral";
+      return withVer(`assets/characters/alexander/transparent/alexander_${mapped}.png`);
     },
     alexander_jacket: (emo) => {
       if (emo === "rain" || emo === "courier_rain") {
-        return "assets/characters/alexander/transparent/alexander_courier_rain.png";
+        return withVer("assets/characters/alexander/transparent/alexander_courier_rain.png");
       }
       if (emo === "wounded") {
-        return "assets/characters/alexander/transparent/alexander_wounded.png";
+        return withVer("assets/characters/alexander/transparent/alexander_wounded.png");
       }
       const valid = ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked"];
       const mapped = valid.includes(emo) ? emo : "neutral";
-      return `assets/characters/alexander/transparent/alexander_jacket_${mapped}.png`;
+      return withVer(`assets/characters/alexander/transparent/alexander_jacket_${mapped}.png`);
     },
-    mirael_angel: (emo) => `assets/characters/mirael/transparent/mirael_angel_${emo || "neutral"}.png`,
-    mirael_human: (emo) => `assets/characters/mirael/transparent/mirael_human_${emo || "neutral"}.png`,
-    valeria: (emo) => `assets/characters/valeria/transparent/valeria_${emo || "neutral"}.png`,
-    valeria_human: (emo) => `assets/characters/valeria/transparent/valeria_human_${emo || "neutral"}.png`,
+    mirael_angel: (emo) => withVer(`assets/characters/mirael/transparent/mirael_angel_${emo || "neutral"}.png`),
+    mirael_human: (emo) => withVer(`assets/characters/mirael/transparent/mirael_human_${emo || "neutral"}.png`),
+    valeria: (emo) => withVer(`assets/characters/valeria/transparent/valeria_${emo || "neutral"}.png`),
+    valeria_human: (emo) => withVer(`assets/characters/valeria/transparent/valeria_human_${emo || "neutral"}.png`),
     nika: (emo) => {
       const valid = ["happy", "neutral", "sad", "shy"];
       const mapped = valid.includes(emo) ? emo : "happy";
-      return `assets/characters/nika_${mapped}.png`;
+      return withVer(`assets/characters/nika_${mapped}.png`);
     },
     lena: (emo) => {
       const valid = ["happy", "neutral", "sad", "snide", "tired"];
       const mapped = valid.includes(emo) ? emo : "tired";
-      return `assets/characters/lena_${mapped}.png`;
+      return withVer(`assets/characters/lena_${mapped}.png`);
     },
     artem: (emo) => {
       const valid = ["empty", "happy", "neutral", "sad"];
       const mapped = valid.includes(emo) ? emo : "neutral";
-      return `assets/characters/artem_shank_${mapped}.png`;
+      return withVer(`assets/characters/artem_shank_${mapped}.png`);
     },
     dmitry: (emo) => {
       const valid = ["neutral", "serious"];
       const mapped = valid.includes(emo) ? emo : "neutral";
-      return `assets/characters/dmitry_${mapped}.png`;
+      return withVer(`assets/characters/dmitry_${mapped}.png`);
     },
-    taya: (emo) => `assets/characters/taya/transparent/taya_${emo || "neutral"}.png`
+    taya: (emo) => withVer(`assets/characters/taya/transparent/taya_${emo || "neutral"}.png`)
   };
 
   const SPEAKER_CLASS = {
@@ -59,6 +68,21 @@
     "Дмитрий": "dmitry",
     "Тая": "taya"
   };
+
+  const DEFAULT_SETTINGS = {
+    bgmVolume: 0.5,
+    bgmMuted: false,
+    uiSfx: true,
+    textSpeed: 3, // 1=Slow, 2=Normal, 3=Fast, 4=Instant
+    autoSpeed: 2, // 1=Slow, 2=Normal, 3=Fast
+    boxOpacity: 0.92
+  };
+
+  let settings = Object.assign({}, DEFAULT_SETTINGS);
+  try {
+    const savedSet = JSON.parse(localStorage.getItem("nsnn_settings_v1") || "null");
+    if (savedSet) settings = Object.assign({}, DEFAULT_SETTINGS, savedSet);
+  } catch (e) {}
 
   const state = {
     chapterIndex: 0,
@@ -81,7 +105,9 @@
     backlog: [],
     isTyping: false,
     fullText: "",
-    typeTimer: null
+    typeTimer: null,
+    autoMode: false,
+    autoTimer: null
   };
 
   // DOM Elements
@@ -93,34 +119,166 @@
   const slotLeft = document.getElementById("slot-left");
   const slotCenter = document.getElementById("slot-center");
   const slotRight = document.getElementById("slot-right");
+
   const hudDay = document.getElementById("hud-day");
   const hudTitle = document.getElementById("hud-title");
+  const bgmAudio = document.getElementById("bgm-audio");
+  const bgmToggle = document.getElementById("bgm-toggle");
+  const bgmLabel = document.getElementById("bgm-label");
+  const bgmVolume = document.getElementById("bgm-volume");
+
   const speakerTag = document.getElementById("speaker-tag");
   const dialogueText = document.getElementById("dialogue-text");
   const progressLabel = document.getElementById("progress-label");
+  const dialogueBox = document.getElementById("dialogue-box");
+
   const choiceOverlay = document.getElementById("choice-overlay");
   const choicePrompt = document.getElementById("choice-prompt");
   const choiceList = document.getElementById("choice-list");
-  const bgmAudio = document.getElementById("bgm-audio");
-  const bgmLabel = document.getElementById("bgm-label");
-  const bgmVolume = document.getElementById("bgm-volume");
-  const bgmToggle = document.getElementById("bgm-toggle");
 
-  // 1. SPLASH SCREEN ($WAG ENTERTAINMENT) & MENU LEAVES ANIMATION
-  function dismissSplash() {
-    if (splashScreen.classList.contains("fade-out")) return;
-    splashScreen.classList.add("fade-out");
-    playBgm("Golden Afternoon Light.mp3");
-    setTimeout(() => {
-      splashScreen.style.display = "none";
-    }, 950);
+  const chaptersModal = document.getElementById("chapters-modal");
+  const chaptersModalBody = document.getElementById("chapters-modal-body");
+  const logModal = document.getElementById("log-modal");
+  const logModalBody = document.getElementById("log-modal-body");
+  const savesModal = document.getElementById("saves-modal");
+  const savesModalBody = document.getElementById("saves-modal-body");
+  const settingsModal = document.getElementById("settings-modal");
+  const creditsModal = document.getElementById("credits-modal");
+
+  const btnAuto = document.getElementById("btn-auto");
+  const continueBadge = document.getElementById("continue-badge");
+
+  // Preload cache so images never flicker or drop
+  const preloadedImages = new Map();
+  function preloadImage(url) {
+    if (!url || preloadedImages.has(url)) return;
+    const im = new Image();
+    im.src = url;
+    preloadedImages.set(url, im);
   }
 
-  splashScreen.addEventListener("click", dismissSplash);
-  setTimeout(dismissSplash, 3250);
+  function preloadChapterAssets(ch) {
+    if (!ch) return;
+    if (ch.bg) preloadImage(withVer(ch.bg));
+    function scan(nodes) {
+      (nodes || []).forEach((n) => {
+        if (n.bg) preloadImage(withVer(n.bg));
+        if (n.sprite && typeof n.sprite === "object" && n.sprite.char) {
+          const resolver = SPRITE_MAP[n.sprite.char];
+          if (resolver) preloadImage(resolver(n.sprite.emotion));
+        }
+        if (n.choice && n.choice.options) {
+          n.choice.options.forEach((o) => {
+            if (o.next) scan(o.next);
+          });
+        }
+      });
+    }
+    scan(ch.nodes);
+  }
 
-  // Falling leaves & sunlight motes canvas on Main Menu
-  function initMenuLeaves() {
+  // Synthesized subtle UI Sound Effects (Web Audio API)
+  let audioCtx = null;
+  function playUiSound(type) {
+    if (!settings.uiSfx) return;
+    try {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (!audioCtx) return;
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const now = audioCtx.currentTime;
+      if (type === "hover") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(660, now + 0.045);
+        gain.gain.setValueAtTime(0.025, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } else if (type === "click") {
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+        gain.gain.setValueAtTime(0.055, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.09);
+      }
+    } catch (e) {}
+  }
+
+  // Attach hover/click sounds to interactive buttons
+  function bindUiSounds(root = document) {
+    root.querySelectorAll("button").forEach((btn) => {
+      if (btn.dataset.sfxBound) return;
+      btn.dataset.sfxBound = "1";
+      btn.addEventListener("mouseenter", () => playUiSound("hover"));
+      btn.addEventListener("click", () => playUiSound("click"));
+    });
+  }
+
+  // =========================================================
+  // SPLASH SCREEN & CANONICAL MENU ENTRANCE + IMMEDIATE MUSIC
+  // =========================================================
+  let splashDismissed = false;
+  function dismissSplash() {
+    if (splashDismissed) return;
+    splashDismissed = true;
+    if (splashScreen) {
+      splashScreen.classList.add("hidden");
+    }
+    if (titleScreen) {
+      titleScreen.classList.add("ready");
+    }
+    if (titleScreen && !titleScreen.classList.contains("hidden")) {
+      playBgm("Golden Afternoon Light.mp3");
+    }
+  }
+
+  if (splashScreen) {
+    splashScreen.addEventListener("click", dismissSplash);
+    setTimeout(dismissSplash, 3200);
+  } else if (titleScreen) {
+    titleScreen.classList.add("ready");
+  }
+
+  // Global unlock so music starts immediately on page load or very first user interaction
+  function unlockAudioOnce() {
+    if (settings.bgmMuted) return;
+    if (bgmAudio.paused) {
+      const target = state.currentBgm || "Golden Afternoon Light.mp3";
+      if (!target.startsWith("placeholder:")) {
+        playBgm(target);
+      }
+    }
+  }
+  ["pointerdown", "mousedown", "keydown", "touchstart", "click"].forEach((evt) => {
+    window.addEventListener(evt, unlockAudioOnce, { capture: true, passive: true });
+  });
+
+  // Mouse parallax on Main Menu
+  if (titleScreen) {
+    titleScreen.addEventListener("mousemove", (e) => {
+      if (titleScreen.classList.contains("hidden")) return;
+      const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+      const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+      titleScreen.style.setProperty("--px", `${(nx * -14).toFixed(1)}px`);
+      titleScreen.style.setProperty("--py", `${(ny * -10).toFixed(1)}px`);
+    });
+  }
+
+  // =========================================================
+  // MULTI-LAYER MENU FX CANVAS (BOKEH + LEAVES + WIND STREAKS)
+  // =========================================================
+  function initMenuCanvasFx() {
     const canvas = document.getElementById("menu-leaves-canvas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -132,49 +290,89 @@
       h = canvas.height = window.innerHeight;
     });
 
-    const leaves = Array.from({ length: 38 }, () => ({
+    // Layer 1: Warm rising/floating bokeh motes
+    const motes = Array.from({ length: 42 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      size: 7 + Math.random() * 11,
-      speedY: 0.55 + Math.random() * 1.15,
-      speedX: -0.35 + Math.random() * 0.9,
-      angle: Math.random() * Math.PI * 2,
-      spin: (Math.random() - 0.5) * 0.025,
-      swayAmp: 0.6 + Math.random() * 1.2,
-      swayFreq: 0.01 + Math.random() * 0.02,
-      phase: Math.random() * Math.PI * 2,
-      hue: Math.random() > 0.32 ? "rgba(134, 188, 92, 0.72)" : "rgba(218, 186, 104, 0.75)"
+      r: 1.5 + Math.random() * 4.5,
+      vx: -0.25 + Math.random() * 0.5,
+      vy: -0.15 - Math.random() * 0.45,
+      alpha: 0.15 + Math.random() * 0.45,
+      phase: Math.random() * Math.PI * 2
     }));
 
-    const motes = Array.from({ length: 45 }, () => ({
+    // Layer 2: Falling spinning leaves
+    const leaves = Array.from({ length: 34 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: 1.2 + Math.random() * 2.5,
-      vy: -0.15 - Math.random() * 0.35,
-      vx: -0.2 + Math.random() * 0.4,
-      alpha: 0.2 + Math.random() * 0.55
+      size: 6 + Math.random() * 9,
+      speedY: 0.55 + Math.random() * 1.15,
+      speedX: -0.45 + Math.random() * 1.1,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.028,
+      swayAmp: 0.6 + Math.random() * 1.2,
+      swayFreq: 0.01 + Math.random() * 0.018,
+      phase: Math.random() * Math.PI * 2,
+      hue: Math.random() > 0.42 ? "rgba(232, 182, 96, 0.58)" : "rgba(186, 128, 68, 0.48)"
+    }));
+
+    // Layer 3: Subtle wind light streaks
+    const streaks = Array.from({ length: 5 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      len: 90 + Math.random() * 140,
+      speed: 2.2 + Math.random() * 2.5,
+      alpha: 0.04 + Math.random() * 0.06
     }));
 
     let tick = 0;
     function drawFrame() {
-      tick += 1;
       if (!titleScreen.classList.contains("hidden")) {
         ctx.clearRect(0, 0, w, h);
+        tick += 1;
 
-        // Draw warm light motes
-        motes.forEach((m) => {
-          m.x += m.vx;
-          m.y += m.vy;
-          if (m.y < -10) m.y = h + 10;
-          if (m.x < -10) m.x = w + 10;
-          if (m.x > w + 10) m.x = -10;
+        // Draw wind streaks
+        streaks.forEach((st) => {
+          st.x += st.speed;
+          st.y += st.speed * 0.18;
+          if (st.x > w + st.len) {
+            st.x = -st.len;
+            st.y = Math.random() * h * 0.85;
+          }
+          const grad = ctx.createLinearGradient(st.x, st.y, st.x - st.len, st.y - st.len * 0.18);
+          grad.addColorStop(0, "rgba(255, 230, 175, 0)");
+          grad.addColorStop(0.5, `rgba(255, 230, 175, ${st.alpha})`);
+          grad.addColorStop(1, "rgba(255, 230, 175, 0)");
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.2;
           ctx.beginPath();
-          ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 236, 175, ${m.alpha})`;
-          ctx.fill();
+          ctx.moveTo(st.x, st.y);
+          ctx.lineTo(st.x - st.len, st.y - st.len * 0.18);
+          ctx.stroke();
         });
 
-        // Draw falling summer leaves
+        // Draw glowing bokeh motes
+        motes.forEach((m) => {
+          m.x += m.vx + Math.sin(tick * 0.015 + m.phase) * 0.25;
+          m.y += m.vy;
+          if (m.y < -15) {
+            m.y = h + 15;
+            m.x = Math.random() * w;
+          }
+          if (m.x > w + 15) m.x = -15;
+          if (m.x < -15) m.x = w + 15;
+          const pulse = 0.65 + 0.35 * Math.sin(tick * 0.03 + m.phase);
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 224, 152, ${(m.alpha * pulse).toFixed(3)})`;
+          ctx.shadowColor = "rgba(255, 200, 110, 0.8)";
+          ctx.shadowBlur = 8;
+          ctx.fill();
+          ctx.restore();
+        });
+
+        // Draw falling leaves
         leaves.forEach((lf) => {
           lf.y += lf.speedY;
           lf.x += lf.speedX + Math.sin(tick * lf.swayFreq + lf.phase) * lf.swayAmp;
@@ -202,23 +400,53 @@
     }
     requestAnimationFrame(drawFrame);
   }
-  initMenuLeaves();
+  initMenuCanvasFx();
 
-  function countChapterWords(ch) {
-    let total = 0;
-    function scan(nodes) {
-      nodes.forEach((n) => {
-        if (n.text) total += n.text.trim().split(/\s+/).length;
-        if (n.choice && n.choice.options) {
-          n.choice.options.forEach((o) => {
-            if (o.label) total += o.label.trim().split(/\s+/).length;
-            if (o.next) scan(o.next);
-          });
-        }
-      });
+  // =========================================================
+  // AUDIO & SETTINGS MANAGEMENT
+  // =========================================================
+  function saveSettings() {
+    try {
+      localStorage.setItem("nsnn_settings_v1", JSON.stringify(settings));
+    } catch (e) {}
+  }
+
+  function applySettingsToDom() {
+    document.documentElement.style.setProperty("--dlg-opacity", String(settings.boxOpacity));
+    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
+    if (bgmVolume) bgmVolume.value = String(settings.bgmVolume);
+
+    const setBgmVol = document.getElementById("set-bgm-vol");
+    const setBgmVolVal = document.getElementById("set-bgm-vol-val");
+    const setBgmMute = document.getElementById("set-bgm-mute");
+    const setUiSfx = document.getElementById("set-ui-sfx");
+    const setTextSpeed = document.getElementById("set-text-speed");
+    const setTextSpeedVal = document.getElementById("set-text-speed-val");
+    const setAutoSpeed = document.getElementById("set-auto-speed");
+    const setAutoSpeedVal = document.getElementById("set-auto-speed-val");
+    const setBoxOpacity = document.getElementById("set-box-opacity");
+    const setBoxOpacityVal = document.getElementById("set-box-opacity-val");
+
+    if (setBgmVol) setBgmVol.value = String(settings.bgmVolume);
+    if (setBgmVolVal) setBgmVolVal.textContent = settings.bgmMuted ? "Выкл" : `${Math.round(settings.bgmVolume * 100)}%`;
+    if (setBgmMute) {
+      setBgmMute.textContent = settings.bgmMuted ? "Включить звук" : "Выключить звук";
+      setBgmMute.classList.toggle("primary", !settings.bgmMuted);
     }
-    scan(ch.nodes || []);
-    return total;
+    if (setUiSfx) {
+      setUiSfx.textContent = settings.uiSfx ? "Включены" : "Выключены";
+      setUiSfx.classList.toggle("primary", !!settings.uiSfx);
+    }
+    const speedNames = { 1: "Медленно", 2: "Обычная", 3: "Быстро", 4: "Мгновенно" };
+    if (setTextSpeed) setTextSpeed.value = String(settings.textSpeed);
+    if (setTextSpeedVal) setTextSpeedVal.textContent = speedNames[settings.textSpeed] || "Быстро";
+
+    const autoNames = { 1: "Медленно", 2: "Средне", 3: "Быстро" };
+    if (setAutoSpeed) setAutoSpeed.value = String(settings.autoSpeed);
+    if (setAutoSpeedVal) setAutoSpeedVal.textContent = autoNames[settings.autoSpeed] || "Средне";
+
+    if (setBoxOpacity) setBoxOpacity.value = String(settings.boxOpacity);
+    if (setBoxOpacityVal) setBoxOpacityVal.textContent = `${Math.round(settings.boxOpacity * 100)}%`;
   }
 
   function playBgm(trackName) {
@@ -230,13 +458,17 @@
       bgmToggle.textContent = "♫ Заглушка";
       return;
     }
+    const encoded = withVer(encodeURI(trackName));
     if (state.currentBgm === trackName && !bgmAudio.paused) return;
     state.currentBgm = trackName;
-    bgmAudio.src = encodeURI(trackName);
-    bgmAudio.volume = parseFloat(bgmVolume.value || "0.45");
+    if (bgmAudio.getAttribute("data-track") !== trackName) {
+      bgmAudio.setAttribute("data-track", trackName);
+      bgmAudio.src = encoded;
+    }
+    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
     bgmLabel.textContent = trackName.replace(".mp3", "");
     bgmAudio.play().then(() => {
-      bgmToggle.textContent = "♫ Пауза";
+      bgmToggle.textContent = settings.bgmMuted ? "♫ Звук выкл" : "♫ Пауза";
     }).catch(() => {
       bgmToggle.textContent = "♫ Вкл. звук";
     });
@@ -245,8 +477,10 @@
   bgmToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     if (bgmAudio.paused) {
+      settings.bgmMuted = false;
+      bgmAudio.volume = settings.bgmVolume;
       if (!bgmAudio.src && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
-        bgmAudio.src = encodeURI(state.currentBgm);
+        bgmAudio.src = withVer(encodeURI(state.currentBgm));
       }
       bgmAudio.play().then(() => {
         bgmToggle.textContent = "♫ Пауза";
@@ -255,28 +489,99 @@
       bgmAudio.pause();
       bgmToggle.textContent = "♫ Вкл. звук";
     }
+    applySettingsToDom();
+    saveSettings();
   });
-
-  const titleMusicBtn = document.getElementById("title-music-btn");
-  if (titleMusicBtn) {
-    titleMusicBtn.addEventListener("click", () => {
-      if (bgmAudio.paused) {
-        playBgm("Golden Afternoon Light.mp3");
-      } else {
-        bgmAudio.pause();
-        bgmToggle.textContent = "♫ Вкл. звук";
-      }
-    });
-  }
 
   bgmVolume.addEventListener("input", (e) => {
-    bgmAudio.volume = parseFloat(e.target.value);
+    settings.bgmVolume = parseFloat(e.target.value);
+    settings.bgmMuted = settings.bgmVolume === 0;
+    applySettingsToDom();
+    saveSettings();
   });
 
+  // Bind Settings Modal controls
+  function initSettingsControls() {
+    const setBgmVol = document.getElementById("set-bgm-vol");
+    const setBgmMute = document.getElementById("set-bgm-mute");
+    const setUiSfx = document.getElementById("set-ui-sfx");
+    const setTextSpeed = document.getElementById("set-text-speed");
+    const setAutoSpeed = document.getElementById("set-auto-speed");
+    const setBoxOpacity = document.getElementById("set-box-opacity");
+    const setFullscreenBtn = document.getElementById("set-fullscreen-btn");
+    const setResetBtn = document.getElementById("set-reset-btn");
+
+    if (setBgmVol) {
+      setBgmVol.addEventListener("input", (e) => {
+        settings.bgmVolume = parseFloat(e.target.value);
+        if (settings.bgmVolume > 0) settings.bgmMuted = false;
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    if (setBgmMute) {
+      setBgmMute.addEventListener("click", () => {
+        settings.bgmMuted = !settings.bgmMuted;
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    if (setUiSfx) {
+      setUiSfx.addEventListener("click", () => {
+        settings.uiSfx = !settings.uiSfx;
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    if (setTextSpeed) {
+      setTextSpeed.addEventListener("input", (e) => {
+        settings.textSpeed = parseInt(e.target.value, 10);
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    if (setAutoSpeed) {
+      setAutoSpeed.addEventListener("input", (e) => {
+        settings.autoSpeed = parseInt(e.target.value, 10);
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    if (setBoxOpacity) {
+      setBoxOpacity.addEventListener("input", (e) => {
+        settings.boxOpacity = parseFloat(e.target.value);
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    if (setFullscreenBtn) {
+      setFullscreenBtn.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+          setFullscreenBtn.textContent = "Оконный режим";
+        } else {
+          document.exitFullscreen().catch(() => {});
+          setFullscreenBtn.textContent = "На весь экран";
+        }
+      });
+    }
+    if (setResetBtn) {
+      setResetBtn.addEventListener("click", () => {
+        settings = Object.assign({}, DEFAULT_SETTINGS);
+        applySettingsToDom();
+        saveSettings();
+      });
+    }
+    applySettingsToDom();
+  }
+
+  // =========================================================
+  // STAGE: BACKGROUNDS, WEATHER, CAMERA & SPRITES
+  // =========================================================
   function setBackground(bgPath) {
     if (!bgPath || state.currentBg === bgPath) return;
     state.currentBg = bgPath;
-    bgLayer.style.backgroundImage = `url('${bgPath}')`;
+    bgLayer.style.backgroundImage = `url('${withVer(bgPath)}')`;
   }
 
   function setWeather(mode) {
@@ -298,7 +603,7 @@
     flashOverlay.classList.add("active");
     setTimeout(() => {
       flashOverlay.classList.remove("active");
-    }, 100);
+    }, 110);
   }
 
   function clearSprites() {
@@ -363,12 +668,34 @@
       let img = el.querySelector("img");
       if (!img) {
         img = document.createElement("img");
+        img.alt = "";
+        img.decoding = "async";
         el.appendChild(img);
       }
-      if (img.getAttribute("src") !== src) {
-        img.setAttribute("src", src);
+      if (img.getAttribute("data-base-src") !== src) {
+        img.setAttribute("data-base-src", src);
+        img.dataset.retries = "0";
+        img.classList.remove("loaded");
+        img.onload = () => {
+          img.classList.add("loaded");
+        };
+        img.onerror = () => {
+          const retries = parseInt(img.dataset.retries || "0", 10);
+          if (retries < 3) {
+            img.dataset.retries = String(retries + 1);
+            setTimeout(() => {
+              img.src = `${src}&retry=${Date.now()}_${retries}`;
+            }, 150 * (retries + 1));
+          }
+        };
+        img.src = src;
+        if (img.complete && img.naturalWidth > 0) {
+          img.classList.add("loaded");
+        }
+      } else if (img.complete && img.naturalWidth > 0) {
+        img.classList.add("loaded");
       }
-      img.alt = info.char;
+
       el.classList.add("visible");
 
       if (speakerCharKey && !info.char.startsWith(speakerCharKey)) {
@@ -379,12 +706,17 @@
     });
   }
 
+  // =========================================================
+  // CHAPTER & NODE EXECUTION + AUTO-ADVANCE
+  // =========================================================
   function loadChapter(index, startNode = 0) {
     const chapters = window.VN_CHAPTERS || [];
     if (index < 0 || index >= chapters.length) return;
     state.chapterIndex = index;
     state.nodeIndex = startNode;
     const ch = chapters[index];
+    preloadChapterAssets(ch);
+    if (chapters[index + 1]) preloadChapterAssets(chapters[index + 1]);
     state.runtimeNodes = JSON.parse(JSON.stringify(ch.nodes));
     clearSprites();
     setBackground(ch.bg);
@@ -397,9 +729,26 @@
     saveAuto();
   }
 
+  function scheduleAutoAdvance() {
+    if (state.autoTimer) {
+      clearTimeout(state.autoTimer);
+      state.autoTimer = null;
+    }
+    if (!state.autoMode) return;
+    if (choiceOverlay.classList.contains("visible")) return;
+    if (!titleScreen.classList.contains("hidden")) return;
+    const delayMap = { 1: 3600, 2: 2300, 3: 1300 };
+    const baseDelay = delayMap[settings.autoSpeed] || 2300;
+    state.autoTimer = setTimeout(() => {
+      if (state.autoMode && !state.isTyping && !choiceOverlay.classList.contains("visible")) {
+        stepForward();
+      }
+    }, baseDelay);
+  }
+
   function typeText(text, isThought, speaker) {
     if (state.typeTimer) clearInterval(state.typeTimer);
-    state.isTyping = true;
+    if (state.autoTimer) clearTimeout(state.autoTimer);
 
     const spClass = SPEAKER_CLASS[speaker] || "narrator";
     if (isThought) {
@@ -410,18 +759,31 @@
 
     const formatted = isThought ? `«${text}»` : speaker === "Рассказчик" ? text : `— ${text}`;
     state.fullText = formatted;
+
+    if (settings.textSpeed >= 4) {
+      dialogueText.textContent = formatted;
+      state.isTyping = false;
+      scheduleAutoAdvance();
+      return;
+    }
+
+    state.isTyping = true;
     dialogueText.textContent = "";
     let idx = 0;
+    const stepChars = settings.textSpeed === 3 ? 2 : 1;
+    const intervalMs = settings.textSpeed === 1 ? 26 : settings.textSpeed === 2 ? 15 : 10;
+
     state.typeTimer = setInterval(() => {
-      idx += 2;
+      idx += stepChars;
       if (idx >= formatted.length) {
         dialogueText.textContent = formatted;
         clearInterval(state.typeTimer);
         state.isTyping = false;
+        scheduleAutoAdvance();
       } else {
         dialogueText.textContent = formatted.slice(0, idx);
       }
-    }, 11);
+    }, intervalMs);
   }
 
   function finishTyping() {
@@ -429,6 +791,7 @@
     if (state.typeTimer) clearInterval(state.typeTimer);
     dialogueText.textContent = state.fullText;
     state.isTyping = false;
+    scheduleAutoAdvance();
   }
 
   function renderCurrentNode() {
@@ -483,8 +846,10 @@
       const btn = document.createElement("button");
       btn.className = "choice-option-btn";
       btn.textContent = `${idx + 1}. ${opt.label}`;
+      btn.addEventListener("mouseenter", () => playUiSound("hover"));
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
+        playUiSound("click");
         if (opt.effects) {
           Object.entries(opt.effects).forEach(([k, v]) => {
             state.stats[k] = (state.stats[k] || 0) + v;
@@ -517,198 +882,317 @@
 
   function stepBackward() {
     if (choiceOverlay.classList.contains("visible")) return;
+    if (!titleScreen.classList.contains("hidden")) return;
+    if (state.isTyping) {
+      finishTyping();
+      return;
+    }
     if (state.nodeIndex > 0) {
       state.nodeIndex -= 1;
+      for (let i = state.nodeIndex; i >= 0; i--) {
+        if (state.runtimeNodes[i].bg) {
+          setBackground(state.runtimeNodes[i].bg);
+          break;
+        }
+      }
       renderCurrentNode();
     } else if (state.chapterIndex > 0) {
-      const prevIdx = state.chapterIndex - 1;
-      const prevLen = window.VN_CHAPTERS[prevIdx].nodes.length;
-      loadChapter(prevIdx, Math.max(0, prevLen - 1));
+      const prevCh = window.VN_CHAPTERS[state.chapterIndex - 1];
+      loadChapter(state.chapterIndex - 1, Math.max(0, prevCh.nodes.length - 1));
     }
+  }
+
+  function showEndOfPartModal() {
+    choicePrompt.textContent = "Конец Первой Части (Пролог: День 0 и Акт I: День 1)";
+    choiceList.innerHTML = "";
+
+    const summary = document.createElement("div");
+    summary.style.cssText = "color: var(--text-main); font-family: var(--font-serif); line-height: 1.65; margin-bottom: 16px; font-size: 16px;";
+    summary.innerHTML = `
+      <p>Вы завершили прохождение <strong>Части I (День 0 и День 1)</strong> визуальной новеллы «Не смотри на небо».</p>
+      <p style="margin-top:10px; color: var(--accent-gold);">
+        Симпатия Мираэль: ${state.stats.aff_mirael} · Интерес Валерии: ${state.stats.aff_valeria} · Доверие Лены: ${state.stats.aff_lena} · Связь с Таей: ${state.stats.aff_taya} · Внутреннее зрение: ${state.stats.inner_sight}
+      </p>
+    `;
+    choiceList.appendChild(summary);
+
+    const restartBtn = document.createElement("button");
+    restartBtn.className = "choice-option-btn";
+    restartBtn.textContent = "1. Вернуться в главное меню";
+    restartBtn.addEventListener("click", () => {
+      choiceOverlay.classList.remove("visible");
+      openTitleScreen();
+    });
+
+    const chaptersBtn = document.createElement("button");
+    chaptersBtn.className = "choice-option-btn";
+    chaptersBtn.textContent = "2. Открыть выбор эпизода";
+    chaptersBtn.addEventListener("click", () => {
+      choiceOverlay.classList.remove("visible");
+      openChaptersModal();
+    });
+
+    choiceList.appendChild(restartBtn);
+    choiceList.appendChild(chaptersBtn);
+    choiceOverlay.classList.add("visible");
+  }
+
+  function openTitleScreen() {
+    state.autoMode = false;
+    if (btnAuto) btnAuto.classList.remove("active");
+    if (state.autoTimer) clearTimeout(state.autoTimer);
+    updateContinueBadge();
+    titleScreen.classList.remove("hidden");
+    titleScreen.classList.add("ready");
+    playBgm("Golden Afternoon Light.mp3");
+  }
+
+  // =========================================================
+  // SAVES & LOCAL STORAGE
+  // =========================================================
+  function createSaveSnapshot(label) {
+    const ch = window.VN_CHAPTERS[state.chapterIndex];
+    const currentNode = state.runtimeNodes[state.nodeIndex] || {};
+    return {
+      label,
+      timestamp: new Date().toLocaleString("ru-RU"),
+      chapterIndex: state.chapterIndex,
+      chapterTitle: ch ? `${ch.day} — ${ch.title}` : "Глава",
+      chapterShort: ch ? ch.day : "ДЕНЬ 0",
+      nodeIndex: state.nodeIndex,
+      previewText: currentNode.text ? currentNode.text.slice(0, 75) + "..." : "",
+      runtimeNodes: state.runtimeNodes,
+      currentBg: state.currentBg,
+      currentBgm: state.currentBgm,
+      weather: state.weather,
+      camera: state.camera,
+      stats: state.stats,
+      choicesMade: state.choicesMade
+    };
   }
 
   function saveAuto() {
     try {
-      localStorage.setItem(
-        "vn_sky_autosave",
-        JSON.stringify({
-          chapterIndex: state.chapterIndex,
-          nodeIndex: state.nodeIndex,
-          stats: state.stats,
-          choicesMade: state.choicesMade,
-          timestamp: new Date().toLocaleString("ru-RU")
-        })
-      );
-    } catch (_) {}
+      localStorage.setItem("nsnn_autosave_v1", JSON.stringify(createSaveSnapshot("Автосохранение")));
+      updateContinueBadge();
+    } catch (e) {}
   }
 
-  function saveManualSlot(slotNum) {
+  function getSaves() {
     try {
-      const ch = window.VN_CHAPTERS[state.chapterIndex];
-      localStorage.setItem(
-        `vn_sky_slot_${slotNum}`,
-        JSON.stringify({
-          chapterIndex: state.chapterIndex,
-          nodeIndex: state.nodeIndex,
-          chapterTitle: `${ch.day} — ${ch.title}`,
-          stats: state.stats,
-          choicesMade: state.choicesMade,
-          timestamp: new Date().toLocaleString("ru-RU")
-        })
-      );
-      renderSavesModal();
-    } catch (_) {}
+      return JSON.parse(localStorage.getItem("nsnn_saves_v1") || "{}");
+    } catch (e) {
+      return {};
+    }
   }
 
-  function loadFromData(data) {
-    if (!data) return;
-    state.stats = data.stats || state.stats;
-    state.choicesMade = data.choicesMade || {};
+  function updateContinueBadge() {
+    if (!continueBadge) return;
+    try {
+      const autoRaw = localStorage.getItem("nsnn_autosave_v1");
+      if (autoRaw) {
+        const snap = JSON.parse(autoRaw);
+        continueBadge.textContent = `${snap.chapterShort || "ДЕНЬ 0"} · Сц. ${(snap.nodeIndex || 0) + 1}`;
+        return;
+      }
+      const saves = getSaves();
+      const firstKey = Object.keys(saves)[0];
+      if (firstKey && saves[firstKey]) {
+        const snap = saves[firstKey];
+        continueBadge.textContent = `${snap.chapterShort || "ДЕНЬ 0"} · Сц. ${(snap.nodeIndex || 0) + 1}`;
+        return;
+      }
+      continueBadge.textContent = "";
+    } catch (e) {
+      continueBadge.textContent = "";
+    }
+  }
+
+  function saveToSlot(slotId) {
+    const saves = getSaves();
+    saves[slotId] = createSaveSnapshot(`Слот ${slotId}`);
+    localStorage.setItem("nsnn_saves_v1", JSON.stringify(saves));
+    updateContinueBadge();
+    renderSavesModal();
+  }
+
+  function loadSnapshot(snap) {
+    if (!snap) return;
+    state.chapterIndex = snap.chapterIndex || 0;
+    state.nodeIndex = snap.nodeIndex || 0;
+    const ch = window.VN_CHAPTERS[state.chapterIndex];
+    preloadChapterAssets(ch);
+    state.runtimeNodes = snap.runtimeNodes || JSON.parse(JSON.stringify(ch.nodes));
+    state.stats = snap.stats || state.stats;
+    state.choicesMade = snap.choicesMade || {};
+    clearSprites();
+    setBackground(snap.currentBg || ch.bg);
+    setWeather(snap.weather || ch.weather || "none");
+    setCamera(snap.camera || ch.camera || "none");
+    playBgm(snap.currentBgm || ch.bgm);
+    hudDay.textContent = ch.day;
+    hudTitle.textContent = ch.title;
     titleScreen.classList.add("hidden");
-    closeAllModals();
-    loadChapter(data.chapterIndex || 0, data.nodeIndex || 0);
+    savesModal.classList.remove("visible");
+    renderCurrentNode();
   }
 
-  function closeAllModals() {
-    document.querySelectorAll(".modal-backdrop").forEach((m) => m.classList.remove("open"));
-  }
-
+  // =========================================================
+  // MODALS RENDERING
+  // =========================================================
   function openChaptersModal() {
-    const container = document.getElementById("chapters-modal-body");
-    container.innerHTML = "";
-    let grandTotalWords = 0;
-    const chapters = window.VN_CHAPTERS || [];
-    chapters.forEach((ch) => {
-      grandTotalWords += countChapterWords(ch);
-    });
-
-    const summary = document.createElement("div");
-    summary.style.cssText = "padding: 10px 14px; background: rgba(216,185,121,0.1); border: 1px solid rgba(216,185,121,0.3); border-radius: 8px; font-size: 13.5px; color: #e8dec8;";
-    summary.innerHTML = `Доступно глав в текущей сборке: <strong>${chapters.length}</strong> (Пролог: День 0 + Акт I: День 1) · Объём текста первой части: <strong>${grandTotalWords.toLocaleString("ru-RU")} слов</strong>`;
-    container.appendChild(summary);
-
-    chapters.forEach((ch, idx) => {
-      const words = countChapterWords(ch);
+    chaptersModalBody.innerHTML = "";
+    (window.VN_CHAPTERS || []).forEach((ch, idx) => {
       const card = document.createElement("div");
-      card.className = "chapter-card";
+      card.className = "chapter-card" + (idx === state.chapterIndex ? " active" : "");
       card.innerHTML = `
         <div>
           <div class="chapter-card-day">${ch.day}</div>
           <div class="chapter-card-title">${ch.title}</div>
           <div class="chapter-card-sub">${ch.subtitle || ""}</div>
         </div>
-        <div style="text-align:right; min-width: 110px;">
-          <div style="font-size:12px; color: var(--gold-accent);">${words} слов</div>
-          <div style="font-size:11px; color: var(--text-muted); margin-top:4px;">Перейти →</div>
-        </div>
+        <div class="save-action-btn primary">Запустить →</div>
       `;
+      card.addEventListener("mouseenter", () => playUiSound("hover"));
       card.addEventListener("click", () => {
+        playUiSound("click");
+        chaptersModal.classList.remove("visible");
         titleScreen.classList.add("hidden");
-        closeAllModals();
         loadChapter(idx, 0);
       });
-      container.appendChild(card);
+      chaptersModalBody.appendChild(card);
     });
-
-    document.getElementById("chapters-modal").classList.add("open");
+    chaptersModal.classList.add("visible");
   }
 
   function openLogModal() {
-    const container = document.getElementById("log-modal-body");
-    container.innerHTML = "";
+    logModalBody.innerHTML = "";
     if (state.backlog.length === 0) {
-      container.innerHTML = `<div style="color:var(--text-muted);">История реплик пока пуста.</div>`;
+      logModalBody.innerHTML = `<div style="color: var(--text-muted);">Журнал пока пуст.</div>`;
     } else {
       state.backlog.forEach((item) => {
-        const div = document.createElement("div");
-        div.className = "log-entry";
-        div.innerHTML = `<div class="log-speaker">${item.speaker}</div><div>${item.text}</div>`;
-        container.appendChild(div);
+        const row = document.createElement("div");
+        row.className = "log-entry";
+        row.innerHTML = `
+          <div class="log-speaker">${item.speaker}</div>
+          <div class="log-text">${item.text}</div>
+        `;
+        logModalBody.appendChild(row);
       });
     }
-    document.getElementById("log-modal").classList.add("open");
-    container.scrollTop = container.scrollHeight;
+    logModal.classList.add("visible");
+    logModalBody.scrollTop = logModalBody.scrollHeight;
   }
 
   function renderSavesModal() {
-    const container = document.getElementById("saves-modal-body");
-    container.innerHTML = "";
-    for (let slot = 1; slot <= 4; slot++) {
-      let raw = null;
+    savesModalBody.innerHTML = "";
+    const inGame = titleScreen.classList.contains("hidden");
+    const autoRaw = localStorage.getItem("nsnn_autosave_v1");
+    if (autoRaw) {
       try {
-        raw = JSON.parse(localStorage.getItem(`vn_sky_slot_${slot}`));
-      } catch (_) {}
-      const card = document.createElement("div");
-      card.className = "chapter-card";
-      card.innerHTML = `
+        const autoSnap = JSON.parse(autoRaw);
+        const autoEl = document.createElement("div");
+        autoEl.className = "save-slot";
+        autoEl.innerHTML = `
+          <div>
+            <div class="chapter-card-day">АВТОСОХРАНЕНИЕ · ${autoSnap.timestamp}</div>
+            <div class="chapter-card-title">${autoSnap.chapterTitle}</div>
+            <div class="chapter-card-sub">Сцена ${autoSnap.nodeIndex + 1} ${autoSnap.previewText ? "· «" + autoSnap.previewText + "»" : ""}</div>
+          </div>
+          <div class="save-slot-actions">
+            <button class="save-action-btn primary" data-load-auto="1">Загрузить</button>
+          </div>
+        `;
+        autoEl.querySelector("[data-load-auto]").addEventListener("click", () => loadSnapshot(autoSnap));
+        savesModalBody.appendChild(autoEl);
+      } catch (e) {}
+    }
+
+    const saves = getSaves();
+    for (let slot = 1; slot <= 6; slot++) {
+      const snap = saves[slot];
+      const slotEl = document.createElement("div");
+      slotEl.className = "save-slot";
+      slotEl.innerHTML = `
         <div>
-          <div class="chapter-card-day">СЛОТ СОХРАНЕНИЯ #${slot}</div>
-          <div class="chapter-card-title">${raw ? raw.chapterTitle : "Пустой слот"}</div>
-          <div class="chapter-card-sub">${raw ? `Сохранено: ${raw.timestamp} (сцена ${raw.nodeIndex + 1})` : "Нажмите «Сохранить», чтобы записать текущий прогресс"}</div>
+          <div class="chapter-card-day">СЛОТ #${slot} ${snap ? "· " + snap.timestamp : "· Пусто"}</div>
+          <div class="chapter-card-title">${snap ? snap.chapterTitle : "Свободная ячейка сохранения"}</div>
+          <div class="chapter-card-sub">${snap ? "Сцена " + (snap.nodeIndex + 1) + (snap.previewText ? " · «" + snap.previewText + "»" : "") : (inGame ? "Нажмите «Сохранить», чтобы записать текущий момент" : "Запустите игру, чтобы сделать запись в этот слот")}</div>
         </div>
-        <div style="display:flex; gap:8px;">
-          <button class="hud-btn" data-save="${slot}">Сохранить</button>
-          ${raw ? `<button class="hud-btn" data-load="${slot}">Загрузить</button>` : ""}
+        <div class="save-slot-actions">
+          ${inGame ? `<button class="save-action-btn" data-save="${slot}">${snap ? "Перезаписать" : "Сохранить"}</button>` : ""}
+          ${snap ? `<button class="save-action-btn primary" data-load="${slot}">Загрузить</button>` : ""}
+          ${snap ? `<button class="save-action-btn" data-del="${slot}">✕</button>` : ""}
         </div>
       `;
-      card.querySelector(`[data-save="${slot}"]`).addEventListener("click", (e) => {
-        e.stopPropagation();
-        saveManualSlot(slot);
-      });
-      const loadBtn = card.querySelector(`[data-load="${slot}"]`);
-      if (loadBtn) {
-        loadBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          loadFromData(raw);
+      const saveBtn = slotEl.querySelector(`[data-save="${slot}"]`);
+      if (saveBtn) saveBtn.addEventListener("click", () => saveToSlot(slot));
+      const loadBtn = slotEl.querySelector(`[data-load="${slot}"]`);
+      if (loadBtn) loadBtn.addEventListener("click", () => loadSnapshot(snap));
+      const delBtn = slotEl.querySelector(`[data-del="${slot}"]`);
+      if (delBtn) {
+        delBtn.addEventListener("click", () => {
+          const all = getSaves();
+          delete all[slot];
+          localStorage.setItem("nsnn_saves_v1", JSON.stringify(all));
+          updateContinueBadge();
+          renderSavesModal();
         });
       }
-      container.appendChild(card);
+      savesModalBody.appendChild(slotEl);
     }
-    document.getElementById("saves-modal").classList.add("open");
+    bindUiSounds(savesModalBody);
   }
 
-  function showEndOfPartModal() {
-    const container = document.getElementById("chapters-modal-body");
-    openChaptersModal();
-    const banner = document.createElement("div");
-    banner.style.cssText = "padding: 16px; background: rgba(138, 196, 255, 0.14); border: 1px solid #8ac4ff; border-radius: 10px; margin-bottom: 8px;";
-    banner.innerHTML = `
-      <div style="font-weight:700; color:#fff; margin-bottom:6px;">Конец Первой части (Пролог: День 0 + Акт I: День 1)</div>
-      <div style="font-size:13.5px; color:#d9e7f7; line-height:1.5;">
-        Параметры вашего прохождения: Мираэль (${state.stats.aff_mirael}), Валерия (${state.stats.aff_valeria}), Лена (${state.stats.aff_lena}), Тая (${state.stats.aff_taya}), Внутренний взгляд (${state.stats.inner_sight}).
-      </div>
-    `;
-    container.prepend(banner);
+  function openSavesModal() {
+    renderSavesModal();
+    savesModal.classList.add("visible");
   }
 
-  // Event Bindings
-  document.getElementById("dialogue-wrapper").addEventListener("click", stepForward);
+  function openSettingsModal() {
+    applySettingsToDom();
+    settingsModal.classList.add("visible");
+  }
+
+  function openCreditsModal() {
+    creditsModal.classList.add("visible");
+  }
+
+  // =========================================================
+  // EVENT LISTENERS
+  // =========================================================
+  dialogueBox.addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;
+    stepForward();
+  });
+
   document.getElementById("btn-next").addEventListener("click", (e) => {
     e.stopPropagation();
     stepForward();
   });
+
   document.getElementById("btn-prev").addEventListener("click", (e) => {
     e.stopPropagation();
     stepBackward();
   });
 
-  document.getElementById("btn-chapters").addEventListener("click", (e) => {
-    e.stopPropagation();
-    openChaptersModal();
-  });
-  document.getElementById("btn-log").addEventListener("click", (e) => {
-    e.stopPropagation();
-    openLogModal();
-  });
-  document.getElementById("btn-saves").addEventListener("click", (e) => {
-    e.stopPropagation();
-    renderSavesModal();
-  });
-  document.getElementById("btn-menu").addEventListener("click", (e) => {
-    e.stopPropagation();
-    titleScreen.classList.remove("hidden");
-    playBgm("Golden Afternoon Light.mp3");
-  });
+  if (btnAuto) {
+    btnAuto.addEventListener("click", () => {
+      state.autoMode = !state.autoMode;
+      btnAuto.classList.toggle("active", state.autoMode);
+      if (state.autoMode && !state.isTyping) {
+        scheduleAutoAdvance();
+      } else if (!state.autoMode && state.autoTimer) {
+        clearTimeout(state.autoTimer);
+      }
+    });
+  }
+
+  document.getElementById("btn-chapters").addEventListener("click", openChaptersModal);
+  document.getElementById("btn-log").addEventListener("click", openLogModal);
+  document.getElementById("btn-saves").addEventListener("click", openSavesModal);
+  document.getElementById("btn-settings").addEventListener("click", openSettingsModal);
+  document.getElementById("btn-menu").addEventListener("click", openTitleScreen);
 
   document.getElementById("title-start-btn").addEventListener("click", () => {
     titleScreen.classList.add("hidden");
@@ -716,36 +1200,51 @@
   });
 
   document.getElementById("title-continue-btn").addEventListener("click", () => {
-    let saved = null;
-    try {
-      saved = JSON.parse(localStorage.getItem("vn_sky_autosave"));
-    } catch (_) {}
-    if (saved) {
-      loadFromData(saved);
-    } else {
-      titleScreen.classList.add("hidden");
-      loadChapter(0, 0);
+    const autoRaw = localStorage.getItem("nsnn_autosave_v1");
+    if (autoRaw) {
+      try {
+        loadSnapshot(JSON.parse(autoRaw));
+        return;
+      } catch (e) {}
     }
+    const saves = getSaves();
+    const firstKey = Object.keys(saves)[0];
+    if (firstKey && saves[firstKey]) {
+      loadSnapshot(saves[firstKey]);
+      return;
+    }
+    titleScreen.classList.add("hidden");
+    loadChapter(0, 0);
   });
 
-  document.getElementById("title-chapters-btn").addEventListener("click", () => {
-    openChaptersModal();
-  });
-
-  document.getElementById("title-saves-btn").addEventListener("click", () => {
-    renderSavesModal();
-  });
+  document.getElementById("title-saves-btn").addEventListener("click", openSavesModal);
+  document.getElementById("title-chapters-btn").addEventListener("click", openChaptersModal);
+  document.getElementById("title-settings-btn").addEventListener("click", openSettingsModal);
+  document.getElementById("title-credits-btn").addEventListener("click", openCreditsModal);
 
   document.querySelectorAll(".modal-close").forEach((btn) => {
-    btn.addEventListener("click", closeAllModals);
+    btn.addEventListener("click", () => {
+      btn.closest(".modal-backdrop").classList.remove("visible");
+    });
+  });
+
+  document.querySelectorAll(".modal-backdrop").forEach((backdrop) => {
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) backdrop.classList.remove("visible");
+    });
   });
 
   window.addEventListener("keydown", (e) => {
-    if (document.querySelector(".modal-backdrop.open")) {
-      if (e.key === "Escape") closeAllModals();
+    const anyModal = document.querySelector(".modal-backdrop.visible");
+    if (e.key === "Escape") {
+      if (anyModal) {
+        anyModal.classList.remove("visible");
+      } else if (titleScreen.classList.contains("hidden")) {
+        openSettingsModal();
+      }
       return;
     }
-    if (!titleScreen.classList.contains("hidden")) return;
+    if (anyModal) return;
     if (e.key === " " || e.key === "Enter" || e.key === "ArrowRight") {
       e.preventDefault();
       stepForward();
@@ -755,8 +1254,20 @@
     }
   });
 
-  window.addEventListener("DOMContentLoaded", () => {
-    bgmLabel.textContent = "Golden Afternoon Light";
-    state.currentBgm = "Golden Afternoon Light.mp3";
-  });
+  // =========================================================
+  // INITIALIZATION
+  // =========================================================
+  function init() {
+    initSettingsControls();
+    bindUiSounds(document);
+    updateContinueBadge();
+    if (window.VN_CHAPTERS && window.VN_CHAPTERS.length > 0) {
+      setBackground(window.VN_CHAPTERS[0].bg);
+      preloadChapterAssets(window.VN_CHAPTERS[0]);
+    }
+    // Start menu music immediately
+    playBgm("Golden Afternoon Light.mp3");
+  }
+
+  init();
 })();
