@@ -65,7 +65,7 @@
       fallback: "neutral"
     },
     lena: {
-      emotions: set(C + "lena_{e}.png", ["happy", "neutral", "sad", "snide", "tired", "angry", "surprised", "thoughtful", "coffee", "shy"]),
+      emotions: set(C + "lena/transparent/lena_{e}.png", ["happy", "neutral", "sad", "snide", "tired", "angry", "surprised", "thoughtful", "coffee", "shy"]),
       aliases: {},
       fallback: "tired"
     },

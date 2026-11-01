@@ -128,8 +128,9 @@
 | Саша: shy, shocked_terrified, куртка ×7 (shocked*, surprised*), courier_rain | ✅ 01.11 — **Саша закрыт целиком, 20/20** |
 | Мираэль: ангел ×8, человек ×8 (`--neutral-despill`) | ✅ 01.11 — у крыльев вернулись перья, открыты просветы между прядями |
 | Валерия, истинный облик ×9 (`--neutral-despill`) | ✅ 01.11 |
-| Валерия, human: neutral, amused, angry, cold_serious, contract | ✅ 01.11 (amused: генератор затемнил кожу, цвет внутри фигуры перенесён из оригинала, маска и края от зелёной версии) |
-| Валерия, human: playful_smile, soft_vulnerable, surprised, thoughtful | ⏳ |
-| Лена ×10, Ника ×8, Дмитрий ×5 | ⏳ |
+| Валерия, human ×9 | ✅ 01.11 (amused перегенерирован с требованием светлой кожи; soft_vulnerable: прядь за пальцами восстановлена по оригиналу) |
+| Лена: angry, coffee, happy, neutral, sad → `lena/transparent/` | ✅ 01.11 (вход — RGBA из корня на белом, большие уменьшены до 896×1200) |
+| Лена: snide, tired, surprised, thoughtful, shy | ⏳ (пока в `lena/transparent/` лежат старые копии из корня) |
+| Ника ×8, Дмитрий ×5 | ⏳ |
 | Тая | ждём новый дефолтный спрайт от автора |
 
