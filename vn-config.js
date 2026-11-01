@@ -107,7 +107,11 @@
     "Бариста": { cls: "minor", char: null },
     "Клиент": { cls: "minor", char: null },
     "Клиентка": { cls: "minor", char: null },
-    "Голос": { cls: "minor", char: null }
+    "Голос": { cls: "minor", char: null },
+    "Мама": { cls: "minor", char: null },
+    "Тамара": { cls: "minor", char: null },
+    "Ковалёвский": { cls: "minor", char: null },
+    "Рыбак": { cls: "minor", char: null }
   };
 
   const WEATHER = ["none", "rain"];

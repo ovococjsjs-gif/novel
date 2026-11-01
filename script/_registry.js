@@ -22,6 +22,7 @@ window.VN_VARS = {
   // --- Факты Недели 1, на которые ссылается текст ---
   raincoat_packed: { type: "flag", default: false, desc: "Пролог: взял жёлтый дождевик (иначе Лена выдаст запасной из депо)" },
   dasha_honest: { type: "flag", default: false, desc: "Пролог: честно признался Даше, что забыл про платье" },
+  rude_complaint: { type: "flag", default: false, desc: "Пролог: отшутился с хамом-клиентом (жалоба доходит до Дмитрия)" },
   saw_taya_d0: { type: "flag", default: false, desc: "Пролог: заметил янтарный свет мастерской" },
   mirael_phone: { type: "flag", default: false, desc: "День 2: оставил Мираэль старый кнопочный телефон" },
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },
