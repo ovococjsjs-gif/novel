@@ -1,0 +1,128 @@
+// Общая конфигурация движка: персонажи, спрайты, допустимые значения полей.
+// Подключается и в браузере (window.VNConfig), и в Node (tools/validate.js).
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  else root.VNConfig = api;
+})(typeof self !== "undefined" ? self : this, function () {
+  const C = "assets/characters/";
+
+  function set(dirPattern, emotions) {
+    const out = {};
+    emotions.forEach((e) => (out[e] = dirPattern.replace("{e}", e)));
+    return out;
+  }
+
+  // Каждый набор спрайтов: emotions — файл на каждую эмоцию,
+  // aliases — допустимые синонимы, fallback — что показать, если эмоции нет (валидатор предупредит).
+  const SPRITES = {
+    alexander: {
+      emotions: Object.assign(
+        set(C + "alexander/transparent/alexander_{e}.png", ["neutral", "smile", "stressed", "surprised", "thoughtful", "wounded"]),
+        set(C + "alexander/transparent/alexandr_{e}.png", ["determined_anger", "happy", "sad", "shocked", "shocked_terrified", "shy"])
+      ),
+      aliases: { serious: "determined_anger" },
+      fallback: "neutral"
+    },
+    alexander_jacket: {
+      emotions: Object.assign(
+        set(C + "alexander/transparent/alexander_jacket_{e}.png", ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked", "wounded"]),
+        { rain: C + "alexander/transparent/alexander_courier_rain.png" }
+      ),
+      aliases: {
+        courier_rain: "rain",
+        happy: "smile",
+        sad: "thoughtful",
+        stressed: "thoughtful",
+        determined_anger: "shocked",
+        shocked_terrified: "shocked"
+      },
+      fallback: "neutral"
+    },
+    mirael_angel: {
+      emotions: set(C + "mirael/transparent/mirael_angel_{e}.png", ["neutral", "happy", "sad", "shy", "surprised", "crying", "determined_anger", "shocked_terrified"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    mirael_human: {
+      emotions: set(C + "mirael/transparent/mirael_human_{e}.png", ["neutral", "happy", "sad", "shy", "surprised", "crying", "determined_anger", "shocked_terrified"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    valeria: {
+      emotions: set(C + "valeria/transparent/valeria_{e}.png", ["neutral", "amused", "angry", "cold_serious", "contract", "playful_smile", "soft_vulnerable", "surprised", "thoughtful"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    valeria_human: {
+      emotions: set(C + "valeria/transparent/valeria_human_{e}.png", ["neutral", "amused", "angry", "cold_serious", "contract", "playful_smile", "soft_vulnerable", "surprised", "thoughtful"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    nika: {
+      emotions: set(C + "nika_{e}.png", ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    lena: {
+      emotions: set(C + "lena_{e}.png", ["happy", "neutral", "sad", "snide", "tired", "angry", "surprised", "thoughtful", "coffee", "shy"]),
+      aliases: {},
+      fallback: "tired"
+    },
+    artem: {
+      emotions: set(C + "artem_shank_{e}.png", ["empty", "happy", "neutral", "sad"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    dmitry: {
+      emotions: set(C + "dmitry_{e}.png", ["neutral", "serious"]),
+      aliases: {},
+      fallback: "neutral"
+    },
+    taya: {
+      emotions: set(C + "taya/transparent/taya_{e}.png", ["neutral", "sad_compassion", "serious", "surprised", "thoughtful", "warm_smile"]),
+      aliases: {},
+      fallback: "neutral"
+    }
+  };
+
+  // Имя в окне реплики → css-класс цвета и группа спрайтов (для затемнения неговорящих).
+  const SPEAKERS = {
+    "Рассказчик": { cls: "narrator", char: null },
+    "Александр": { cls: "alexander", char: "alexander" },
+    "Мираэль": { cls: "mirael", char: "mirael" },
+    "Незнакомка": { cls: "mirael", char: "mirael" },
+    "Валерия": { cls: "valeria", char: "valeria" },
+    "Ника": { cls: "nika", char: "nika" },
+    "Лена": { cls: "lena", char: "lena" },
+    "Артём": { cls: "artem", char: "artem" },
+    "Дмитрий": { cls: "dmitry", char: "dmitry" },
+    "Тая": { cls: "taya", char: "taya" }
+  };
+
+  const WEATHER = ["none", "rain"];
+  const CAMERA = ["none", "normal", "ride", "shake"];
+  const EFFECTS = ["flash"];
+
+  const BG_DIR = "assets/backgrounds/";
+
+  // Разрешение эмоции: точное имя → синоним → fallback. Возвращает {path, exact}.
+  function resolveSprite(char, emotion) {
+    const def = SPRITES[char];
+    if (!def) return { path: "", exact: false };
+    const emo = emotion || "neutral";
+    if (def.emotions[emo]) return { path: def.emotions[emo], exact: true };
+    const alias = def.aliases[emo];
+    if (alias && def.emotions[alias]) return { path: def.emotions[alias], exact: true };
+    return { path: def.emotions[def.fallback], exact: false };
+  }
+
+  // Короткая запись фона: "bg_taya_workshop" → полный путь.
+  function resolveBg(bg) {
+    if (!bg) return "";
+    if (bg.includes("/")) return bg;
+    return BG_DIR + (bg.endsWith(".png") || bg.endsWith(".webp") || bg.endsWith(".jpg") ? bg : bg + ".png");
+  }
+
+  return { SPRITES, SPEAKERS, WEATHER, CAMERA, EFFECTS, BG_DIR, resolveSprite, resolveBg };
+});

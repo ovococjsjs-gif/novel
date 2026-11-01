@@ -1210,3 +1210,38 @@ html, body {
     padding: 22px 20px 18px;
   }
 }
+
+/* ===== Конец части / концовки ===== */
+.end-summary {
+  color: var(--text-main);
+  font-family: var(--font-serif);
+  line-height: 1.65;
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+.end-summary p + p { margin-top: 10px; }
+.end-summary .end-stats { color: var(--accent-gold); font-size: 13px; font-family: monospace; }
+
+/* ===== Закрытые эпизоды ===== */
+.chapter-card.locked { opacity: 0.45; cursor: default; pointer-events: none; }
+
+/* ===== Dev-режим (?dev=1) ===== */
+#dev-panel {
+  position: fixed;
+  left: 8px;
+  top: 64px;
+  z-index: 9999;
+  max-width: 46vw;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #9fe89f;
+  font: 11px/1.45 monospace;
+  border: 1px solid rgba(159, 232, 159, 0.35);
+  border-radius: 4px;
+  pointer-events: auto;
+}
+#dev-panel b { color: #fff; }
+#dev-panel .dev-changed { color: #ffd36b; }
+#dev-panel .dev-actions { margin-top: 4px; }
+#dev-panel button { font: inherit; background: #222; color: #ccc; border: 1px solid #555; cursor: pointer; padding: 1px 6px; }
+.dev-choice-fx { display: block; margin-top: 4px; font: 11px monospace; color: #9fe89f; opacity: 0.85; }

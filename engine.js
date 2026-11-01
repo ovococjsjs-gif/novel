@@ -1,76 +1,25 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261031_19";
+  const ASSET_VER = "20261101_02";
 
   function withVer(url) {
     if (!url) return "";
     return url.includes("?") ? `${url}&v=${ASSET_VER}` : `${url}?v=${ASSET_VER}`;
   }
 
-  const SPRITE_MAP = {
-    alexander: (emo) => {
-      const alexandrEmos = ["determined_anger", "happy", "sad", "shocked", "shocked_terrified", "shy"];
-      if (emo === "serious") return withVer("assets/characters/alexander/transparent/alexandr_determined_anger.png");
-      if (alexandrEmos.includes(emo)) {
-        return withVer(`assets/characters/alexander/transparent/alexandr_${emo}.png`);
-      }
-      const valid = ["neutral", "smile", "stressed", "surprised", "thoughtful", "wounded", "courier_rain"];
-      const mapped = valid.includes(emo) ? emo : "neutral";
-      return withVer(`assets/characters/alexander/transparent/alexander_${mapped}.png`);
-    },
-    alexander_jacket: (emo) => {
-      if (emo === "rain" || emo === "courier_rain") {
-        return withVer("assets/characters/alexander/transparent/alexander_courier_rain.png");
-      }
-      if (emo === "wounded") {
-        return withVer("assets/characters/alexander/transparent/alexander_jacket_wounded.png");
-      }
-      if (emo === "happy") emo = "smile";
-      if (emo === "sad" || emo === "stressed") emo = "thoughtful";
-      if (emo === "determined_anger" || emo === "shocked_terrified") emo = "shocked";
-      const valid = ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked"];
-      const mapped = valid.includes(emo) ? emo : "neutral";
-      return withVer(`assets/characters/alexander/transparent/alexander_jacket_${mapped}.png`);
-    },
-    mirael_angel: (emo) => withVer(`assets/characters/mirael/transparent/mirael_angel_${emo || "neutral"}.png`),
-    mirael_human: (emo) => withVer(`assets/characters/mirael/transparent/mirael_human_${emo || "neutral"}.png`),
-    valeria: (emo) => withVer(`assets/characters/valeria/transparent/valeria_${emo || "neutral"}.png`),
-    valeria_human: (emo) => withVer(`assets/characters/valeria/transparent/valeria_human_${emo || "neutral"}.png`),
-    nika: (emo) => {
-      const valid = ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"];
-      const mapped = valid.includes(emo) ? emo : "happy";
-      return withVer(`assets/characters/nika_${mapped}.png`);
-    },
-    lena: (emo) => {
-      const valid = ["happy", "neutral", "sad", "snide", "tired", "angry", "surprised", "thoughtful", "coffee", "shy"];
-      const mapped = valid.includes(emo) ? emo : "tired";
-      return withVer(`assets/characters/lena_${mapped}.png`);
-    },
-    artem: (emo) => {
-      const valid = ["empty", "happy", "neutral", "sad"];
-      const mapped = valid.includes(emo) ? emo : "neutral";
-      return withVer(`assets/characters/artem_shank_${mapped}.png`);
-    },
-    dmitry: (emo) => {
-      const valid = ["neutral", "serious"];
-      const mapped = valid.includes(emo) ? emo : "neutral";
-      return withVer(`assets/characters/dmitry_${mapped}.png`);
-    },
-    taya: (emo) => withVer(`assets/characters/taya/transparent/taya_${emo || "neutral"}.png`)
-  };
+  const Core = window.VNCore;
+  const Cfg = window.VNConfig;
+  const DEV = /[?&]dev=1(?:&|$)/.test(location.search);
+  const META_KEY = "nsnn_meta_v1";
+  const AUTO_KEY = "nsnn_autosave_v2";
+  const SLOTS_KEY = "nsnn_saves_v2";
+  const HISTORY_LIMIT = 300;
 
-  const SPEAKER_CLASS = {
-    "Рассказчик": "narrator",
-    "Александр": "alexander",
-    "Мираэль": "mirael",
-    "Незнакомка": "mirael",
-    "Валерия": "valeria",
-    "Ника": "nika",
-    "Лена": "lena",
-    "Артём": "artem",
-    "Дмитрий": "dmitry",
-    "Тая": "taya"
-  };
+  function spriteSrc(char, emotion) {
+    const r = Cfg.resolveSprite(char, emotion);
+    if (!r.exact && DEV) console.warn(`[VN] нет спрайта ${char}:${emotion}, показан запасной`);
+    return r.path ? withVer(r.path) : "";
+  }
 
   const DEFAULT_SETTINGS = {
     bgmVolume: 0.5,
@@ -88,23 +37,16 @@
   } catch (e) {}
 
   const state = {
-    chapterIndex: 0,
-    nodeIndex: 0,
-    runtimeNodes: [],
+    chapterId: null,
+    pc: 0,
+    vars: {},
+    choicesMade: {},
+    history: [],
     activeSprites: { left: null, center: null, right: null },
     currentBg: "",
     currentBgm: "",
     weather: "none",
     camera: "none",
-    stats: {
-      aff_mirael: 0,
-      aff_valeria: 0,
-      aff_lena: 0,
-      aff_taya: 0,
-      inner_sight: 0,
-      glitch_count: 0
-    },
-    choicesMade: {},
     backlog: [],
     isTyping: false,
     fullText: "",
@@ -187,33 +129,21 @@
     preloadQueue.length = 0;
     if (preloadTimer) clearTimeout(preloadTimer);
 
-    if (ch.bg) preloadImage(withVer(ch.bg));
+    if (ch.bg) preloadImage(withVer(Cfg.resolveBg(ch.bg)));
     function preloadSpriteObj(sp) {
       if (!sp || typeof sp !== "object") return;
-      if (sp.char) {
-        const resolver = SPRITE_MAP[sp.char];
-        if (resolver) preloadImage(resolver(sp.emotion));
-      }
+      if (sp.char) preloadImage(spriteSrc(sp.char, sp.emotion));
       ["left", "center", "right"].forEach((k) => {
-        if (sp[k] && sp[k].char) {
-          const resolver = SPRITE_MAP[sp[k].char];
-          if (resolver) preloadImage(resolver(sp[k].emotion));
-        }
+        if (sp[k] && sp[k].char) preloadImage(spriteSrc(sp[k].char, sp[k].emotion));
       });
     }
-    function scan(nodes) {
-      (nodes || []).forEach((n) => {
-        if (n.bg) preloadImage(withVer(n.bg));
-        if (n.sprite) preloadSpriteObj(n.sprite);
-        if (n.choice && n.choice.options) {
-          n.choice.options.forEach((o) => {
-            const branch = o.next || o.nodes;
-            if (branch) scan(branch);
-          });
-        }
-      });
-    }
-    scan(ch.nodes);
+    const comp = compiled(ch.id);
+    (comp ? comp.code : []).forEach((ins) => {
+      const n = ins.node || ins.env;
+      if (!n) return;
+      if (n.bg) preloadImage(withVer(Cfg.resolveBg(n.bg)));
+      if (n.sprite) preloadSpriteObj(n.sprite);
+    });
     // Start sequential background preloading after active BGM & first-frame sprites have loaded
     preloadTimer = setTimeout(pumpPreloadQueue, 700);
   }
@@ -675,6 +605,7 @@
   // STAGE: BACKGROUNDS, WEATHER, CAMERA & SPRITES
   // =========================================================
   function setBackground(bgPath) {
+    bgPath = Cfg.resolveBg(bgPath);
     if (!bgPath || state.currentBg === bgPath) return;
     state.currentBg = bgPath;
     bgLayer.style.backgroundImage = `url('${withVer(bgPath)}')`;
@@ -768,17 +699,7 @@
     }
 
     const slotMap = { left: slotLeft, center: slotCenter, right: slotRight };
-    const speakerCharKey = {
-      "Александр": "alexander",
-      "Мираэль": "mirael",
-      "Незнакомка": "mirael",
-      "Валерия": "valeria",
-      "Ника": "nika",
-      "Лена": "lena",
-      "Артём": "artem",
-      "Дмитрий": "dmitry",
-      "Тая": "taya"
-    }[speakerName];
+    const speakerCharKey = speakerName ? (Cfg.SPEAKERS[speakerName] || {}).char : null;
 
     ["left", "center", "right"].forEach((pos) => {
       const el = slotMap[pos];
@@ -790,8 +711,7 @@
         return;
       }
       el.dataset.charGroup = info.char.split("_")[0];
-      const resolver = SPRITE_MAP[info.char];
-      const src = resolver ? resolver(info.emotion) : "";
+      const src = spriteSrc(info.char, info.emotion);
       let img = el.querySelector("img");
       if (!img) {
         img = document.createElement("img");
@@ -834,43 +754,296 @@
   }
 
   // =========================================================
-  // CHAPTER & NODE EXECUTION + AUTO-ADVANCE
+  // SCRIPT RUNTIME
+  // Глава компилируется в плоский список инструкций (vn-core.js).
+  // Позиция игрока = (chapterId, pc). «Назад» и сохранения работают
+  // через снимки состояния (frames), которые кладутся перед каждой репликой и выбором.
   // =========================================================
-  function resolveNodeEnvironment(ch, nodes, upToIndex) {
-    let bg = ch.bg;
-    let bgm = ch.bgm;
-    let weather = ch.weather || "none";
-    let camera = ch.camera || "none";
-    const limit = Math.min(upToIndex, (nodes || []).length - 1);
-    for (let i = 0; i <= limit; i++) {
-      const n = nodes[i];
-      if (!n) continue;
-      if (n.bg) bg = n.bg;
-      if (n.bgm) bgm = n.bgm;
-      if (n.weather) weather = n.weather;
-      if (n.camera) camera = n.camera;
+  const compiledCache = {};
+
+  function allChapters() {
+    return window.VN_CHAPTERS || [];
+  }
+  function chapterById(id) {
+    return allChapters().find((c) => c.id === id) || null;
+  }
+  function chapterIndexById(id) {
+    return allChapters().findIndex((c) => c.id === id);
+  }
+  function compiled(id) {
+    if (!compiledCache[id]) {
+      const ch = chapterById(id);
+      if (!ch) return null;
+      const c = Core.compileChapter(ch);
+      if (c.problems.length) console.warn(`[VN] ${id}: проблемы компиляции`, c.problems);
+      compiledCache[id] = c;
     }
-    return { bg, bgm, weather, camera };
+    return compiledCache[id];
   }
 
-  function loadChapter(index, startNode = 0) {
-    const chapters = window.VN_CHAPTERS || [];
-    if (index < 0 || index >= chapters.length) return;
-    state.chapterIndex = index;
-    state.nodeIndex = startNode;
-    const ch = chapters[index];
-    state.runtimeNodes = JSON.parse(JSON.stringify(ch.nodes));
+  function defaultVars() {
+    const out = {};
+    const reg = window.VN_VARS || {};
+    Object.keys(reg).forEach((k) => {
+      out[k] = reg[k].default !== undefined ? reg[k].default : 0;
+    });
+    return out;
+  }
+
+  // ---------- Мета-прогресс (между прохождениями) ----------
+  function loadMeta() {
+    const empty = { endings: {}, flags: {}, seen: {} };
+    try {
+      return Object.assign(empty, JSON.parse(localStorage.getItem(META_KEY) || "{}"));
+    } catch (e) {
+      return empty;
+    }
+  }
+  let meta = loadMeta();
+  function saveMeta() {
+    try {
+      localStorage.setItem(META_KEY, JSON.stringify(meta));
+    } catch (e) {}
+  }
+
+  const warnedVars = new Set();
+  function getVar(name) {
+    if (name.startsWith("meta.")) {
+      const k = name.slice(5);
+      return meta.flags[k] || (meta.endings[k] ? 1 : 0);
+    }
+    if (name.startsWith("thr.")) {
+      return (window.VN_THRESHOLDS || {})[name.slice(4)] || 0;
+    }
+    if (DEV && !(name in (window.VN_VARS || {})) && !warnedVars.has(name)) {
+      warnedVars.add(name);
+      console.warn(`[VN] переменная «${name}» не описана в script/_registry.js`);
+    }
+    return state.vars[name];
+  }
+
+  function checkCond(cond, where) {
+    try {
+      return Core.evalCond(cond, getVar);
+    } catch (e) {
+      console.error(`[VN] ошибка условия (${where}):`, e.message);
+      return false;
+    }
+  }
+
+  function applyEffects(effects, set) {
+    if (effects) {
+      Object.entries(effects).forEach(([k, v]) => {
+        state.vars[k] = (Number(state.vars[k]) || 0) + Number(v);
+      });
+    }
+    if (set) {
+      Object.entries(set).forEach(([k, v]) => {
+        state.vars[k] = v;
+      });
+    }
+  }
+
+  // ---------- Снимки состояния ----------
+  function captureFrame() {
+    return {
+      chapterId: state.chapterId,
+      pc: state.pc,
+      vars: Object.assign({}, state.vars),
+      choicesMade: Object.assign({}, state.choicesMade),
+      env: { bg: state.currentBg, bgm: state.currentBgm, weather: state.weather, camera: state.camera },
+      sprites: JSON.parse(JSON.stringify(state.activeSprites)),
+      backlogLen: state.backlog.length
+    };
+  }
+
+  function pushHistory() {
+    state.history.push(captureFrame());
+    if (state.history.length > HISTORY_LIMIT) state.history.shift();
+  }
+
+  function setHud(ch) {
+    hudDay.textContent = ch.day || "";
+    hudTitle.textContent = ch.title || "";
+  }
+
+  function restoreFrame(f) {
+    const ch = chapterById(f.chapterId);
+    if (!ch) return false;
+    state.chapterId = f.chapterId;
+    state.pc = f.pc;
+    state.vars = Object.assign(defaultVars(), f.vars || {});
+    state.choicesMade = Object.assign({}, f.choicesMade || {});
+    const env = f.env || {};
+    setBackground(env.bg || Cfg.resolveBg(ch.bg));
+    setWeather(env.weather || "none");
+    setCamera(env.camera || "none");
+    playBgm(env.bgm || ch.bgm);
+    state.activeSprites = JSON.parse(JSON.stringify(f.sprites || { left: null, center: null, right: null }));
+    updateSprites(undefined, null);
+    if (typeof f.backlogLen === "number" && state.backlog.length > f.backlogLen) {
+      state.backlog.length = Math.max(0, f.backlogLen);
+    }
+    setHud(ch);
+    return true;
+  }
+
+  function resetRun(vars, choicesMade) {
+    state.vars = Object.assign(defaultVars(), vars || {});
+    state.choicesMade = Object.assign({}, choicesMade || {});
+    state.history = [];
+    state.backlog = [];
+    choiceOverlay.classList.remove("visible");
     clearSprites();
-    const env = resolveNodeEnvironment(ch, state.runtimeNodes, startNode);
-    setBackground(env.bg);
-    setWeather(env.weather);
-    setCamera(env.camera);
-    playBgm(env.bgm);
-    hudDay.textContent = ch.day;
-    hudTitle.textContent = ch.title;
-    renderCurrentNode();
-    saveAuto();
+  }
+
+  // ---------- Исполнение ----------
+  function applyEnv(n) {
+    if (n.bg) setBackground(Cfg.resolveBg(n.bg));
+    if (n.bgm) playBgm(n.bgm);
+    if (n.weather) setWeather(n.weather);
+    if (n.camera) setCamera(n.camera);
+    if (n.effect === "flash") triggerFlash();
+  }
+
+  function enterChapter(id, pc = 0) {
+    const ch = chapterById(id);
+    if (!ch) {
+      console.error(`[VN] нет главы «${id}»`);
+      showEndOfPartModal();
+      return;
+    }
+    state.chapterId = id;
+    state.pc = pc;
+    if (pc === 0) {
+      clearSprites();
+      setBackground(Cfg.resolveBg(ch.bg));
+      setWeather(ch.weather || "none");
+      setCamera(ch.camera || "none");
+      playBgm(ch.bgm);
+      meta.seen[id] = {
+        vars: Object.assign({}, state.vars),
+        choicesMade: Object.assign({}, state.choicesMade),
+        at: Date.now()
+      };
+      saveMeta();
+    }
+    setHud(ch);
     preloadChapterAssets(ch);
+    run();
+  }
+
+  function resolveJump(to) {
+    let chId = state.chapterId;
+    let label = to;
+    if (to.includes("#")) {
+      [chId, label] = to.split("#");
+      if (!chId) chId = state.chapterId;
+    } else {
+      const here = compiled(state.chapterId);
+      if (here && here.labels[to] !== undefined) return { chapterId: state.chapterId, pc: here.labels[to] };
+      if (chapterById(to)) return { chapterId: to, pc: 0 };
+      return null;
+    }
+    const comp = compiled(chId);
+    if (!comp) return null;
+    if (!label) return { chapterId: chId, pc: 0 };
+    if (comp.labels[label] === undefined) return null;
+    return { chapterId: chId, pc: comp.labels[label] };
+  }
+
+  function run() {
+    let guard = 0;
+    for (;;) {
+      if (++guard > 10000) {
+        console.error(`[VN] бесконечный цикл в ${state.chapterId} около pc=${state.pc}`);
+        return;
+      }
+      const comp = compiled(state.chapterId);
+      if (!comp) return;
+      if (state.pc >= comp.code.length) {
+        const ch = chapterById(state.chapterId);
+        const nextId = Core.resolveChapterNext(ch, allChapters(), getVar);
+        if (nextId) enterChapter(nextId);
+        else {
+          pushHistory();
+          showEndOfPartModal();
+        }
+        return;
+      }
+      const ins = comp.code[state.pc];
+      switch (ins.op) {
+        case "set":
+          applyEffects(ins.effects, ins.set);
+          state.pc += 1;
+          break;
+        case "branch":
+          state.pc = checkCond(ins.cond, `${state.chapterId} ${ins.path}`) ? state.pc + 1 : ins.target;
+          break;
+        case "goto":
+          state.pc = ins.target;
+          break;
+        case "jump": {
+          const r = resolveJump(ins.to);
+          if (!r) {
+            console.error(`[VN] переход «${ins.to}» не найден (${state.chapterId} ${ins.path})`);
+            state.pc += 1;
+            break;
+          }
+          if (r.chapterId !== state.chapterId) {
+            enterChapter(r.chapterId, r.pc);
+            return;
+          }
+          state.pc = r.pc;
+          break;
+        }
+        case "env":
+          applyEnv(ins.node);
+          if (ins.node.sprite !== undefined) updateSprites(ins.node.sprite, null);
+          state.pc += 1;
+          break;
+        case "say":
+          pushHistory();
+          renderSay(ins.node, comp);
+          return;
+        case "choice":
+          pushHistory();
+          if (ins.env) {
+            applyEnv(ins.env);
+            if (ins.env.sprite !== undefined) updateSprites(ins.env.sprite, null);
+          }
+          showChoice(ins);
+          return;
+        case "ending":
+          pushHistory();
+          showEnding(ins.ending);
+          return;
+        default:
+          state.pc += 1;
+      }
+    }
+  }
+
+  function updateProgress(comp) {
+    const idx = chapterIndexById(state.chapterId);
+    const total = allChapters().length;
+    const pct = comp && comp.code.length ? Math.round((state.pc / comp.code.length) * 100) : 0;
+    progressLabel.textContent = `Эпизод ${idx + 1}/${total} · ${pct}%`;
+  }
+
+  function renderSay(node, comp) {
+    choiceOverlay.classList.remove("visible");
+    applyEnv(node);
+    const speaker = node.speaker || "Рассказчик";
+    const spCls = (Cfg.SPEAKERS[speaker] || {}).cls || "narrator";
+    speakerTag.textContent = node.thought ? `${speaker} (мысли)` : speaker;
+    speakerTag.className = spCls;
+    updateSprites(node.sprite, speaker);
+    typeText(node.text || "", !!node.thought, speaker);
+    updateProgress(comp);
+    state.backlog.push({ speaker: node.thought ? `${speaker} (мысли)` : speaker, text: node.text || "" });
+    updateDevPanel();
+    saveAuto();
   }
 
   function scheduleAutoAdvance() {
@@ -894,12 +1067,8 @@
     if (state.typeTimer) clearInterval(state.typeTimer);
     if (state.autoTimer) clearTimeout(state.autoTimer);
 
-    const spClass = SPEAKER_CLASS[speaker] || "narrator";
-    if (isThought) {
-      dialogueText.className = "voice-thought";
-    } else {
-      dialogueText.className = `voice-${spClass}`;
-    }
+    const spClass = (Cfg.SPEAKERS[speaker] || {}).cls || "narrator";
+    dialogueText.className = isThought ? "voice-thought" : `voice-${spClass}`;
 
     const formatted = isThought ? `«${text}»` : speaker === "Рассказчик" ? text : `— ${text}`;
     state.fullText = formatted;
@@ -938,84 +1107,53 @@
     scheduleAutoAdvance();
   }
 
-  function renderCurrentNode() {
-    const nodes = state.runtimeNodes;
-    if (state.nodeIndex >= nodes.length) {
-      if (state.chapterIndex + 1 < window.VN_CHAPTERS.length) {
-        loadChapter(state.chapterIndex + 1, 0);
-      } else {
-        showEndOfPartModal();
-      }
-      return;
-    }
-
-    const node = nodes[state.nodeIndex];
-    if (node.bg) setBackground(node.bg);
-    if (node.bgm) playBgm(node.bgm);
-    if (node.weather) setWeather(node.weather);
-    if (node.camera) setCamera(node.camera);
-    if (node.effect === "flash") triggerFlash();
-
-    if (node.choice) {
-      showChoice(node.choice);
-      return;
-    }
-
-    choiceOverlay.classList.remove("visible");
-
-    const speaker = node.speaker || "Рассказчик";
-    speakerTag.textContent = node.thought ? `${speaker} (мысли)` : speaker;
-    speakerTag.className = SPEAKER_CLASS[speaker] || "narrator";
-
-    updateSprites(node.sprite, speaker);
-    typeText(node.text || "", !!node.thought, speaker);
-
-    progressLabel.textContent = `Эпизод ${state.chapterIndex + 1}/${window.VN_CHAPTERS.length} · Сцена ${state.nodeIndex + 1}/${nodes.length}`;
-
-    const lastLog = state.backlog[state.backlog.length - 1];
-    if (!lastLog || lastLog.text !== node.text) {
-      state.backlog.push({
-        speaker: node.thought ? `${speaker} (мысли)` : speaker,
-        text: node.text
-      });
-      if (state.backlog.length > 180) state.backlog.shift();
-    }
-    saveAuto();
+  function describeEffects(o) {
+    const parts = [];
+    if (o.effects) Object.entries(o.effects).forEach(([k, v]) => parts.push(`${k} ${v > 0 ? "+" : ""}${v}`));
+    if (o.set) Object.entries(o.set).forEach(([k, v]) => parts.push(`${k} = ${v}`));
+    if (o.if !== undefined) parts.push(`если ${typeof o.if === "string" ? o.if : JSON.stringify(o.if)}`);
+    return parts.join(", ");
   }
 
-  function showChoice(choiceObj) {
-    choicePrompt.textContent = choiceObj.prompt || "Сделайте выбор:";
+  function showChoice(ins) {
+    choicePrompt.textContent = ins.choice.prompt || "Что сделать?";
     choiceList.innerHTML = "";
-    choiceObj.options.forEach((opt, idx) => {
+    let shown = ins.options
+      .map((o, idx) => ({ o, idx }))
+      .filter(({ o }) => o.if === undefined || checkCond(o.if, `${state.chapterId} ${ins.path}`));
+    if (!shown.length) {
+      console.error(`[VN] у выбора ${ins.choice.id} не осталось доступных вариантов — показываю все`);
+      shown = ins.options.map((o, idx) => ({ o, idx }));
+    }
+    shown.forEach(({ o, idx }, n) => {
       const btn = document.createElement("button");
       btn.className = "choice-option-btn";
-      btn.textContent = `${idx + 1}. ${opt.label}`;
+      btn.textContent = `${n + 1}. ${o.label}`;
+      btn.dataset.choiceKey = String(n + 1);
+      if (DEV) {
+        const fx = describeEffects(o);
+        if (fx) {
+          const small = document.createElement("span");
+          small.className = "dev-choice-fx";
+          small.textContent = fx;
+          btn.appendChild(small);
+        }
+      }
       btn.addEventListener("mouseenter", () => playUiSound("hover"));
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
         playUiSound("click");
-        if (opt.effects) {
-          Object.entries(opt.effects).forEach(([k, v]) => {
-            state.stats[k] = (state.stats[k] || 0) + v;
-          });
-        }
-        state.choicesMade[choiceObj.id] = idx;
+        applyEffects(o.effects, o.set);
+        if (ins.choice.id) state.choicesMade[ins.choice.id] = idx;
         choiceOverlay.classList.remove("visible");
-        const branchNodes = Array.isArray(opt.next)
-          ? opt.next
-          : Array.isArray(opt.nodes)
-          ? opt.nodes
-          : null;
-        if (branchNodes && branchNodes.length > 0) {
-          state.runtimeNodes.splice(state.nodeIndex, 1, ...branchNodes);
-        } else {
-          state.nodeIndex += 1;
-        }
-        renderCurrentNode();
+        state.pc = o.target;
+        run();
       });
       choiceList.appendChild(btn);
     });
     choiceOverlay.classList.add("visible");
+    updateDevPanel();
+    saveAuto();
   }
 
   function stepForward() {
@@ -1025,64 +1163,91 @@
       finishTyping();
       return;
     }
-    state.nodeIndex += 1;
-    renderCurrentNode();
+    const comp = compiled(state.chapterId);
+    const ins = comp && comp.code[state.pc];
+    if (!ins || ins.op !== "say") return;
+    state.pc += 1;
+    run();
   }
 
   function stepBackward() {
-    if (choiceOverlay.classList.contains("visible")) return;
     if (!titleScreen.classList.contains("hidden")) return;
     if (state.isTyping) {
       finishTyping();
       return;
     }
-    if (state.nodeIndex > 0) {
-      state.nodeIndex -= 1;
-      const ch = window.VN_CHAPTERS[state.chapterIndex] || {};
-      const env = resolveNodeEnvironment(ch, state.runtimeNodes, state.nodeIndex);
-      setBackground(env.bg);
-      setWeather(env.weather);
-      setCamera(env.camera);
-      playBgm(env.bgm);
-      renderCurrentNode();
-    } else if (state.chapterIndex > 0) {
-      const prevCh = window.VN_CHAPTERS[state.chapterIndex - 1];
-      loadChapter(state.chapterIndex - 1, Math.max(0, prevCh.nodes.length - 1));
+    if (state.history.length < 2) return;
+    state.history.pop();
+    const prev = state.history.pop();
+    choiceOverlay.classList.remove("visible");
+    if (restoreFrame(prev)) run();
+  }
+
+  function overlayButton(label, onClick) {
+    const b = document.createElement("button");
+    b.className = "choice-option-btn";
+    b.textContent = label;
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      choiceOverlay.classList.remove("visible");
+      onClick();
+    });
+    return b;
+  }
+
+  function statsLine() {
+    const v = state.vars;
+    return `Мираэль ${v.aff_mirael} · Валерия ${v.aff_valeria} · Лена ${v.aff_lena} · Тая ${v.aff_taya} · Взгляд внутрь ${v.inner_sight} · Сбои ${v.glitch_count}`;
+  }
+
+  function showEnding(ending) {
+    const e = ending || {};
+    if (e.id) {
+      meta.endings[e.id] = Date.now();
+      meta.flags[`cleared_${e.id}`] = 1;
+      saveMeta();
     }
+    choicePrompt.textContent = e.title || "Конец";
+    choiceList.innerHTML = "";
+    const box = document.createElement("div");
+    box.className = "end-summary";
+    if (e.text) {
+      const p = document.createElement("p");
+      p.textContent = e.text;
+      box.appendChild(p);
+    }
+    if (DEV) {
+      const s = document.createElement("p");
+      s.className = "end-stats";
+      s.textContent = `[dev] концовка ${e.id || "?"} · ${statsLine()}`;
+      box.appendChild(s);
+    }
+    choiceList.appendChild(box);
+    choiceList.appendChild(overlayButton("1. В главное меню", openTitleScreen));
+    choiceOverlay.classList.add("visible");
+    updateDevPanel();
+    saveAuto();
   }
 
   function showEndOfPartModal() {
-    choicePrompt.textContent = "Конец текущей части (Пролог: День 0 и Акт I: Дни 1–3)";
+    const last = chapterById(state.chapterId) || {};
+    const cfg = window.VN_META || {};
+    choicePrompt.textContent = cfg.partEndTitle || "Продолжение следует";
     choiceList.innerHTML = "";
-
-    const summary = document.createElement("div");
-    summary.style.cssText = "color: var(--text-main); font-family: var(--font-serif); line-height: 1.65; margin-bottom: 16px; font-size: 16px;";
-    summary.innerHTML = `
-      <p>Вы завершили прохождение <strong>Пролога (День 0) и Дней 1–3 Первого Акта</strong> визуальной новеллы «Не смотри на небо».</p>
-      <p style="margin-top:10px; color: var(--accent-gold);">
-        Симпатия Мираэль: ${state.stats.aff_mirael} · Интерес Валерии: ${state.stats.aff_valeria} · Доверие Лены: ${state.stats.aff_lena} · Связь с Таей: ${state.stats.aff_taya} · Внутреннее зрение: ${state.stats.inner_sight}
-      </p>
-    `;
-    choiceList.appendChild(summary);
-
-    const restartBtn = document.createElement("button");
-    restartBtn.className = "choice-option-btn";
-    restartBtn.textContent = "1. Вернуться в главное меню";
-    restartBtn.addEventListener("click", () => {
-      choiceOverlay.classList.remove("visible");
-      openTitleScreen();
-    });
-
-    const chaptersBtn = document.createElement("button");
-    chaptersBtn.className = "choice-option-btn";
-    chaptersBtn.textContent = "2. Открыть выбор эпизода";
-    chaptersBtn.addEventListener("click", () => {
-      choiceOverlay.classList.remove("visible");
-      openChaptersModal();
-    });
-
-    choiceList.appendChild(restartBtn);
-    choiceList.appendChild(chaptersBtn);
+    const box = document.createElement("div");
+    box.className = "end-summary";
+    const p = document.createElement("p");
+    p.textContent = cfg.partEndText || `Здесь пока заканчивается написанная часть истории. Вы остановились на главе «${last.title || ""}» (${last.day || ""}).`;
+    box.appendChild(p);
+    if (DEV) {
+      const s = document.createElement("p");
+      s.className = "end-stats";
+      s.textContent = `[dev] ${statsLine()}`;
+      box.appendChild(s);
+    }
+    choiceList.appendChild(box);
+    choiceList.appendChild(overlayButton("1. В главное меню", openTitleScreen));
+    choiceList.appendChild(overlayButton("2. Выбрать эпизод", openChaptersModal));
     choiceOverlay.classList.add("visible");
   }
 
@@ -1097,117 +1262,136 @@
   }
 
   // =========================================================
+  // DEV MODE (?dev=1)
+  // =========================================================
+  let devPanel = null;
+  function updateDevPanel() {
+    if (!DEV) return;
+    if (!devPanel) {
+      devPanel = document.createElement("div");
+      devPanel.id = "dev-panel";
+      document.body.appendChild(devPanel);
+    }
+    const comp = compiled(state.chapterId);
+    const ins = comp && comp.code[state.pc];
+    const defs = defaultVars();
+    const rows = Object.keys(state.vars)
+      .map((k) => {
+        const changed = state.vars[k] !== defs[k];
+        return `<span class="${changed ? "dev-changed" : ""}">${k}=${state.vars[k]}</span>`;
+      })
+      .join(" ");
+    const endings = Object.keys(meta.endings).join(", ") || "—";
+    devPanel.innerHTML = `
+      <div><b>${state.chapterId}</b> · pc ${state.pc}/${comp ? comp.code.length : "?"} · ${ins ? ins.op + " " + ins.path : ""}</div>
+      <div>${rows}</div>
+      <div>концовки: ${endings} · история: ${state.history.length}</div>
+      <div class="dev-actions"><button data-dev="meta">сбросить мету</button></div>`;
+    devPanel.querySelector('[data-dev="meta"]').onclick = (e) => {
+      e.stopPropagation();
+      if (confirm("Сбросить мета-прогресс (концовки, открытые эпизоды)?")) {
+        meta = { endings: {}, flags: {}, seen: {} };
+        saveMeta();
+        updateDevPanel();
+      }
+    };
+  }
+
+  // =========================================================
   // SAVES & LOCAL STORAGE
   // =========================================================
   function createSaveSnapshot(label) {
-    const ch = window.VN_CHAPTERS[state.chapterIndex];
-    const currentNode = state.runtimeNodes[state.nodeIndex] || {};
+    const top = state.history[state.history.length - 1] || captureFrame();
+    const ch = chapterById(top.chapterId);
+    const comp = compiled(top.chapterId);
+    const ins = comp && comp.code[top.pc];
+    let preview = "";
+    if (ins && ins.op === "say") preview = ins.node.text || "";
+    else if (ins && ins.op === "choice") preview = ins.choice.prompt || "Выбор";
+    const backlog = state.backlog.slice(-150);
+    const base = state.backlog.length - backlog.length;
+    const history = state.history.slice(-40).map((f) => Object.assign({}, f, { backlogLen: Math.max(0, f.backlogLen - base) }));
     return {
+      v: 2,
       label,
       timestamp: new Date().toLocaleString("ru-RU"),
-      chapterIndex: state.chapterIndex,
+      chapterId: top.chapterId,
       chapterTitle: ch ? `${ch.day} — ${ch.title}` : "Глава",
-      chapterShort: ch ? ch.day : "ДЕНЬ 0",
-      nodeIndex: state.nodeIndex,
-      previewText: currentNode.text ? currentNode.text.slice(0, 75) + "..." : "",
-      runtimeNodes: state.runtimeNodes,
-      currentBg: state.currentBg,
-      currentBgm: state.currentBgm,
-      weather: state.weather,
-      camera: state.camera,
-      stats: state.stats,
-      choicesMade: state.choicesMade
+      chapterShort: ch ? ch.day : "",
+      previewText: preview ? preview.slice(0, 75) + (preview.length > 75 ? "…" : "") : "",
+      frame: Object.assign({}, top, { backlogLen: Math.max(0, top.backlogLen - base) }),
+      history,
+      backlog
     };
   }
 
   function saveAuto() {
+    if (!state.chapterId) return;
     try {
-      localStorage.setItem("nsnn_autosave_v1", JSON.stringify(createSaveSnapshot("Автосохранение")));
+      localStorage.setItem(AUTO_KEY, JSON.stringify(createSaveSnapshot("Автосохранение")));
       updateContinueBadge();
     } catch (e) {}
   }
 
   function getSaves() {
     try {
-      return JSON.parse(localStorage.getItem("nsnn_saves_v1") || "{}");
+      return JSON.parse(localStorage.getItem(SLOTS_KEY) || "{}");
     } catch (e) {
       return {};
     }
   }
 
+  function getAutosave() {
+    try {
+      const snap = JSON.parse(localStorage.getItem(AUTO_KEY) || "null");
+      return snap && snap.v === 2 && chapterById(snap.chapterId) ? snap : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   function updateContinueBadge() {
     if (!continueBadge) return;
-    try {
-      const autoRaw = localStorage.getItem("nsnn_autosave_v1");
-      if (autoRaw) {
-        const snap = JSON.parse(autoRaw);
-        continueBadge.textContent = `${snap.chapterShort || "ДЕНЬ 0"} · Сц. ${(snap.nodeIndex || 0) + 1}`;
-        return;
-      }
-      const saves = getSaves();
-      const firstKey = Object.keys(saves)[0];
-      if (firstKey && saves[firstKey]) {
-        const snap = saves[firstKey];
-        continueBadge.textContent = `${snap.chapterShort || "ДЕНЬ 0"} · Сц. ${(snap.nodeIndex || 0) + 1}`;
-        return;
-      }
-      continueBadge.textContent = "";
-    } catch (e) {
-      continueBadge.textContent = "";
-    }
+    const snap = getAutosave();
+    continueBadge.textContent = snap ? snap.chapterShort || "" : "";
   }
 
   function saveToSlot(slotId) {
     const saves = getSaves();
     saves[slotId] = createSaveSnapshot(`Слот ${slotId}`);
-    localStorage.setItem("nsnn_saves_v1", JSON.stringify(saves));
+    localStorage.setItem(SLOTS_KEY, JSON.stringify(saves));
     updateContinueBadge();
     renderSavesModal();
   }
 
-  function buildRuntimeNodesWithChoices(ch, choicesMade) {
-    const nodes = JSON.parse(JSON.stringify((ch && ch.nodes) || []));
-    const map = choicesMade || {};
-    let i = 0;
-    while (i < nodes.length) {
-      const n = nodes[i];
-      if (n && n.choice && n.choice.id && Object.prototype.hasOwnProperty.call(map, n.choice.id)) {
-        const pickedIdx = map[n.choice.id];
-        const opt = (n.choice.options || [])[pickedIdx];
-        const branch = opt ? (Array.isArray(opt.next) ? opt.next : Array.isArray(opt.nodes) ? opt.nodes : null) : null;
-        if (branch && branch.length > 0) {
-          nodes.splice(i, 1, ...JSON.parse(JSON.stringify(branch)));
-          continue;
-        }
-      }
-      i += 1;
-    }
-    return nodes;
-  }
-
   function loadSnapshot(snap) {
-    if (!snap) return;
-    state.chapterIndex = snap.chapterIndex || 0;
-    state.nodeIndex = snap.nodeIndex || 0;
-    const ch = window.VN_CHAPTERS[state.chapterIndex];
-    state.stats = snap.stats || state.stats;
-    state.choicesMade = snap.choicesMade || {};
-    state.runtimeNodes = buildRuntimeNodesWithChoices(ch, state.choicesMade);
-    if (state.nodeIndex >= state.runtimeNodes.length) {
-      state.nodeIndex = Math.max(0, state.runtimeNodes.length - 1);
+    if (!snap || snap.v !== 2 || !chapterById(snap.chapterId)) {
+      alert("Это сохранение сделано в старой версии игры и не может быть загружено.");
+      return;
     }
-    clearSprites();
-    const env = resolveNodeEnvironment(ch, state.runtimeNodes, state.nodeIndex);
-    setBackground(env.bg || snap.currentBg || ch.bg);
-    setWeather(env.weather || snap.weather || "none");
-    setCamera(env.camera || snap.camera || "none");
-    playBgm(env.bgm || snap.currentBgm || ch.bgm);
-    hudDay.textContent = ch.day;
-    hudTitle.textContent = ch.title;
+    state.backlog = (snap.backlog || []).slice();
+    state.history = (snap.history || []).slice(0, -1);
     titleScreen.classList.add("hidden");
     savesModal.classList.remove("visible");
-    renderCurrentNode();
-    preloadChapterAssets(ch);
+    choiceOverlay.classList.remove("visible");
+    clearSprites();
+    if (!restoreFrame(snap.frame)) return;
+    preloadChapterAssets(chapterById(snap.chapterId));
+    run();
+  }
+
+  function startNewGame() {
+    resetRun();
+    titleScreen.classList.add("hidden");
+    const first = allChapters()[0];
+    if (first) enterChapter(first.id);
+  }
+
+  function startFromEpisode(id) {
+    const seen = meta.seen[id];
+    resetRun(seen && seen.vars, seen && seen.choicesMade);
+    titleScreen.classList.add("hidden");
+    enterChapter(id);
   }
 
   // =========================================================
@@ -1215,29 +1399,35 @@
   // =========================================================
   function openChaptersModal() {
     chaptersModalBody.innerHTML = "";
-    (window.VN_CHAPTERS || []).forEach((ch, idx) => {
+    allChapters().forEach((ch) => {
+      const open = DEV || !!meta.seen[ch.id];
       const card = document.createElement("div");
-      card.className = "chapter-card" + (idx === state.chapterIndex ? " active" : "");
-      card.innerHTML = `
+      card.className = "chapter-card" + (ch.id === state.chapterId ? " active" : "") + (open ? "" : " locked");
+      card.innerHTML = open
+        ? `
         <div>
-          <div class="chapter-card-day">${ch.day}</div>
+          <div class="chapter-card-day">${ch.day}${DEV ? ` · <code>${ch.id}</code>` : ""}</div>
           <div class="chapter-card-title">${ch.title}</div>
           <div class="chapter-card-sub">${ch.subtitle || ""}</div>
         </div>
-        <div class="save-action-btn primary">Запустить →</div>
-      `;
-      card.addEventListener("mouseenter", () => playUiSound("hover"));
-      card.addEventListener("click", () => {
-        playUiSound("click");
-        chaptersModal.classList.remove("visible");
-        titleScreen.classList.add("hidden");
-        loadChapter(idx, 0);
-      });
+        <div class="save-action-btn primary">Запустить →</div>`
+        : `
+        <div>
+          <div class="chapter-card-day">${ch.day}</div>
+          <div class="chapter-card-title">— ещё не пройдено —</div>
+        </div>`;
+      if (open) {
+        card.addEventListener("mouseenter", () => playUiSound("hover"));
+        card.addEventListener("click", () => {
+          playUiSound("click");
+          chaptersModal.classList.remove("visible");
+          startFromEpisode(ch.id);
+        });
+      }
       chaptersModalBody.appendChild(card);
     });
     chaptersModal.classList.add("visible");
   }
-
   function openLogModal() {
     logModalBody.innerHTML = "";
     if (state.backlog.length === 0) {
@@ -1260,17 +1450,16 @@
   function renderSavesModal() {
     savesModalBody.innerHTML = "";
     const inGame = titleScreen.classList.contains("hidden");
-    const autoRaw = localStorage.getItem("nsnn_autosave_v1");
-    if (autoRaw) {
+    const autoSnap = getAutosave();
+    if (autoSnap) {
       try {
-        const autoSnap = JSON.parse(autoRaw);
         const autoEl = document.createElement("div");
         autoEl.className = "save-slot";
         autoEl.innerHTML = `
           <div>
             <div class="chapter-card-day">АВТОСОХРАНЕНИЕ · ${autoSnap.timestamp}</div>
             <div class="chapter-card-title">${autoSnap.chapterTitle}</div>
-            <div class="chapter-card-sub">Сцена ${autoSnap.nodeIndex + 1} ${autoSnap.previewText ? "· «" + autoSnap.previewText + "»" : ""}</div>
+            <div class="chapter-card-sub">${autoSnap.previewText ? "«" + autoSnap.previewText + "»" : ""}</div>
           </div>
           <div class="save-slot-actions">
             <button class="save-action-btn primary" data-load-auto="1">Загрузить</button>
@@ -1290,7 +1479,7 @@
         <div>
           <div class="chapter-card-day">СЛОТ #${slot} ${snap ? "· " + snap.timestamp : "· Пусто"}</div>
           <div class="chapter-card-title">${snap ? snap.chapterTitle : "Свободная ячейка сохранения"}</div>
-          <div class="chapter-card-sub">${snap ? "Сцена " + (snap.nodeIndex + 1) + (snap.previewText ? " · «" + snap.previewText + "»" : "") : (inGame ? "Нажмите «Сохранить», чтобы записать текущий момент" : "Запустите игру, чтобы сделать запись в этот слот")}</div>
+          <div class="chapter-card-sub">${snap ? (snap.v !== 2 ? "Сохранение старой версии — загрузить нельзя" : snap.previewText ? "«" + snap.previewText + "»" : "") : (inGame ? "Нажмите «Сохранить», чтобы записать текущий момент" : "Запустите игру, чтобы сделать запись в этот слот")}</div>
         </div>
         <div class="save-slot-actions">
           ${inGame ? `<button class="save-action-btn" data-save="${slot}">${snap ? "Перезаписать" : "Сохранить"}</button>` : ""}
@@ -1307,7 +1496,7 @@
         delBtn.addEventListener("click", () => {
           const all = getSaves();
           delete all[slot];
-          localStorage.setItem("nsnn_saves_v1", JSON.stringify(all));
+          localStorage.setItem(SLOTS_KEY, JSON.stringify(all));
           updateContinueBadge();
           renderSavesModal();
         });
@@ -1368,26 +1557,17 @@
   document.getElementById("btn-menu").addEventListener("click", openTitleScreen);
 
   document.getElementById("title-start-btn").addEventListener("click", () => {
-    titleScreen.classList.add("hidden");
-    loadChapter(0, 0);
+    if (getAutosave() && !confirm("Начать историю заново? Автосохранение будет перезаписано (сохранения в слотах останутся).")) return;
+    startNewGame();
   });
 
   document.getElementById("title-continue-btn").addEventListener("click", () => {
-    const autoRaw = localStorage.getItem("nsnn_autosave_v1");
-    if (autoRaw) {
-      try {
-        loadSnapshot(JSON.parse(autoRaw));
-        return;
-      } catch (e) {}
-    }
-    const saves = getSaves();
-    const firstKey = Object.keys(saves)[0];
-    if (firstKey && saves[firstKey]) {
-      loadSnapshot(saves[firstKey]);
+    const snap = getAutosave();
+    if (snap) {
+      loadSnapshot(snap);
       return;
     }
-    titleScreen.classList.add("hidden");
-    loadChapter(0, 0);
+    startNewGame();
   });
 
   document.getElementById("title-saves-btn").addEventListener("click", openSavesModal);
@@ -1418,6 +1598,11 @@
       return;
     }
     if (anyModal) return;
+    if (choiceOverlay.classList.contains("visible") && /^[1-9]$/.test(e.key)) {
+      const btn = choiceList.querySelector(`[data-choice-key="${e.key}"]`);
+      if (btn) btn.click();
+      return;
+    }
     if (e.key === " " || e.key === "Enter" || e.key === "ArrowRight") {
       e.preventDefault();
       stepForward();
@@ -1436,9 +1621,14 @@
     updateContinueBadge();
     // Start menu music immediately BEFORE queuing any background image preloads
     playBgm("Golden Afternoon Light.mp3");
-    if (window.VN_CHAPTERS && window.VN_CHAPTERS.length > 0) {
-      setBackground(window.VN_CHAPTERS[0].bg);
-      preloadChapterAssets(window.VN_CHAPTERS[0]);
+    state.vars = defaultVars();
+    if (allChapters().length > 0) {
+      setBackground(allChapters()[0].bg);
+      preloadChapterAssets(allChapters()[0]);
+    }
+    if (DEV) {
+      document.body.classList.add("dev-mode");
+      console.info("[VN] dev-режим: все эпизоды открыты, эффекты выборов видны, панель переменных слева сверху");
     }
   }
 
