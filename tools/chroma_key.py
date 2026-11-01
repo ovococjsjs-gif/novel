@@ -112,11 +112,22 @@ def main():
     ap.add_argument("dst")
     ap.add_argument("--ref")
     ap.add_argument("--key", default="green", choices=["green", "blue"])
+    ap.add_argument("--neutral-despill", action="store_true",
+                    help="снять оттенок ключа со всех почти-серых пикселей (для персонажей без "
+                         "зелёного в палитре: Мираэль, белые перья). НЕ для Саши — серо-зелёные глаза")
     args = ap.parse_args()
 
     rgb = np.asarray(Image.open(args.src).convert("RGB")).astype(np.float32)
     alpha, band, k = key_alpha(rgb, args.key)
     rgb = despill(rgb, alpha, band, args.key)
+    if args.neutral_despill:
+        r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+        if args.key == "green":
+            m = (np.abs(r - b) < 40) & (g > np.maximum(r, b))
+            rgb[..., 1] = np.where(m, np.maximum(r, b), g)
+        else:
+            m = (np.abs(r - g) < 40) & (b > np.maximum(r, g))
+            rgb[..., 2] = np.where(m, np.maximum(r, g), b)
     rgba = np.rint(np.dstack([rgb, alpha * 255.0]).clip(0, 255)).astype(np.uint8)
     info = f"key={k:.0f}"
     if args.ref:
