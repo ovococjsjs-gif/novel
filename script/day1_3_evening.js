@@ -164,7 +164,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", text: "Откуда вы..." },
     { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Ты три раза посмотрел на дверь. Так смотрят, когда дома кто-то есть." },
     { bg: "bg_sasha_kitchen_night", bgm: "River Fog.mp3", sprite: "clear", text: "Хлеб, молоко, бинты, банка тушёнки. Ключ в замке. Мираэль стояла в коридоре раньше, чем он открыл дверь." },
-    { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "happy", pos: "right" }, text: "Ты пришёл. Я подходила к окну сорок три раза." },
+    { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "happy", pos: "right" }, text: "Ты пришёл. Я от окна не отходила. Ну, отходила. Но возвращалась." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Я принёс тушёнку. Это примерно как кофе, только мясо." },
     { bg: "bg_sasha_room_night", text: "К полуночи он постелил себе на полу у шкафа. Мираэль легла на кровать, свесив край верхнего крыла почти до его подушки." },
     { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Саша. Ты спишь?" },

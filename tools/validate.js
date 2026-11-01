@@ -258,8 +258,7 @@ for (const ch of chapters) {
   }
   walk(ch.nodes, "nodes");
 
-  if (choices < 3) warn(W(""), `выборов: ${choices} (норма 3–5)`);
-  if (choices > 5) warn(W(""), `выборов: ${choices} (норма 3–5; декоративные выборы режем)`);
+  if (choices > 5) warn(W(""), `выборов: ${choices} (много; декоративные выборы режем)`);
   if (suddens > 1) warn(W(""), `«внезапно/неожиданно» ${suddens} раза`);
   if (aChto > 1) warn(W(""), `«…а что?» ${aChto} раза (приём — не шаблон)`);
   if (nicks > 2) warn(W(""), `прозвищ Лены: ${nicks} (не больше одного на сцену)`);
