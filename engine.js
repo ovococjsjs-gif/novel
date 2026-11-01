@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261101_26";
+  const ASSET_VER = "20261102_27";
 
   function withVer(url) {
     if (!url) return "";
@@ -144,6 +144,23 @@
       if (n.bg) preloadImage(withVer(Cfg.resolveBg(n.bg)));
       if (n.sprite) preloadSpriteObj(n.sprite);
     });
+    // Музыка: текущая и следующая глава грузятся в память заранее,
+    // чтобы трек начинал играть сразу, а не после буферизации через сеть.
+    const tracks = [ch.bgm];
+    (comp ? comp.code : []).forEach((ins) => {
+      const n = ins.node || ins.env;
+      if (n && n.bgm) tracks.push(n.bgm);
+    });
+    const nextCh = allChapters()[chapterIndexById(ch.id) + 1];
+    if (nextCh) {
+      tracks.push(nextCh.bgm);
+      const nc = compiled(nextCh.id);
+      (nc ? nc.code : []).forEach((ins) => {
+        const n = ins.node || ins.env;
+        if (n && n.bgm) tracks.push(n.bgm);
+      });
+    }
+    prefetchBgm(tracks);
     // Start sequential background preloading after active BGM & first-frame sprites have loaded
     preloadTimer = setTimeout(pumpPreloadQueue, 700);
   }
@@ -441,12 +458,66 @@
   }
 
   let bgmRetryTimer = null;
+
+  // ---------- Предзагрузка треков в память ----------
+  const bgmBlobUrls = {};
+  const bgmPrefetching = new Set();
+  const bgmPrefetchQueue = [];
+  let bgmPrefetchBusy = false;
+  function prefetchBgm(list) {
+    (list || []).forEach((t) => {
+      if (!t || t.startsWith("placeholder:") || bgmBlobUrls[t] || bgmPrefetching.has(t)) return;
+      bgmPrefetching.add(t);
+      bgmPrefetchQueue.push(t);
+    });
+    pumpBgmPrefetch();
+  }
+  function pumpBgmPrefetch() {
+    if (bgmPrefetchBusy) return;
+    const t = bgmPrefetchQueue.shift();
+    if (!t) return;
+    bgmPrefetchBusy = true;
+    fetch(withVer(encodeURI(t)))
+      .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
+      .then((b) => {
+        bgmBlobUrls[t] = URL.createObjectURL(b);
+      })
+      .catch(() => {
+        bgmPrefetching.delete(t);
+      })
+      .finally(() => {
+        bgmPrefetchBusy = false;
+        pumpBgmPrefetch();
+      });
+  }
+  function bgmUrl(t) {
+    return bgmBlobUrls[t] || withVer(encodeURI(t));
+  }
+
+  // ---------- Плавная громкость ----------
+  let bgmFadeTimer = null;
+  function fadeBgm(to, ms, done) {
+    if (bgmFadeTimer) clearInterval(bgmFadeTimer);
+    const from = bgmAudio.volume;
+    const t0 = performance.now();
+    bgmFadeTimer = setInterval(() => {
+      const k = Math.min(1, (performance.now() - t0) / ms);
+      bgmAudio.volume = Math.max(0, Math.min(1, from + (to - from) * k));
+      if (k >= 1) {
+        clearInterval(bgmFadeTimer);
+        bgmFadeTimer = null;
+        if (done) done();
+      }
+    }, 30);
+  }
+
   function tryPlayCurrentBgm() {
     if (userPausedBgm || settings.bgmMuted) return;
     if (!state.currentBgm || state.currentBgm.startsWith("placeholder:")) return;
     if (!bgmAudio.paused) return;
-    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
+    bgmAudio.volume = 0;
     bgmAudio.play().then(() => {
+      fadeBgm(settings.bgmMuted ? 0 : settings.bgmVolume, 900);
       audioUnlocked = true;
       bgmToggle.textContent = settings.bgmMuted ? "♫ Звук выкл" : "♫ Пауза";
     }).catch((err) => {
@@ -480,23 +551,35 @@
       bgmToggle.textContent = "♫ Заглушка";
       return;
     }
-    const encoded = withVer(encodeURI(trackName));
     const currentTrackAttr = bgmAudio.getAttribute("data-track");
     if (state.currentBgm === trackName && currentTrackAttr === trackName && !bgmAudio.paused) {
       return;
     }
     state.currentBgm = trackName;
     bgmLabel.textContent = trackName.replace(".mp3", "");
-    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
+    prefetchBgm([trackName]);
     if (currentTrackAttr !== trackName) {
-      bgmAudio.setAttribute("data-track", trackName);
-      bgmAudio.src = encoded;
-      bgmAudio.load();
+      const token = ++bgmSwitchToken;
+      const doSwitch = () => {
+        if (token !== bgmSwitchToken) return;
+        bgmAudio.pause();
+        bgmAudio.setAttribute("data-track", trackName);
+        bgmAudio.src = bgmUrl(trackName);
+        bgmAudio.load();
+        if (!userPausedBgm) tryPlayCurrentBgm();
+      };
+      if (!bgmAudio.paused && bgmAudio.volume > 0.01) {
+        fadeBgm(0, 500, doSwitch);
+      } else {
+        doSwitch();
+      }
+      return;
     }
     if (!userPausedBgm) {
       tryPlayCurrentBgm();
     }
   }
+  let bgmSwitchToken = 0;
 
   bgmToggle.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -506,7 +589,7 @@
       bgmAudio.volume = settings.bgmVolume;
       if (!bgmAudio.src && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
         bgmAudio.setAttribute("data-track", state.currentBgm);
-        bgmAudio.src = withVer(encodeURI(state.currentBgm));
+        bgmAudio.src = bgmUrl(state.currentBgm);
         bgmAudio.load();
       }
       tryPlayCurrentBgm();
@@ -635,6 +718,7 @@
 
   // Плавное исчезновение: сначала гасим opacity (CSS-переход), потом чистим слот.
   const SPRITE_FADE_MS = 450;
+  const SPRITE_XFADE_MS = 380;
   function hideSlot(el) {
     el.classList.remove("visible", "dimmed");
     const token = (el._hideToken = (el._hideToken || 0) + 1);
@@ -729,9 +813,32 @@
         const pre = new Image();
         const swap = () => {
           if (img.getAttribute("data-base-src") !== src) return;
+          // Перетекание: старая картинка остаётся поверх «призраком» и гаснет,
+          // новая проявляется под ней.
+          const oldRect = img.getBoundingClientRect();
+          const hadPicture = img.classList.contains("loaded") && oldRect.width > 0;
+          const ghost = hadPicture ? img.cloneNode(false) : null;
           el.dataset.charGroup = group;
+          img.classList.remove("loaded");
           img.src = src;
-          img.classList.add("loaded");
+          if (ghost) {
+            el.querySelectorAll(".sprite-ghost").forEach((g) => g.remove());
+            ghost.className = "sprite-ghost";
+            ghost.removeAttribute("data-base-src");
+            el.appendChild(ghost);
+            const slotRect = el.getBoundingClientRect();
+            const scale = el.offsetWidth ? slotRect.width / el.offsetWidth : 1;
+            ghost.style.left = `${(oldRect.left - slotRect.left) / scale}px`;
+            ghost.style.top = `${(oldRect.top - slotRect.top) / scale}px`;
+            ghost.style.width = `${oldRect.width / scale}px`;
+            ghost.style.height = `${oldRect.height / scale}px`;
+          }
+          void img.offsetWidth;
+          requestAnimationFrame(() => {
+            img.classList.add("loaded");
+            if (ghost) ghost.style.opacity = "0";
+          });
+          if (ghost) setTimeout(() => ghost.remove(), SPRITE_XFADE_MS + 80);
         };
         pre.onload = swap;
         pre.onerror = swap;
@@ -1424,8 +1531,17 @@
   // =========================================================
   function openChaptersModal() {
     chaptersModalBody.innerHTML = "";
+    let lastDay = null;
     allChapters().forEach((ch) => {
-      const open = DEV || !!meta.seen[ch.id];
+      const dayKey = String(ch.day || "").split("·")[0].trim();
+      if (dayKey !== lastDay) {
+        lastDay = dayKey;
+        const h = document.createElement("div");
+        h.className = "chapter-day-header";
+        h.textContent = ch.day || dayKey;
+        chaptersModalBody.appendChild(h);
+      }
+      const open = true; // все акты доступны сразу: можно перейти к любому акту любого дня
       const card = document.createElement("div");
       card.className = "chapter-card" + (ch.id === state.chapterId ? " active" : "") + (open ? "" : " locked");
       card.innerHTML = open

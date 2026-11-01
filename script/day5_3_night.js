@@ -61,7 +61,7 @@ window.VN_CHAPTERS.push({
       else: [
         { bg: "bg_sasha_room_night", text: "Мираэль сидела на полу у входной двери, обхватив колени. Видимо, так и просидела весь вечер." },
         { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты обещал вечером. Вечер был давно. Я не знала, куда звонить. Мне некуда звонить." },
-        { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Прости. Я у Тёмы был. Засиделся." }
+        { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Мир, прости. Я у Тёмы был. Засиделся." }
       ]
     },
     {

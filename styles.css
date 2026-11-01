@@ -361,6 +361,30 @@ html, body {
   opacity: 1;
 }
 
+/* Перетекание спрайтов при смене эмоции/персонажа */
+.char-slot img {
+  transition: opacity 0.38s ease;
+}
+.char-slot img.sprite-ghost {
+  position: absolute;
+  max-width: none;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.38s ease;
+}
+
+/* Заголовки дней в списке эпизодов */
+.chapter-day-header {
+  grid-column: 1 / -1;
+  margin: 14px 2px 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+.chapter-day-header:first-child { margin-top: 0; }
+
 /* =========================================================
    TOP HUD BAR
    ========================================================= */

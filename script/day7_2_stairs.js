@@ -86,7 +86,7 @@ window.VN_CHAPTERS.push({
             next: [
               { bg: "bg_sasha_room_night", bgm: "Golden Afternoon Light.mp3", weather: "rain", text: "Он поднялся на пятый, перешагивая через ступеньку. Мираэль открыла раньше, чем он постучал. Тетрадь с уставом была у неё в руках." },
               { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "surprised", pos: "right" }, text: "Ты вернулся." },
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Вернулся. Давай свой пункт об убежище. Только с правильным номером." },
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Мира, я вернулся. Давай свой пункт об убежище. Только с правильным номером." },
               { sprite: { char: "mirael_angel", emotion: "crying", pos: "right" }, text: "Она засмеялась и заплакала одновременно, и крылья развернулись во всю комнату, сшибая с полки будильник." }
             ]
           },

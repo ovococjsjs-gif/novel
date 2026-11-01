@@ -34,7 +34,7 @@ window.VN_CHAPTERS.push({
             label: "«Я решу сам. Но скажу тебе, что решил»",
             effects: { inner_sight: 1 },
             next: [
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Я не знаю ещё, куда пойду. Решу сам. Но скажу тебе. Мы договаривались — без мелкого шрифта." },
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Я не знаю ещё, куда пойду. Решу сам. Но скажу тебе. Мы с тобой договаривались, Мира, — без мелкого шрифта." },
               { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Это хуже, чем «не пойду». Но честнее. Ладно." }
             ]
           },
