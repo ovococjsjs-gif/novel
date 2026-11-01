@@ -29,6 +29,10 @@ window.VN_VARS = {
   asked_valeria_page: { type: "flag", default: false, desc: "День 3: дочитал страницу про стирание памяти" },
   nika_bubble_tea: { type: "flag", default: false, desc: "День 3: купил Нике бабл-ти" },
   took_valeria_money: { type: "flag", default: false, desc: "День 3: взял 3 000 ₽ «оплаты курьеру» у Инессы" },
+  artem_told_crash: { type: "flag", default: false, desc: "День 4: рассказал Артёму, что его чуть не сбили на Заречном" },
+  took_artem_money: { type: "flag", default: false, desc: "День 5: взял у Артёма 20 000 ₽ «по-братски»" },
+  saw_artem_mark: { type: "flag", default: false, desc: "День 5: разглядел метку под ремешком (дал Артёму выговориться)" },
+  taya_promise: { type: "flag", default: false, desc: "День 6: пообещал Тае приходить учиться «держать паузу»" },
 
   // --- Маршрут (День 7) ---
   route: { type: "number", default: 0, desc: "0 — общий, 1 Мираэль, 2 Валерия, 3 Лена/Земной, 4 Тая, 5 Буфер" }
