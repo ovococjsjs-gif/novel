@@ -60,7 +60,7 @@
       fallback: "neutral"
     },
     nika: {
-      emotions: set(C + "nika_{e}.png", ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"]),
+      emotions: set(C + "nika/transparent/nika_{e}.png", ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"]),
       aliases: {},
       fallback: "neutral"
     },

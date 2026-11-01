@@ -130,7 +130,10 @@
 | Валерия, истинный облик ×9 (`--neutral-despill`) | ✅ 01.11 |
 | Валерия, human ×9 | ✅ 01.11 (amused перегенерирован с требованием светлой кожи; soft_vulnerable: прядь за пальцами восстановлена по оригиналу) |
 | Лена: angry, coffee, happy, neutral, sad → `lena/transparent/` | ✅ 01.11 (вход — RGBA из корня на белом, большие уменьшены до 896×1200) |
-| Лена: snide, tired, surprised, thoughtful, shy | ⏳ (пока в `lena/transparent/` лежат старые копии из корня) |
-| Ника ×8, Дмитрий ×5 | ⏳ |
+| Лена: snide, tired, thoughtful, shy | ✅ 01.11 |
+| Лена: surprised | ⏳ перегенерировать: генератор залил зелёным затенённые пряди за бантом (пока старая копия) |
+| Ника: neutral, bored, happy, sad → `nika/transparent/` | ✅ 01.11 (`--neutral-despill`) |
+| Ника: annoyed (перегенерировать — затемнена кожа), shy, surprised, teasing | ⏳ (пока старые копии из корня) |
+| Дмитрий ×5 | ⏳ |
 | Тая | ждём новый дефолтный спрайт от автора |
 
