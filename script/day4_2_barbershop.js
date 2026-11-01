@@ -69,7 +69,7 @@ window.VN_CHAPTERS.push({
           {
             label: "«Приду»",
             next: [
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Приду. Пиво с меня. Ну, теперь уже с тебя, я безработный." },
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Приду. Шаурма с меня. Ну, теперь уже с тебя, я безработный." },
               { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "Безработный? Ты? Слушай, это же отлично! Это же... ладно. Завтра. Всё завтра." }
             ]
           },

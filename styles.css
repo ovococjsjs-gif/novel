@@ -153,13 +153,68 @@ html, body {
 }
 
 #bg-layer.cam-ride {
-  animation: povRide 4.8s ease-in-out infinite alternate;
+  /* POV-езда: медленный наезд вперёд + покачивание в ритме педалей.
+     scale/translate/rotate — отдельные свойства, чтобы анимации складывались. */
+  animation:
+    rideDolly 18s ease-in-out infinite alternate,
+    rideBob 0.62s ease-in-out infinite alternate,
+    rideSway 2.5s ease-in-out infinite alternate;
 }
 
-@keyframes povRide {
-  0% { transform: scale(1.03) translate(0px, 0px); }
-  50% { transform: scale(1.045) translate(-8px, -4px); }
-  100% { transform: scale(1.035) translate(8px, 3px); }
+#bg-layer.cam-ride::before {
+  /* полосы скорости по краям кадра, центр чистый */
+  content: '';
+  position: absolute;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 1;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 46%,
+    rgba(255, 255, 255, 0) 0deg 2.4deg,
+    rgba(255, 255, 255, 0.30) 2.8deg,
+    rgba(255, 255, 255, 0) 3.3deg 7deg
+  );
+  -webkit-mask-image:
+    radial-gradient(ellipse 34% 30% at 50% 46%, transparent 55%, #000 100%),
+    repeating-radial-gradient(circle at 50% 46%, transparent calc(var(--ride-off) - 70px), #000 calc(var(--ride-off) - 70px) calc(var(--ride-off) - 40px), transparent calc(var(--ride-off) - 40px) var(--ride-off));
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 34% 30% at 50% 46%, transparent 55%, #000 100%),
+    repeating-radial-gradient(circle at 50% 46%, transparent calc(var(--ride-off) - 70px), #000 calc(var(--ride-off) - 70px) calc(var(--ride-off) - 40px), transparent calc(var(--ride-off) - 40px) var(--ride-off));
+  mask-composite: intersect;
+  animation: rideStreaks 0.42s linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes rideDolly {
+  0%   { scale: 1.06; }
+  100% { scale: 1.13; }
+}
+
+@keyframes rideBob {
+  0%   { translate: 0 -3px; }
+  100% { translate: 0 4px; }
+}
+
+@keyframes rideSway {
+  0%   { rotate: -0.45deg; }
+  100% { rotate: 0.45deg; }
+}
+
+@property --ride-off {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes rideStreaks {
+  0%   { --ride-off: 0px; }
+  100% { --ride-off: 70px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #bg-layer.cam-ride { animation: rideDolly 18s ease-in-out infinite alternate; }
+  #bg-layer.cam-ride::before { display: none; }
 }
 
 #bg-layer.cam-shake {
