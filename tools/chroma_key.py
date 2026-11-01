@@ -49,7 +49,15 @@ def key_alpha(rgb, key="green"):
     band = cv2.dilate(core, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))).astype(bool)
     # тонкие щели между пальцами/прядями (1–2 px): смешанный с ключом цвет.
     # Внутри фигуры перевес ключа ≤ ~0.1k (глаза, оливки), так что 0.2k безопасно.
-    band |= cv2.dilate((dom > 0.2 * k).astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+    # Только компоненты, связанные с фоном (core): замкнутые внутри фигуры пятна
+    # (голубой глаз при синем ключе, зелёный при зелёном) не трогаем.
+    weak = (dom > 0.2 * k).astype(np.uint8)
+    nl, wl = cv2.connectedComponents(weak, connectivity=8)
+    hit = np.zeros(nl, bool)
+    hit[np.unique(wl[core.astype(bool) & (weak > 0)])] = True
+    hit[0] = False
+    weak = hit[wl].astype(np.uint8)
+    band |= cv2.dilate(weak, np.ones((3, 3), np.uint8)).astype(bool)
     # альфа по «зелёному перевесу»: 0 на чистом ключе, 1 на обычном цвете
     lo, hi = 0.12 * k, 0.88 * k
     a = 1.0 - np.clip((dom - lo) / (hi - lo), 0.0, 1.0)
