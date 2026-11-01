@@ -254,12 +254,17 @@ html, body {
 }
 
 .char-slot[data-char-group="artem"] {
-  top: 3vh;
-  height: 132vh;
+  top: 4vh;
+  height: 136vh;
 }
 
-.char-slot[data-char-group="valeria"],
+/* Дмитрий нарисован на том же холсте, что Саша; чуть ниже — он коренастее и ниже ростом */
 .char-slot[data-char-group="dmitry"] {
+  top: 8vh;
+  height: 136vh;
+}
+
+.char-slot[data-char-group="valeria"] {
   top: 11vh;
   height: 116vh;
 }

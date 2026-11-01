@@ -70,13 +70,13 @@
       fallback: "tired"
     },
     artem: {
-      emotions: set(C + "artem_shank_{e}.png", ["empty", "happy", "neutral", "sad"]),
-      aliases: {},
+      emotions: set(C + "artem/transparent/artem_{e}.png", ["neutral", "happy", "sad", "empty", "nervous"]),
+      aliases: { worried: "nervous", smile: "happy", guilty: "sad" },
       fallback: "neutral"
     },
     dmitry: {
-      emotions: set(C + "dmitry_{e}.png", ["neutral", "serious"]),
-      aliases: {},
+      emotions: set(C + "dmitry/transparent/dmitry_{e}.png", ["neutral", "serious", "angry"]),
+      aliases: { tired: "neutral", smile: "neutral" },
       fallback: "neutral"
     },
     taya: {
