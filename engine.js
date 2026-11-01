@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261031_18";
+  const ASSET_VER = "20261031_19";
 
   function withVer(url) {
     if (!url) return "";
@@ -294,9 +294,17 @@
   // Global unlock so music starts immediately on page load or very first user interaction
   let audioUnlocked = false;
   let userPausedBgm = false;
+  const unlockEvents = ["pointerdown", "keydown", "touchstart", "click"];
   function unlockAudioOnce(e) {
     if (audioUnlocked || settings.bgmMuted || userPausedBgm) return;
-    if (e && e.target && e.target.closest && e.target.closest("#bgm-toggle")) return;
+    if (
+      e &&
+      e.target &&
+      e.target.closest &&
+      e.target.closest("#bgm-toggle, #title-start-btn, #title-continue-btn, .chapter-card, [data-load], [data-load-auto]")
+    ) {
+      return;
+    }
     if (bgmAudio.paused) {
       const target = state.currentBgm || "Golden Afternoon Light.mp3";
       if (!target.startsWith("placeholder:")) {
@@ -304,12 +312,16 @@
       }
     }
   }
-  const unlockEvents = ["pointerdown", "keydown", "touchstart", "click"];
   unlockEvents.forEach((evt) => {
     window.addEventListener(evt, unlockAudioOnce, { capture: true, passive: true });
   });
   bgmAudio.addEventListener("playing", () => {
-    audioUnlocked = true;
+    if (!audioUnlocked) {
+      audioUnlocked = true;
+      unlockEvents.forEach((evt) => {
+        window.removeEventListener(evt, unlockAudioOnce, { capture: true });
+      });
+    }
     bgmToggle.textContent = settings.bgmMuted ? "♫ Звук выкл" : "♫ Пауза";
   });
 
@@ -517,10 +529,12 @@
     });
   }
 
-  bgmAudio.addEventListener("canplay", () => {
-    if (!userPausedBgm && !settings.bgmMuted && bgmAudio.paused && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
-      tryPlayCurrentBgm();
-    }
+  ["canplay", "canplaythrough", "loadeddata"].forEach((evName) => {
+    bgmAudio.addEventListener(evName, () => {
+      if (!userPausedBgm && !settings.bgmMuted && bgmAudio.paused && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
+        tryPlayCurrentBgm();
+      }
+    });
   });
 
   function playBgm(trackName) {
@@ -1151,20 +1165,43 @@
     renderSavesModal();
   }
 
+  function buildRuntimeNodesWithChoices(ch, choicesMade) {
+    const nodes = JSON.parse(JSON.stringify((ch && ch.nodes) || []));
+    const map = choicesMade || {};
+    let i = 0;
+    while (i < nodes.length) {
+      const n = nodes[i];
+      if (n && n.choice && n.choice.id && Object.prototype.hasOwnProperty.call(map, n.choice.id)) {
+        const pickedIdx = map[n.choice.id];
+        const opt = (n.choice.options || [])[pickedIdx];
+        const branch = opt ? (Array.isArray(opt.next) ? opt.next : Array.isArray(opt.nodes) ? opt.nodes : null) : null;
+        if (branch && branch.length > 0) {
+          nodes.splice(i, 1, ...JSON.parse(JSON.stringify(branch)));
+          continue;
+        }
+      }
+      i += 1;
+    }
+    return nodes;
+  }
+
   function loadSnapshot(snap) {
     if (!snap) return;
     state.chapterIndex = snap.chapterIndex || 0;
     state.nodeIndex = snap.nodeIndex || 0;
     const ch = window.VN_CHAPTERS[state.chapterIndex];
-    state.runtimeNodes = snap.runtimeNodes || JSON.parse(JSON.stringify(ch.nodes));
     state.stats = snap.stats || state.stats;
     state.choicesMade = snap.choicesMade || {};
+    state.runtimeNodes = buildRuntimeNodesWithChoices(ch, state.choicesMade);
+    if (state.nodeIndex >= state.runtimeNodes.length) {
+      state.nodeIndex = Math.max(0, state.runtimeNodes.length - 1);
+    }
     clearSprites();
     const env = resolveNodeEnvironment(ch, state.runtimeNodes, state.nodeIndex);
-    setBackground(snap.currentBg || env.bg);
-    setWeather(snap.weather || env.weather);
-    setCamera(snap.camera || env.camera);
-    playBgm(snap.currentBgm || env.bgm);
+    setBackground(env.bg || snap.currentBg || ch.bg);
+    setWeather(env.weather || snap.weather || "none");
+    setCamera(env.camera || snap.camera || "none");
+    playBgm(env.bgm || snap.currentBgm || ch.bgm);
     hudDay.textContent = ch.day;
     hudTitle.textContent = ch.title;
     titleScreen.classList.add("hidden");
