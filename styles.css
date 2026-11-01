@@ -285,75 +285,64 @@ html, body {
 
 .char-slot {
   position: absolute;
-  top: 12vh;
-  height: 114vh;
+  top: 19.6vh;
+  height: 91.2vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  transition: opacity 0.26s ease, transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), filter 0.26s ease;
+  /* все слоты позиционируются по центру фигуры */
+  transform: translateX(-50%) translateY(14px) scale(0.985);
+  transition: opacity 0.45s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
   opacity: 0;
   pointer-events: none;
 }
 
+/* Высоты подобраны так, чтобы персонажи были одного роста между собой
+   и стояли на среднем плане, а не вплотную к камере. */
 .char-slot[data-char-group="alexander"] {
-  top: 4vh;
-  height: 136vh;
+  top: 13vh;
+  height: 109vh;
 }
 
 .char-slot[data-char-group="lena"],
 .char-slot[data-char-group="nika"],
 .char-slot[data-char-group="mirael"],
 .char-slot[data-char-group="taya"] {
-  top: 14vh;
-  height: 110vh;
+  top: 21vh;
+  height: 88vh;
 }
 
 .char-slot[data-char-group="artem"] {
-  top: 3vh;
-  height: 132vh;
+  top: 12.2vh;
+  height: 105.6vh;
 }
 
 /* Дмитрий нарисован на том же холсте, что Саша; чуть ниже — он коренастее и ниже ростом */
 .char-slot[data-char-group="dmitry"] {
-  top: 8vh;
-  height: 136vh;
+  top: 16.2vh;
+  height: 108.8vh;
 }
 
 .char-slot[data-char-group="valeria"] {
-  top: 11vh;
-  height: 116vh;
+  top: 18.6vh;
+  height: 92.8vh;
 }
+
+.char-slot.left   { left: 27%; }
+.char-slot.center { left: 50%; }
+.char-slot.right  { left: 73%; }
 
 .char-slot.visible {
   opacity: 1;
-}
-
-.char-slot.left {
-  left: 3%;
-  transform: translateX(0) scale(1);
-}
-
-.char-slot.center {
-  left: 50%;
-  transform: translateX(-50%) scale(1);
-}
-
-.char-slot.right {
-  right: 3%;
-  transform: translateX(0) scale(1);
+  transform: translateX(-50%) translateY(0) scale(1);
 }
 
 .char-slot.dimmed {
   filter: brightness(0.72) saturate(0.86);
 }
 
-.char-slot.left.dimmed,
-.char-slot.right.dimmed {
-  transform: scale(0.975);
-}
-
-.char-slot.center.dimmed {
-  transform: translateX(-50%) scale(0.975);
+.char-slot.visible.dimmed {
+  transform: translateX(-50%) translateY(0) scale(0.975);
 }
 
 .char-slot img {
@@ -1267,10 +1256,8 @@ html, body {
 }
 
 @media (max-width: 768px) {
-  .char-slot {
-    top: 8vh;
-    height: 122vh;
-  }
+  .char-slot.left  { left: 24%; }
+  .char-slot.right { left: 76%; }
   #dialogue-box {
     padding: 22px 20px 18px;
   }

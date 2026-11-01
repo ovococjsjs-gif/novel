@@ -141,6 +141,7 @@ function checkEnv(where, n) {
   if (n.bgm && !exists(n.bgm)) err(where, `bgm: нет файла ${n.bgm}`);
   if (n.weather && !Cfg.WEATHER.includes(n.weather)) err(where, `weather «${n.weather}»`);
   if (n.camera && !Cfg.CAMERA.includes(n.camera)) err(where, `camera «${n.camera}»`);
+  if (n.camera === "ride" && n.sprite !== "clear") warn(where, "езда (camera: ride) без sprite: \"clear\" — POV, спрайты должны уйти");
   if (n.effect && !Cfg.EFFECTS.includes(n.effect)) err(where, `effect «${n.effect}»`);
   checkSprite(where, n.sprite);
 }

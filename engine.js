@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261101_11";
+  const ASSET_VER = "20261101_12";
 
   function withVer(url) {
     if (!url) return "";
@@ -633,12 +633,22 @@
     }, 110);
   }
 
+  // Плавное исчезновение: сначала гасим opacity (CSS-переход), потом чистим слот.
+  const SPRITE_FADE_MS = 450;
+  function hideSlot(el) {
+    el.classList.remove("visible", "dimmed");
+    const token = (el._hideToken = (el._hideToken || 0) + 1);
+    setTimeout(() => {
+      if (el._hideToken === token && !el.classList.contains("visible")) {
+        el.innerHTML = "";
+        delete el.dataset.charGroup;
+      }
+    }, SPRITE_FADE_MS);
+  }
+
   function clearSprites() {
     state.activeSprites = { left: null, center: null, right: null };
-    [slotLeft, slotCenter, slotRight].forEach((el) => {
-      el.classList.remove("visible", "dimmed");
-      el.innerHTML = "";
-    });
+    [slotLeft, slotCenter, slotRight].forEach(hideSlot);
   }
 
   function updateSprites(spriteSpec, speakerName) {
@@ -705,20 +715,35 @@
       const el = slotMap[pos];
       const info = state.activeSprites[pos];
       if (!info) {
-        el.classList.remove("visible", "dimmed");
-        delete el.dataset.charGroup;
-        el.innerHTML = "";
+        if (el.classList.contains("visible")) hideSlot(el);
         return;
       }
-      el.dataset.charGroup = info.char.split("_")[0];
+      el._hideToken = (el._hideToken || 0) + 1; // отменяем отложенную очистку
+      const group = info.char.split("_")[0];
       const src = spriteSrc(info.char, info.emotion);
       let img = el.querySelector("img");
+      if (img && img.getAttribute("src") && img.getAttribute("data-base-src") !== src) {
+        // Смена эмоции/персонажа в занятом слоте: грузим новую картинку заранее
+        // и подменяем, когда она готова, — без мигания пустым слотом.
+        img.setAttribute("data-base-src", src);
+        const pre = new Image();
+        const swap = () => {
+          if (img.getAttribute("data-base-src") !== src) return;
+          el.dataset.charGroup = group;
+          img.src = src;
+          img.classList.add("loaded");
+        };
+        pre.onload = swap;
+        pre.onerror = swap;
+        pre.src = src;
+      }
       if (!img) {
         img = document.createElement("img");
         img.alt = "";
         img.decoding = "async";
         el.appendChild(img);
       }
+      if (!img.getAttribute("src")) el.dataset.charGroup = group;
       if (img.getAttribute("data-base-src") !== src) {
         img.setAttribute("data-base-src", src);
         img.dataset.retries = "0";
