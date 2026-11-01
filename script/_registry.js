@@ -20,6 +20,8 @@ window.VN_VARS = {
   glitch_count: { type: "number", default: 0, desc: "Сколько сбоев собрано (0..3)" },
 
   // --- Факты Недели 1, на которые ссылается текст ---
+  raincoat_packed: { type: "flag", default: false, desc: "Пролог: взял жёлтый дождевик (иначе Лена выдаст запасной из депо)" },
+  dasha_honest: { type: "flag", default: false, desc: "Пролог: честно признался Даше, что забыл про платье" },
   saw_taya_d0: { type: "flag", default: false, desc: "Пролог: заметил янтарный свет мастерской" },
   mirael_phone: { type: "flag", default: false, desc: "День 1: дал Мираэль старый телефон" },
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },

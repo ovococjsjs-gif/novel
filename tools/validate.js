@@ -160,7 +160,7 @@ function styleText(where, text, kind) {
   if (kind === "narr" && text.length > MAX_NARR) warn(where, `рассказчик: ${text.length} знаков (> ${MAX_NARR})`);
   if (kind === "line" && text.length > MAX_LINE) warn(where, `реплика: ${text.length} знаков (> ${MAX_LINE})`);
   if (kind === "narr") {
-    const fp = t.match(FIRST_PERSON_RE);
+    const fp = t.replace(/«[^»]*»/g, " ").replace(/(^|\n)\s*—[^\n]*/g, " ").match(FIRST_PERSON_RE);
     if (fp) warn(where, `рассказчик в первом лице? «${fp[2]}»`);
   }
 }

@@ -97,7 +97,17 @@
     "Лена": { cls: "lena", char: "lena" },
     "Артём": { cls: "artem", char: "artem" },
     "Дмитрий": { cls: "dmitry", char: "dmitry" },
-    "Тая": { cls: "taya", char: "taya" }
+    "Тая": { cls: "taya", char: "taya" },
+    // Второстепенные (без спрайтов)
+    "Баба Нюра": { cls: "minor", char: null },
+    "Даша": { cls: "minor", char: null },
+    "Зоя Павловна": { cls: "minor", char: null },
+    "Инесса": { cls: "minor", char: null },
+    "Администратор": { cls: "minor", char: null },
+    "Бариста": { cls: "minor", char: null },
+    "Клиент": { cls: "minor", char: null },
+    "Клиентка": { cls: "minor", char: null },
+    "Голос": { cls: "minor", char: null }
   };
 
   const WEATHER = ["none", "rain"];

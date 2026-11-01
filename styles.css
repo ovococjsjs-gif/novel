@@ -484,6 +484,10 @@ html, body {
   border-color: #a78bfa;
   color: #ddd6fe;
 }
+#speaker-tag.minor {
+  border-color: #78716c;
+  color: #d6d3d1;
+}
 
 #dialogue-text {
   font-family: var(--font-serif);
@@ -505,6 +509,7 @@ html, body {
 #dialogue-text.voice-artem { color: var(--voice-artem); }
 #dialogue-text.voice-dmitry { color: var(--voice-dmitry); }
 #dialogue-text.voice-taya { color: var(--voice-taya); }
+#dialogue-text.voice-minor { color: #e7e2d9; }
 
 #dialogue-text.voice-thought {
   font-style: italic;
