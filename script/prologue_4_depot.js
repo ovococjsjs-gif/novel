@@ -134,7 +134,7 @@ window.VN_CHAPTERS.push({
     {
       if: "raincoat_packed",
       then: [
-        { sprite: { char: "alexander_jacket", emotion: "rain", pos: "left" }, text: "Саша вытащил из рюкзака жёлтый рулон и натянул дождевик прямо поверх рубашки. Светоотражающие полосы вспыхнули в фарах проезжающей маршрутки." },
+        { sprite: { char: "alexander_jacket", emotion: "rain", pos: "left" }, text: "Саша вытащил из кармана термокороба жёлтый рулон и натянул дождевик прямо поверх рубашки. Светоотражающие полосы вспыхнули в фарах проезжающей маршрутки." },
         { speaker: "Лена", sprite: { char: "lena", emotion: "snide", pos: "right" }, text: "Смотри-ка. Взрослый человек. Прогноз погоды читает." }
       ],
       else: [
