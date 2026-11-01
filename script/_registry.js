@@ -26,6 +26,7 @@ window.VN_VARS = {
   watch_left_taya: { type: "flag", default: false, desc: "День 1: оставил часы деда у Таи" },
   asked_valeria_page: { type: "flag", default: false, desc: "День 3: дочитал страницу про стирание памяти" },
   nika_bubble_tea: { type: "flag", default: false, desc: "День 3: купил Нике бабл-ти" },
+  took_valeria_money: { type: "flag", default: false, desc: "День 3: взял 3 000 ₽ «оплаты курьеру» у Инессы" },
 
   // --- Маршрут (День 7) ---
   route: { type: "number", default: 0, desc: "0 — общий, 1 Мираэль, 2 Валерия, 3 Лена/Земной, 4 Тая, 5 Буфер" }
