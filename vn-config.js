@@ -70,8 +70,8 @@
       fallback: "tired"
     },
     artem: {
-      emotions: set(C + "artem/transparent/artem_{e}.png", ["neutral", "happy", "sad", "empty", "nervous"]),
-      aliases: { worried: "nervous", smile: "happy", guilty: "sad" },
+      emotions: set(C + "artem_shank_{e}.png", ["empty", "happy", "neutral", "sad"]),
+      aliases: { smile: "happy", guilty: "sad", worried: "sad", nervous: "neutral" },
       fallback: "neutral"
     },
     dmitry: {

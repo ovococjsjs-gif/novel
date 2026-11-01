@@ -254,8 +254,8 @@ html, body {
 }
 
 .char-slot[data-char-group="artem"] {
-  top: 4vh;
-  height: 136vh;
+  top: 3vh;
+  height: 132vh;
 }
 
 /* Дмитрий нарисован на том же холсте, что Саша; чуть ниже — он коренастее и ниже ростом */
