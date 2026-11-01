@@ -253,8 +253,12 @@ html, body {
   height: 110vh;
 }
 
+.char-slot[data-char-group="artem"] {
+  top: 3vh;
+  height: 132vh;
+}
+
 .char-slot[data-char-group="valeria"],
-.char-slot[data-char-group="artem"],
 .char-slot[data-char-group="dmitry"] {
   top: 11vh;
   height: 116vh;

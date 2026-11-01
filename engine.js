@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261031_16";
+  const ASSET_VER = "20261031_17";
 
   function withVer(url) {
     if (!url) return "";
@@ -25,6 +25,9 @@
       if (emo === "wounded") {
         return withVer("assets/characters/alexander/transparent/alexander_jacket_wounded.png");
       }
+      if (emo === "happy") emo = "smile";
+      if (emo === "sad" || emo === "stressed") emo = "thoughtful";
+      if (emo === "determined_anger" || emo === "shocked_terrified") emo = "shocked";
       const valid = ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked"];
       const mapped = valid.includes(emo) ? emo : "neutral";
       return withVer(`assets/characters/alexander/transparent/alexander_jacket_${mapped}.png`);
@@ -160,16 +163,27 @@
   function preloadChapterAssets(ch) {
     if (!ch) return;
     if (ch.bg) preloadImage(withVer(ch.bg));
+    function preloadSpriteObj(sp) {
+      if (!sp || typeof sp !== "object") return;
+      if (sp.char) {
+        const resolver = SPRITE_MAP[sp.char];
+        if (resolver) preloadImage(resolver(sp.emotion));
+      }
+      ["left", "center", "right"].forEach((k) => {
+        if (sp[k] && sp[k].char) {
+          const resolver = SPRITE_MAP[sp[k].char];
+          if (resolver) preloadImage(resolver(sp[k].emotion));
+        }
+      });
+    }
     function scan(nodes) {
       (nodes || []).forEach((n) => {
         if (n.bg) preloadImage(withVer(n.bg));
-        if (n.sprite && typeof n.sprite === "object" && n.sprite.char) {
-          const resolver = SPRITE_MAP[n.sprite.char];
-          if (resolver) preloadImage(resolver(n.sprite.emotion));
-        }
+        if (n.sprite) preloadSpriteObj(n.sprite);
         if (n.choice && n.choice.options) {
           n.choice.options.forEach((o) => {
-            if (o.next) scan(o.next);
+            const branch = o.next || o.nodes;
+            if (branch) scan(branch);
           });
         }
       });
@@ -619,27 +633,56 @@
       clearSprites();
       return;
     }
-    if (spriteSpec && spriteSpec.char) {
-      const pos = spriteSpec.pos || "center";
-      if (pos === "center") {
-        state.activeSprites.left = null;
-        state.activeSprites.right = null;
-      } else {
-        state.activeSprites.center = null;
-      }
-      ["left", "center", "right"].forEach((slotKey) => {
-        if (
-          slotKey !== pos &&
-          state.activeSprites[slotKey] &&
-          state.activeSprites[slotKey].char.split("_")[0] === spriteSpec.char.split("_")[0]
-        ) {
-          state.activeSprites[slotKey] = null;
+    if (spriteSpec && typeof spriteSpec === "object") {
+      if (spriteSpec.left || spriteSpec.center || spriteSpec.right) {
+        if (spriteSpec.center && spriteSpec.center.char) {
+          state.activeSprites.left = null;
+          state.activeSprites.right = null;
+          state.activeSprites.center = {
+            char: spriteSpec.center.char,
+            emotion: spriteSpec.center.emotion || "neutral"
+          };
+        } else {
+          state.activeSprites.center = null;
+          if (spriteSpec.left === "clear" || spriteSpec.left === null) {
+            state.activeSprites.left = null;
+          } else if (spriteSpec.left && spriteSpec.left.char) {
+            state.activeSprites.left = {
+              char: spriteSpec.left.char,
+              emotion: spriteSpec.left.emotion || "neutral"
+            };
+          }
+          if (spriteSpec.right === "clear" || spriteSpec.right === null) {
+            state.activeSprites.right = null;
+          } else if (spriteSpec.right && spriteSpec.right.char) {
+            state.activeSprites.right = {
+              char: spriteSpec.right.char,
+              emotion: spriteSpec.right.emotion || "neutral"
+            };
+          }
         }
-      });
-      state.activeSprites[pos] = {
-        char: spriteSpec.char,
-        emotion: spriteSpec.emotion || "neutral"
-      };
+      } else if (spriteSpec.char) {
+        const pos = spriteSpec.pos || "center";
+        if (pos === "center") {
+          state.activeSprites.left = null;
+          state.activeSprites.right = null;
+        } else {
+          state.activeSprites.center = null;
+        }
+        ["left", "center", "right"].forEach((slotKey) => {
+          if (
+            slotKey !== pos &&
+            state.activeSprites[slotKey] &&
+            state.activeSprites[slotKey].char.split("_")[0] === spriteSpec.char.split("_")[0]
+          ) {
+            state.activeSprites[slotKey] = null;
+          }
+        });
+        state.activeSprites[pos] = {
+          char: spriteSpec.char,
+          emotion: spriteSpec.emotion || "neutral"
+        };
+      }
     }
 
     const slotMap = { left: slotLeft, center: slotCenter, right: slotRight };
@@ -859,8 +902,13 @@
         }
         state.choicesMade[choiceObj.id] = idx;
         choiceOverlay.classList.remove("visible");
-        if (Array.isArray(opt.next) && opt.next.length > 0) {
-          state.runtimeNodes.splice(state.nodeIndex, 1, ...opt.next);
+        const branchNodes = Array.isArray(opt.next)
+          ? opt.next
+          : Array.isArray(opt.nodes)
+          ? opt.nodes
+          : null;
+        if (branchNodes && branchNodes.length > 0) {
+          state.runtimeNodes.splice(state.nodeIndex, 1, ...branchNodes);
         } else {
           state.nodeIndex += 1;
         }
