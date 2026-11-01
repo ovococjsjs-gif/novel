@@ -125,9 +125,9 @@
 |---|---|
 | Саша, рубашка: neutral, smile, stressed*, surprised*, thoughtful, wounded, determined_anger, happy, sad, shocked* | ✅ 01.11 (* — поправлены глаза) |
 | Саша: shy, shocked_terrified, куртка ×7 (shocked*, surprised*), courier_rain | ✅ 01.11 — **Саша закрыт целиком, 20/20** |
-| Мираэль: ангел ×8, человек neutral/happy (`--neutral-despill`) | ✅ 01.11 — у крыльев вернулись перья, потерянные старой вырезкой |
-| Мираэль, человек: sad, shy, surprised, crying, determined_anger, shocked_terrified | ⏳ |
-| Валерия (×9 + human ×9) | ⏳ |
+| Мираэль: ангел ×8, человек ×8 (`--neutral-despill`) | ✅ 01.11 — у крыльев вернулись перья, открыты просветы между прядями |
+| Валерия, истинный облик: neutral, amused, angry, cold_serious (`--neutral-despill`) | ✅ 01.11 |
+| Валерия, истинный облик: contract, playful_smile, soft_vulnerable, surprised, thoughtful; human ×9 | ⏳ |
 | Лена ×10, Ника ×8, Дмитрий ×5 | ⏳ |
 | Тая | ждём новый дефолтный спрайт от автора |
 
