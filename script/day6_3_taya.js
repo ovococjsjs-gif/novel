@@ -21,7 +21,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", text: "А что будет на двенадцати?" },
     { speaker: "Тая", sprite: { char: "taya", emotion: "sad_compassion", pos: "right" }, text: "Не знаю. Правда. Я узнаю вместе с тобой." },
     { text: "Она заварила чай. Тот же, с дымком. Саша держал пиалу обеими руками, хотя в мастерской было тепло." },
-    { speaker: "Тая", sprite: { char: "taya", emotion: "neutral", pos: "right" }, text: "У тебя что-то случилось сегодня. Не с часами." },
+    { speaker: "Тая", sprite: { char: "taya", emotion: "tea", pos: "right" }, text: "У тебя что-то случилось сегодня. Не с часами." },
     {
       choice: {
         id: "d6_taya_talk",
@@ -31,7 +31,7 @@ window.VN_CHAPTERS.push({
             label: "Спросить, что ему делать",
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "Меня выселяют. Завтра. Если я не пойду к одним людям и не подпишу одну бумагу. Что мне делать, Тая?" },
-              { speaker: "Тая", sprite: { char: "taya", emotion: "neutral", pos: "right" }, text: "Я не скажу." },
+              { speaker: "Тая", sprite: { char: "taya", emotion: "firm", pos: "right" }, text: "Я не скажу." },
               { speaker: "Александр", text: "Почему?" },
               { speaker: "Тая", text: "Потому что тогда это будет моё решение. А жить с ним тебе." }
             ]
@@ -57,7 +57,7 @@ window.VN_CHAPTERS.push({
       }
     },
     { text: "Тая сняла с полки старые каминные часы, открыла заднюю крышку и повернула к нему механизм. Внутри качался маленький якорёк, туда-сюда." },
-    { speaker: "Тая", sprite: { char: "taya", emotion: "neutral", pos: "right" }, text: "Это анкер. Слушай. Тик. Так. А между ними колесо стоит. Совсем. Его отпускают и ловят." },
+    { speaker: "Тая", sprite: { char: "taya", emotion: "pocket_watch", pos: "right" }, text: "Это анкер. Слушай. Тик. Так. А между ними колесо стоит. Совсем. Его отпускают и ловят." },
     { text: "Саша наклонился. Тик — и тишина, крошечная, на волос. Так — и снова тишина. Он никогда раньше не слышал этих пауз. Теперь не слышать их не получалось." },
     { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Ты живёшь от удара к удару. А можно научиться жить в паузе. Хотя бы иногда. Приходи учиться. По вечерам." },
     {

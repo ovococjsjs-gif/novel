@@ -67,7 +67,7 @@ window.VN_CHAPTERS.push({
         { text: "Она сказала это так спокойно, что переспрашивать стало стыдно. Саша сел." }
       ],
       else: [
-        { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Заходи, чайник как раз вскипел. Ты бледный." },
+        { speaker: "Тая", sprite: { char: "taya", emotion: "tea", pos: "right" }, text: "Заходи, чайник как раз вскипел. Ты бледный." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Мне сейчас заказ пришёл в квартиру ноль. В вашей арке." },
         { speaker: "Тая", sprite: { char: "taya", emotion: "thoughtful", pos: "right" }, text: "И ты отказался." },
         { speaker: "Александр", text: "А надо было принять?" },
@@ -86,7 +86,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Тая", text: "Разное. Кто-то оставался у меня работать — помогать в мастерской. Им становилось легче. Один до сих пор приходит по четвергам. Приносит пряники и чинит кукушек." },
     { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Приходи и ты, когда будет время. Мне нужны руки. Пинцет держать, пружины не терять." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "happy", pos: "left" }, text: "Время у меня теперь есть. Я сегодня уволился." },
-    { speaker: "Тая", sprite: { char: "taya", emotion: "neutral", pos: "right" }, text: "Сегодня? И как?" },
+    { speaker: "Тая", sprite: { char: "taya", emotion: "surprised", pos: "right" }, text: "Сегодня? И как?" },
     { speaker: "Александр", text: "Легко. Подозрительно легко." },
     {
       choice: {
@@ -98,7 +98,7 @@ window.VN_CHAPTERS.push({
             effects: { aff_taya: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Приду. Только предупреждаю: пружины я теряю профессионально." },
-              { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Тогда начнём с того, что будем их искать. Это полезнее, чем кажется." }
+              { speaker: "Тая", sprite: { char: "taya", emotion: "laugh", pos: "right" }, text: "Тогда начнём с того, что будем их искать. Это полезнее, чем кажется." }
             ]
           },
           {

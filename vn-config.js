@@ -80,7 +80,7 @@
       fallback: "neutral"
     },
     taya: {
-      emotions: set(C + "taya/transparent/taya_{e}.png", ["neutral", "sad_compassion", "serious", "surprised", "thoughtful", "warm_smile"]),
+      emotions: set(C + "taya/transparent/taya_{e}.png", ["neutral", "sad_compassion", "serious", "surprised", "thoughtful", "warm_smile", "laugh", "pocket_watch", "tea", "firm", "shy"]),
       aliases: {},
       fallback: "neutral"
     }
