@@ -75,8 +75,8 @@
       fallback: "neutral"
     },
     dmitry: {
-      emotions: set(C + "dmitry/transparent/dmitry_{e}.png", ["neutral", "serious", "angry"]),
-      aliases: { tired: "neutral", smile: "neutral" },
+      emotions: set(C + "dmitry/transparent/dmitry_{e}.png", ["neutral", "serious", "angry", "tired", "smile"]),
+      aliases: {},
       fallback: "neutral"
     },
     taya: {
