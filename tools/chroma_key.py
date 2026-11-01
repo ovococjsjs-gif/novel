@@ -38,13 +38,18 @@ def key_alpha(rgb, key="green"):
     for i in range(1, n):
         x, y, ww, hh, area = st[i]
         touches = x == 0 or y == 0 or x + ww >= w or y + hh >= h
-        keep[i] = touches or area >= 60
+        mean_dom = float(dom[lab == i].mean())
+        # крошечные зазоры между пальцами: маленькие, но почти чистый ключ
+        keep[i] = touches or area >= 60 or (area >= 6 and mean_dom > 0.6 * k)
     core = keep[lab].astype(np.uint8)
     # узкие щели (между рукой и боком и т.п.) с почти чистым ключом — тоже фон
     core |= (dom > 0.75 * k).astype(np.uint8)
     # зона ключа: 12 px вокруг фона — ловит просветы между прядями;
     # глаза и одежда глубже внутри фигуры и сюда не попадают
     band = cv2.dilate(core, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))).astype(bool)
+    # тонкие щели между пальцами/прядями (1–2 px): смешанный с ключом цвет.
+    # Внутри фигуры перевес ключа ≤ ~0.1k (глаза, оливки), так что 0.2k безопасно.
+    band |= cv2.dilate((dom > 0.2 * k).astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
     # альфа по «зелёному перевесу»: 0 на чистом ключе, 1 на обычном цвете
     lo, hi = 0.12 * k, 0.88 * k
     a = 1.0 - np.clip((dom - lo) / (hi - lo), 0.0, 1.0)
