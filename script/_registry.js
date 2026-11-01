@@ -23,7 +23,7 @@ window.VN_VARS = {
   raincoat_packed: { type: "flag", default: false, desc: "Пролог: взял жёлтый дождевик (иначе Лена выдаст запасной из депо)" },
   dasha_honest: { type: "flag", default: false, desc: "Пролог: честно признался Даше, что забыл про платье" },
   saw_taya_d0: { type: "flag", default: false, desc: "Пролог: заметил янтарный свет мастерской" },
-  mirael_phone: { type: "flag", default: false, desc: "День 1: дал Мираэль старый телефон" },
+  mirael_phone: { type: "flag", default: false, desc: "День 2: оставил Мираэль старый кнопочный телефон" },
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },
   watch_left_taya: { type: "flag", default: false, desc: "День 1: оставил часы деда у Таи" },
   asked_valeria_page: { type: "flag", default: false, desc: "День 3: дочитал страницу про стирание памяти" },
