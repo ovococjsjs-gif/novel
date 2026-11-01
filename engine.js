@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261031_17";
+  const ASSET_VER = "20261031_18";
 
   function withVer(url) {
     if (!url) return "";
@@ -152,16 +152,41 @@
   const continueBadge = document.getElementById("continue-badge");
 
   // Preload cache so images never flicker or drop
-  const preloadedImages = new Map();
+  const preloadedImages = new Set();
+  const preloadQueue = [];
+  let preloadBusy = false;
+  let preloadTimer = null;
+
+  function pumpPreloadQueue() {
+    if (preloadBusy || preloadQueue.length === 0) return;
+    const url = preloadQueue.shift();
+    if (!url || preloadedImages.has(url)) {
+      pumpPreloadQueue();
+      return;
+    }
+    preloadBusy = true;
+    preloadedImages.add(url);
+    const im = new Image();
+    const next = () => {
+      preloadBusy = false;
+      setTimeout(pumpPreloadQueue, 40);
+    };
+    im.onload = next;
+    im.onerror = next;
+    im.src = url;
+  }
+
   function preloadImage(url) {
     if (!url || preloadedImages.has(url)) return;
-    const im = new Image();
-    im.src = url;
-    preloadedImages.set(url, im);
+    preloadQueue.push(url);
   }
 
   function preloadChapterAssets(ch) {
     if (!ch) return;
+    // Clear pending low-priority preloads from previous chapter so they never clog sockets
+    preloadQueue.length = 0;
+    if (preloadTimer) clearTimeout(preloadTimer);
+
     if (ch.bg) preloadImage(withVer(ch.bg));
     function preloadSpriteObj(sp) {
       if (!sp || typeof sp !== "object") return;
@@ -189,6 +214,8 @@
       });
     }
     scan(ch.nodes);
+    // Start sequential background preloading after active BGM & first-frame sprites have loaded
+    preloadTimer = setTimeout(pumpPreloadQueue, 700);
   }
 
   // Synthesized subtle UI Sound Effects (Web Audio API)
@@ -265,8 +292,11 @@
   }
 
   // Global unlock so music starts immediately on page load or very first user interaction
-  function unlockAudioOnce() {
-    if (settings.bgmMuted) return;
+  let audioUnlocked = false;
+  let userPausedBgm = false;
+  function unlockAudioOnce(e) {
+    if (audioUnlocked || settings.bgmMuted || userPausedBgm) return;
+    if (e && e.target && e.target.closest && e.target.closest("#bgm-toggle")) return;
     if (bgmAudio.paused) {
       const target = state.currentBgm || "Golden Afternoon Light.mp3";
       if (!target.startsWith("placeholder:")) {
@@ -274,8 +304,13 @@
       }
     }
   }
-  ["pointerdown", "mousedown", "keydown", "touchstart", "click"].forEach((evt) => {
+  const unlockEvents = ["pointerdown", "keydown", "touchstart", "click"];
+  unlockEvents.forEach((evt) => {
     window.addEventListener(evt, unlockAudioOnce, { capture: true, passive: true });
+  });
+  bgmAudio.addEventListener("playing", () => {
+    audioUnlocked = true;
+    bgmToggle.textContent = settings.bgmMuted ? "♫ Звук выкл" : "♫ Пауза";
   });
 
   // Mouse parallax on Main Menu
@@ -463,8 +498,37 @@
     if (setBoxOpacityVal) setBoxOpacityVal.textContent = `${Math.round(settings.boxOpacity * 100)}%`;
   }
 
+  let bgmRetryTimer = null;
+  function tryPlayCurrentBgm() {
+    if (userPausedBgm || settings.bgmMuted) return;
+    if (!state.currentBgm || state.currentBgm.startsWith("placeholder:")) return;
+    if (!bgmAudio.paused) return;
+    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
+    bgmAudio.play().then(() => {
+      audioUnlocked = true;
+      bgmToggle.textContent = settings.bgmMuted ? "♫ Звук выкл" : "♫ Пауза";
+    }).catch((err) => {
+      if (err && err.name === "AbortError") {
+        if (bgmRetryTimer) clearTimeout(bgmRetryTimer);
+        bgmRetryTimer = setTimeout(tryPlayCurrentBgm, 140);
+      } else {
+        bgmToggle.textContent = "♫ Вкл. звук";
+      }
+    });
+  }
+
+  bgmAudio.addEventListener("canplay", () => {
+    if (!userPausedBgm && !settings.bgmMuted && bgmAudio.paused && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
+      tryPlayCurrentBgm();
+    }
+  });
+
   function playBgm(trackName) {
     if (!trackName) return;
+    if (bgmRetryTimer) {
+      clearTimeout(bgmRetryTimer);
+      bgmRetryTimer = null;
+    }
     if (trackName.startsWith("placeholder:")) {
       state.currentBgm = trackName;
       bgmAudio.pause();
@@ -473,33 +537,37 @@
       return;
     }
     const encoded = withVer(encodeURI(trackName));
-    if (state.currentBgm === trackName && !bgmAudio.paused) return;
+    const currentTrackAttr = bgmAudio.getAttribute("data-track");
+    if (state.currentBgm === trackName && currentTrackAttr === trackName && !bgmAudio.paused) {
+      return;
+    }
     state.currentBgm = trackName;
-    if (bgmAudio.getAttribute("data-track") !== trackName) {
+    bgmLabel.textContent = trackName.replace(".mp3", "");
+    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
+    if (currentTrackAttr !== trackName) {
       bgmAudio.setAttribute("data-track", trackName);
       bgmAudio.src = encoded;
+      bgmAudio.load();
     }
-    bgmAudio.volume = settings.bgmMuted ? 0 : settings.bgmVolume;
-    bgmLabel.textContent = trackName.replace(".mp3", "");
-    bgmAudio.play().then(() => {
-      bgmToggle.textContent = settings.bgmMuted ? "♫ Звук выкл" : "♫ Пауза";
-    }).catch(() => {
-      bgmToggle.textContent = "♫ Вкл. звук";
-    });
+    if (!userPausedBgm) {
+      tryPlayCurrentBgm();
+    }
   }
 
   bgmToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     if (bgmAudio.paused) {
+      userPausedBgm = false;
       settings.bgmMuted = false;
       bgmAudio.volume = settings.bgmVolume;
       if (!bgmAudio.src && state.currentBgm && !state.currentBgm.startsWith("placeholder:")) {
+        bgmAudio.setAttribute("data-track", state.currentBgm);
         bgmAudio.src = withVer(encodeURI(state.currentBgm));
+        bgmAudio.load();
       }
-      bgmAudio.play().then(() => {
-        bgmToggle.textContent = "♫ Пауза";
-      }).catch(() => {});
+      tryPlayCurrentBgm();
     } else {
+      userPausedBgm = true;
       bgmAudio.pause();
       bgmToggle.textContent = "♫ Вкл. звук";
     }
@@ -754,24 +822,41 @@
   // =========================================================
   // CHAPTER & NODE EXECUTION + AUTO-ADVANCE
   // =========================================================
+  function resolveNodeEnvironment(ch, nodes, upToIndex) {
+    let bg = ch.bg;
+    let bgm = ch.bgm;
+    let weather = ch.weather || "none";
+    let camera = ch.camera || "none";
+    const limit = Math.min(upToIndex, (nodes || []).length - 1);
+    for (let i = 0; i <= limit; i++) {
+      const n = nodes[i];
+      if (!n) continue;
+      if (n.bg) bg = n.bg;
+      if (n.bgm) bgm = n.bgm;
+      if (n.weather) weather = n.weather;
+      if (n.camera) camera = n.camera;
+    }
+    return { bg, bgm, weather, camera };
+  }
+
   function loadChapter(index, startNode = 0) {
     const chapters = window.VN_CHAPTERS || [];
     if (index < 0 || index >= chapters.length) return;
     state.chapterIndex = index;
     state.nodeIndex = startNode;
     const ch = chapters[index];
-    preloadChapterAssets(ch);
-    if (chapters[index + 1]) preloadChapterAssets(chapters[index + 1]);
     state.runtimeNodes = JSON.parse(JSON.stringify(ch.nodes));
     clearSprites();
-    setBackground(ch.bg);
-    setWeather(ch.weather || "none");
-    setCamera(ch.camera || "none");
-    playBgm(ch.bgm);
+    const env = resolveNodeEnvironment(ch, state.runtimeNodes, startNode);
+    setBackground(env.bg);
+    setWeather(env.weather);
+    setCamera(env.camera);
+    playBgm(env.bgm);
     hudDay.textContent = ch.day;
     hudTitle.textContent = ch.title;
     renderCurrentNode();
     saveAuto();
+    preloadChapterAssets(ch);
   }
 
   function scheduleAutoAdvance() {
@@ -939,12 +1024,12 @@
     }
     if (state.nodeIndex > 0) {
       state.nodeIndex -= 1;
-      for (let i = state.nodeIndex; i >= 0; i--) {
-        if (state.runtimeNodes[i].bg) {
-          setBackground(state.runtimeNodes[i].bg);
-          break;
-        }
-      }
+      const ch = window.VN_CHAPTERS[state.chapterIndex] || {};
+      const env = resolveNodeEnvironment(ch, state.runtimeNodes, state.nodeIndex);
+      setBackground(env.bg);
+      setWeather(env.weather);
+      setCamera(env.camera);
+      playBgm(env.bgm);
       renderCurrentNode();
     } else if (state.chapterIndex > 0) {
       const prevCh = window.VN_CHAPTERS[state.chapterIndex - 1];
@@ -1071,20 +1156,21 @@
     state.chapterIndex = snap.chapterIndex || 0;
     state.nodeIndex = snap.nodeIndex || 0;
     const ch = window.VN_CHAPTERS[state.chapterIndex];
-    preloadChapterAssets(ch);
     state.runtimeNodes = snap.runtimeNodes || JSON.parse(JSON.stringify(ch.nodes));
     state.stats = snap.stats || state.stats;
     state.choicesMade = snap.choicesMade || {};
     clearSprites();
-    setBackground(snap.currentBg || ch.bg);
-    setWeather(snap.weather || ch.weather || "none");
-    setCamera(snap.camera || ch.camera || "none");
-    playBgm(snap.currentBgm || ch.bgm);
+    const env = resolveNodeEnvironment(ch, state.runtimeNodes, state.nodeIndex);
+    setBackground(snap.currentBg || env.bg);
+    setWeather(snap.weather || env.weather);
+    setCamera(snap.camera || env.camera);
+    playBgm(snap.currentBgm || env.bgm);
     hudDay.textContent = ch.day;
     hudTitle.textContent = ch.title;
     titleScreen.classList.add("hidden");
     savesModal.classList.remove("visible");
     renderCurrentNode();
+    preloadChapterAssets(ch);
   }
 
   // =========================================================
@@ -1311,12 +1397,12 @@
     initSettingsControls();
     bindUiSounds(document);
     updateContinueBadge();
+    // Start menu music immediately BEFORE queuing any background image preloads
+    playBgm("Golden Afternoon Light.mp3");
     if (window.VN_CHAPTERS && window.VN_CHAPTERS.length > 0) {
       setBackground(window.VN_CHAPTERS[0].bg);
       preloadChapterAssets(window.VN_CHAPTERS[0]);
     }
-    // Start menu music immediately
-    playBgm("Golden Afternoon Light.mp3");
   }
 
   init();

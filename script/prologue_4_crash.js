@@ -125,6 +125,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Рассказчик",
+      bgm: "The Hollow Stare.mp3",
       sprite: { char: "mirael_angel", emotion: "shocked_terrified", pos: "center" },
       text: "В нескольких шагах от него, прямо на мокрой разметке перехода, сидела на коленях девушка в длинном белом одеянии. Вокруг неё в лужах плавали сбитые перья, а за её спиной под струями дождя тяжело, прерывисто вздрагивали четыре больших белых крыла."
     },
@@ -229,6 +230,7 @@ window.VN_CHAPTERS.push({
               {
                 speaker: "Рассказчик",
                 bg: "assets/backgrounds/bg_sasha_room_night.png",
+                bgm: "River Fog.mp3",
                 weather: "none",
                 sprite: "clear",
                 text: "Откатив велосипед с погнутым передним ободом в густые заросли сирени у арки, Саша подхватил лёгкую девушку на руки и побежал через тёмные проходные дворы к своему подъезду."
@@ -242,6 +244,7 @@ window.VN_CHAPTERS.push({
               {
                 speaker: "Рассказчик",
                 bg: "assets/backgrounds/bg_sasha_room_night.png",
+                bgm: "River Fog.mp3",
                 weather: "none",
                 sprite: "clear",
                 text: "Саша стащил с себя промокшую курьерскую ветровку, укрыл ею дрожащие белые крылья и, оставив велосипед под аркой, донёс незнакомку до своей квартиры на пятом этаже."
@@ -254,6 +257,7 @@ window.VN_CHAPTERS.push({
     {
       speaker: "Рассказчик",
       bg: "assets/backgrounds/bg_sasha_room_night.png",
+      bgm: "River Fog.mp3",
       weather: "none",
       sprite: { char: "alexander", emotion: "wounded", pos: "center" },
       text: "Дома он уложил девушку на свою кровать, укрыл тёплым клетчатым пледом и только тогда взглянул на собственные ободранные ладони под тусклым светом настольной лампы. За окном всё ещё гудел ночной ливень, а на кровати в его съёмной однушке ровно и тихо дышало существо с четырьмя настоящими крыльями."

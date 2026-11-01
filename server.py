@@ -9,7 +9,10 @@ class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
 
     def end_headers(self):
         self.send_header("Accept-Ranges", "bytes")
-        self.send_header("Cache-Control", "no-cache")
+        if ".mp3" in self.path or "?v=" in self.path:
+            self.send_header("Cache-Control", "public, max-age=86400")
+        else:
+            self.send_header("Cache-Control", "no-cache")
         super().end_headers()
 
     def send_head(self):
@@ -66,7 +69,7 @@ class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
                     outputfile.write(chunk)
                     remaining -= len(chunk)
         except (BrokenPipeError, ConnectionResetError):
-            pass
+            self.close_connection = True
 
 
 if __name__ == "__main__":

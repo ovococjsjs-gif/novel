@@ -7,7 +7,7 @@ window.VN_CHAPTERS.push({
   title: "Глава I. Чужое тело и горячий кофе",
   subtitle: "Съёмная однушка Саши · 09:15 утра",
   bg: "assets/backgrounds/bg_sasha_room_day.png",
-  bgm: "Soft Morning Light.mp3",
+  bgm: "River Fog.mp3",
   nodes: [
     {
       speaker: "Рассказчик",
@@ -93,6 +93,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Мираэль",
+      bgm: "The Hollow Stare.mp3",
       sprite: { char: "mirael_angel", emotion: "sad", pos: "right" },
       text: "Потому что Хранитель обязан беречь человека только до той минуты, которая записана в книге как его законный конец. Если человек падает с дерева по неосторожности раньше срока — мы должны подхватить. Но вчера в двадцать два пятьдесят восемь на том перекрёстке стояла твоя настоящая, финальная точка."
     },
@@ -116,6 +117,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Мираэль",
+      bgm: "Soft Morning Light.mp3",
       sprite: { char: "mirael_angel", emotion: "shy", pos: "right" },
       text: "Ой... Что это сейчас было?! Внутри меня что-то рычит!"
     },

@@ -7,7 +7,7 @@ window.VN_CHAPTERS.push({
   title: "Глава III. Горничная с термосом и предгрозовой штиль",
   subtitle: "Точка сбора курьеров у депо · 19:45 – 22:35",
   bg: "assets/backgrounds/bg_courier_spot.png",
-  bgm: "Summer Town Shuffle.mp3",
+  bgm: "workflow.mp3",
   nodes: [
     {
       speaker: "Рассказчик",
@@ -111,6 +111,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Лена",
+      bgm: "Summer Town Shuffle.mp3",
       sprite: { char: "lena", emotion: "snide", pos: "right" },
       text: "Ну здравствуй, Белый Воротничок. Ты глянь на него — восьмой час смены пошёл, а у графа Орехова даже манжеты на рубашке не помялись. Ты заказы вообще возишь или тебя клиенты на руках по лестницам носят?"
     },
@@ -201,6 +202,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Рассказчик",
+      bgm: "The Hollow Stare.mp3",
       text: "Над крышами пятиэтажек глухо прокатился раскат грома, и по жестяному козырьку павильона сразу застучали частые тяжёлые капли."
     },
     {

@@ -7,7 +7,7 @@ window.VN_CHAPTERS.push({
   title: "Глава II. Кассационный срок",
   subtitle: "Съёмная однушка Саши · Полдень",
   bg: "assets/backgrounds/bg_apartment_hallway.png",
-  bgm: "Midnight Boardroom.mp3",
+  bgm: "The Hollow Stare.mp3",
   nodes: [
     {
       speaker: "Рассказчик",
@@ -44,7 +44,6 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Валерия",
-      bgm: "Midnight Boardroom.mp3",
       sprite: { char: "valeria_human", emotion: "angry", pos: "left" },
       text: "Ника, сделай одолжение, помолчи хотя бы две минуты. Ты сейчас на выездной ревизии."
     },
@@ -96,6 +95,7 @@ window.VN_CHAPTERS.push({
     {
       speaker: "Рассказчик",
       bg: "assets/backgrounds/bg_sasha_room_day.png",
+      bgm: "Midnight Boardroom.mp3",
       text: "Стоило входной двери закрыться за их спинами, оставляя посторонние человеческие глаза снаружи, как воздух в комнате заметно потяжелел, наполнившись тонким запахом дорогой кожи и остывшего каминного угля."
     },
     {
@@ -148,6 +148,7 @@ window.VN_CHAPTERS.push({
     },
     {
       speaker: "Валерия",
+      bgm: "terms and leverage_v2.mp3",
       sprite: { char: "valeria", emotion: "contract", pos: "right" },
       text: "Хранитель неразрывно привязан к полису своего подопечного до момента его фактической смерти. А с вами, Александр, вышел очаровательный бюрократический клинч: по документам Верхнего круга вы числитесь погибшим со вчерашней ночи, тогда как на деле стоите передо мной совершенно живой и здоровый."
     },
