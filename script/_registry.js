@@ -25,6 +25,7 @@ window.VN_VARS = {
   rude_complaint: { type: "flag", default: false, desc: "Пролог: отшутился с хамом-клиентом (жалоба доходит до Дмитрия)" },
   saw_taya_d0: { type: "flag", default: false, desc: "Пролог: заметил янтарный свет мастерской" },
   mirael_phone: { type: "flag", default: false, desc: "День 2: оставил Мираэль старый кнопочный телефон" },
+  crossed_zarechny: { type: "flag", default: false, desc: "День 2: довёз инсулин через перекрёсток на Заречном" },
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },
   watch_left_taya: { type: "flag", default: false, desc: "День 1: оставил часы деда у Таи" },
   asked_valeria_page: { type: "flag", default: false, desc: "День 3: дочитал страницу про стирание памяти" },

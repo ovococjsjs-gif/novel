@@ -29,6 +29,7 @@
 | `bg_river_embankment_day.png` | Речная набережная | день | Вечер — `bg_river_embankment_evening.png` (✅ 01.11) |
 | `bg_courier_spot.png` | Точка сбора курьеров у шаурмичной | **только дождь / пасмурно** | Сухой вечер перед грозой — `bg_courier_spot_dry.png` (✅ 01.11) |
 | `bg_rainy_crossroad.png` | Заречный перекрёсток, ливень | ночь, дождь | — |
+| `bg_crossroad_day.png` | Тот же перекрёсток на Заречном днём: солнце, сухой асфальт, зелёный свет (правка `bg_rainy_crossroad`) | d2 |
 | `bg_barbershop_interior.png` | Барбершоп Артёма | день | — |
 | `bg_artyom_apartment.png` | Квартира Артёма | вечер | — |
 | `bg_city_cafe.png` | Кафе с бабл-ти | день | — |

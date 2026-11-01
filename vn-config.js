@@ -111,6 +111,7 @@
     "Мама": { cls: "minor", char: null },
     "Тамара": { cls: "minor", char: null },
     "Ковалёвский": { cls: "minor", char: null },
+    "Гарик": { cls: "minor", char: null },
     "Рыбак": { cls: "minor", char: null }
   };
 
