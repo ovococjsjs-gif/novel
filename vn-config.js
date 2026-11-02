@@ -105,6 +105,7 @@
     "Лев Аркадьевич": { cls: "minor", char: null },
     "Инесса": { cls: "minor", char: null },
     "Администратор": { cls: "minor", char: null },
+    "Консьерж": { cls: "minor", char: null },
     "Бариста": { cls: "minor", char: null },
     "Клиент": { cls: "minor", char: null },
     "Клиентка": { cls: "minor", char: null },
