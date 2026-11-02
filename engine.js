@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261102_31";
+  const ASSET_VER = "20261102_32";
 
   function withVer(url) {
     if (!url) return "";
@@ -460,6 +460,8 @@
   let bgmRetryTimer = null;
 
   // ---------- Предзагрузка треков в память ----------
+  // Все треки лежат в music/; в сценарии пишем только имя файла.
+  const BGM_DIR = "music/";
   const bgmBlobUrls = {};
   const bgmPrefetching = new Set();
   const bgmPrefetchQueue = [];
@@ -477,7 +479,7 @@
     const t = bgmPrefetchQueue.shift();
     if (!t) return;
     bgmPrefetchBusy = true;
-    fetch(withVer(encodeURI(t)))
+    fetch(withVer(encodeURI(BGM_DIR + t)))
       .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
       .then((b) => {
         bgmBlobUrls[t] = URL.createObjectURL(b);
@@ -491,7 +493,7 @@
       });
   }
   function bgmUrl(t) {
-    return bgmBlobUrls[t] || withVer(encodeURI(t));
+    return bgmBlobUrls[t] || withVer(encodeURI(BGM_DIR + t));
   }
 
   // ---------- Плавная громкость ----------

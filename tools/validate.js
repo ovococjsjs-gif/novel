@@ -138,7 +138,7 @@ function checkEnv(where, n) {
     const p = Cfg.resolveBg(n.bg);
     if (!exists(p)) err(where, `bg: нет файла ${p}`);
   }
-  if (n.bgm && !exists(n.bgm)) err(where, `bgm: нет файла ${n.bgm}`);
+  if (n.bgm && !exists("music/" + n.bgm)) err(where, `bgm: нет файла music/${n.bgm}`);
   if (n.weather && !Cfg.WEATHER.includes(n.weather)) err(where, `weather «${n.weather}»`);
   if (n.camera && !Cfg.CAMERA.includes(n.camera)) err(where, `camera «${n.camera}»`);
   if (n.camera === "ride" && n.sprite !== "clear") warn(where, "езда (camera: ride) без sprite: \"clear\" — POV, спрайты должны уйти");

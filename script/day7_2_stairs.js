@@ -94,7 +94,7 @@ window.VN_CHAPTERS.push({
             label: "В салон «Валерия и партнёры»",
             set: { route: 2 },
             next: [
-              { bg: "bg_valeria_salon", bgm: "Midnight Boardroom.mp3", weather: "rain", text: "До Старокупеческого он добежал мокрый насквозь. Дверь на втором этаже открылась сама. Пахло воском и старым деревом, в камине трещали поленья." },
+              { bg: "bg_valeria_salon_night", bgm: "Midnight Boardroom.mp3", weather: "rain", text: "До Старокупеческого он добежал мокрый насквозь. Дверь на втором этаже открылась сама. Пахло воском и старым деревом, в камине трещали поленья." },
               { speaker: "Валерия", sprite: { char: "valeria", emotion: "playful_smile", pos: "right" }, text: "Александр. Без двадцати двенадцать. Вы умеете входить эффектно." },
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Я пришёл говорить. Не подписывать." },
               { speaker: "Валерия", sprite: { char: "valeria", emotion: "amused", pos: "right" }, text: "Все так говорят. Садитесь. Вы играете в шахматы?" }
@@ -114,7 +114,7 @@ window.VN_CHAPTERS.push({
             label: "В мастерскую к Тае",
             set: { route: 4 },
             next: [
-              { bg: "bg_taya_workshop", bgm: "Soft Morning Light.mp3", weather: "none", text: "В полуподвале было сухо и тихо. Дождь стучал где-то наверху, в другом мире. Колокольчик звякнул, и все часы на полках на миг притихли." },
+              { bg: "bg_taya_workshop_night", bgm: "Soft Morning Light.mp3", weather: "none", text: "В полуподвале было сухо и тихо. Дождь стучал где-то наверху, в другом мире. Колокольчик звякнул, и все часы на полках на миг притихли." },
               { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Ты вовремя. Смотри." },
               { text: "Дедовские часы лежали на сукне. Стрелки сошлись на двенадцати. Секундная замерла, дрогнула — и пошла вперёд." },
               { speaker: "Тая", sprite: { char: "taya", emotion: "neutral", pos: "right" }, text: "Садись. Я заварю чай. Сначала выпей чаю." }

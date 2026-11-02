@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава II. Горячий кофе",
   subtitle: "Тихая улица, пятый этаж · кухня",
   bg: "bg_sasha_kitchen_day",
-  bgm: "Soft Morning Light.mp3",
+  bgm: "Toast and Tinkling.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Кухня у Саши была узкая, как купе, и Мираэль заняла её почти целиком." },

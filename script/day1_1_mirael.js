@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава I. Чужое тело",
   subtitle: "Тихая улица, пятый этаж · понедельник, утро",
   bg: "bg_sasha_room_day",
-  bgm: "Soft Morning Light.mp3",
+  bgm: "First Steps in the Hall.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Шея затекла так, что голова поворачивалась только вместе с плечами. Саша открыл глаза и увидел днище письменного стола: паутину в углу и жвачку, которую сам туда прилепил на первом курсе." },

@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава III. Человек хоть стал",
   subtitle: "Мостовой проспект · барбершоп Артёма · день",
   bg: "bg_barbershop_interior",
-  bgm: "Summer Town Shuffle.mp3",
+  bgm: "Last Chord.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Внутри дул кондиционер, пахло ментоловым тоником и дорогим деревом. Два мастера работали, третий скучал у кассы и листал телефон." },

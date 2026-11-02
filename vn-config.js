@@ -133,8 +133,17 @@
   }
 
   // Короткая запись фона: "bg_taya_workshop" → полный путь.
+  // Фоны, у которых появились дневной и ночной варианты (02.11). Старое имя
+  // остаётся рабочим (на случай старых сохранений) и ведёт на дневной.
+  const BG_ALIASES = {
+    bg_taya_workshop: "bg_taya_workshop_day",
+    bg_valeria_office: "bg_valeria_office_day",
+    bg_valeria_reception: "bg_valeria_reception_day",
+    bg_valeria_salon: "bg_valeria_salon_day",
+  };
   function resolveBg(bg) {
     if (!bg) return "";
+    if (BG_ALIASES[bg]) bg = BG_ALIASES[bg];
     if (bg.includes("/")) return bg;
     return BG_DIR + (bg.endsWith(".png") || bg.endsWith(".webp") || bg.endsWith(".jpg") ? bg : bg + ".png");
   }
