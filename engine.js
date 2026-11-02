@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261102_50";
+  const ASSET_VER = "20261103_51";
 
   function withVer(url) {
     if (!url) return "";
