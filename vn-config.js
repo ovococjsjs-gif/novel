@@ -102,6 +102,7 @@
     "Баба Нюра": { cls: "minor", char: null },
     "Даша": { cls: "minor", char: null },
     "Зоя Павловна": { cls: "minor", char: null },
+    "Лев Аркадьевич": { cls: "minor", char: null },
     "Инесса": { cls: "minor", char: null },
     "Администратор": { cls: "minor", char: null },
     "Бариста": { cls: "minor", char: null },
