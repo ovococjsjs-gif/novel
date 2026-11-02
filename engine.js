@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261102_43";
+  const ASSET_VER = "20261102_44";
 
   function withVer(url) {
     if (!url) return "";
@@ -223,17 +223,6 @@
     if (splashScreen) {
       splashScreen.classList.add("leaving");
       splashScreen.classList.add("hidden");
-      const v = splashScreen.querySelector(".swag-video");
-      if (v) {
-        // мягко глушим звук ролика за время затухания, потом останавливаем
-        const startVol = v.volume;
-        let k = 0;
-        const fade = setInterval(() => {
-          k += 1;
-          v.volume = Math.max(0, startVol * (1 - k / 10));
-          if (k >= 10) { clearInterval(fade); v.pause(); }
-        }, 90);
-      }
     }
     if (titleScreen) {
       titleScreen.classList.add("ready");
@@ -249,26 +238,7 @@
       if (splashDismissed) return document.removeEventListener("keydown", onSplashKey);
       if (e.key === "Enter" || e.key === " " || e.key === "Escape") dismissSplash();
     });
-    const splashVideo = splashScreen.querySelector(".swag-video");
-    let splashSafety = setTimeout(dismissSplash, 6000); // если видео так и не стартует
-    if (splashVideo) {
-      splashVideo.addEventListener("ended", dismissSplash);
-      splashVideo.addEventListener("error", () => setTimeout(dismissSplash, 1500));
-      splashVideo.addEventListener("playing", () => {
-        clearTimeout(splashSafety);
-        const d = isFinite(splashVideo.duration) ? splashVideo.duration : 10;
-        splashSafety = setTimeout(dismissSplash, (d + 2) * 1000); // страховка, если "ended" не придёт
-      }, { once: true });
-      // Со звуком браузер пускает только после взаимодействия; иначе играем без звука.
-      splashVideo.muted = false;
-      const p = splashVideo.play();
-      if (p && p.catch) {
-        p.catch(() => {
-          splashVideo.muted = true;
-          splashVideo.play().catch(() => {});
-        });
-      }
-    }
+    setTimeout(dismissSplash, 5600);
   } else if (titleScreen) {
     titleScreen.classList.add("ready");
   }
