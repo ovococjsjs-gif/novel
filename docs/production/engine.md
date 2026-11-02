@@ -129,7 +129,7 @@ window.VN_CHAPTERS.push({
 - **Сцены-варианты Дней 5–7:** по одной в день, по текущему лидеру (та же функция подсчёта, без меню).
 - **Секретная ветка** — `glitch_count >= 3` и Саша открывает дверь под лестницей.
 - **Хорошая концовка** маршрута X: `aff_X >= thr.good_aff && inner_sight >= thr.good_sight`. Плохая: `inner_sight <= thr.bad_sight`. Иначе нейтральная.
-- **Истинная концовка**: `meta.cleared_mirael_good && meta.cleared_valeria_good && meta.cleared_lena_good && meta.cleared_taya_good && meta.cleared_backrooms`.
+- **Истинная концовка**: `meta.cleared_mirael_good && meta.cleared_valeria_good && meta.cleared_earth_good && meta.cleared_taya_good && meta.cleared_secret_good`.
 - `id` концовок: `<маршрут>_<good|neutral|bad>`, `backrooms`, `true`.
 
 Ориентир по `inner_sight` для Недели 1: ~20 выборов, по правилу ±1 реальный максимум ~+10, у «бегущего» игрока — около 0 или ниже.
