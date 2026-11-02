@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261102_36";
+  const ASSET_VER = "20261102_37";
 
   function withVer(url) {
     if (!url) return "";
@@ -221,6 +221,7 @@
     if (splashDismissed) return;
     splashDismissed = true;
     if (splashScreen) {
+      splashScreen.classList.add("leaving");
       splashScreen.classList.add("hidden");
     }
     if (titleScreen) {
@@ -233,7 +234,11 @@
 
   if (splashScreen) {
     splashScreen.addEventListener("click", dismissSplash);
-    setTimeout(dismissSplash, 3200);
+    document.addEventListener("keydown", function onSplashKey(e) {
+      if (splashDismissed) return document.removeEventListener("keydown", onSplashKey);
+      if (e.key === "Enter" || e.key === " " || e.key === "Escape") dismissSplash();
+    });
+    setTimeout(dismissSplash, 5600);
   } else if (titleScreen) {
     titleScreen.classList.add("ready");
   }
