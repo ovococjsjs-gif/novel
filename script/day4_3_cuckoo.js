@@ -11,7 +11,29 @@ window.VN_CHAPTERS.push({
     { bg: "bg_sadovaya_street", bgm: "workflow.mp3", sprite: "clear", camera: "ride", text: "К пяти он поехал в Старокупеческий. Тая звала в четверг, и это было единственное место в городе, где его сегодня ждали к определённому часу. Под горку педали крутить не пришлось. Липы над переулком уже отцвели и роняли на асфальт сухие крылышки." },
     { bg: "bg_courtyard_arch_day", bgm: "Cold Elegance.mp3", sprite: "clear", camera: "none", text: "Под аркой Старокупеческого было прохладно. На крыльце седьмого дома стояла Валерия с чашкой кофе, как будто вышла подышать ровно в эту минуту." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "Александр. Вас подстригли. Смело." },
-    { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Друг подстриг." },
+    {
+      choice: {
+        id: "d4_valeria_porch",
+        prompt: "Валерия разглядывает его неровный висок поверх чашки.",
+        options: [
+          {
+            label: "Ответить ей в тон",
+            effects: { aff_valeria: 1 },
+            next: [
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Смело было бы прийти к вам заросшим. Я решил не рисковать." },
+              { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "Вы начинаете отвечать, Александр. Это интереснее, чем когда вы молчите. И для вас опаснее." }
+            ]
+          },
+          {
+            label: "Буркнуть, что друг подстриг",
+            next: [
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Друг подстриг." },
+              { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "neutral", pos: "right" }, text: "Друг. Конечно." }
+            ]
+          }
+        ]
+      }
+    },
     {
       if: "called_deanery",
       then: [
@@ -92,7 +114,6 @@ window.VN_CHAPTERS.push({
           },
           {
             label: "Спросить, как она сама услышала, что часы хромают",
-            effects: { aff_taya: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "А вы как это слышите? Я бы так и думал, что они нормально ходят." },
               { speaker: "Тая", sprite: { char: "taya", emotion: "warm_smile", pos: "right" }, text: "Меня учили слушать. Долго. Сначала часы, потом людей. С людьми труднее, они громче тикают." },

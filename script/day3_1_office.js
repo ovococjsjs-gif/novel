@@ -238,6 +238,7 @@ window.VN_CHAPTERS.push({
           {
             label: "Взять. Деньги есть деньги",
             set: { took_valeria_money: true },
+            effects: { aff_valeria: 1 },
             next: [
               { text: "Он расписался. Ручка была тяжёлая, с золотым пером, и писала мягко, сама вела руку. Конверт лёг во внутренний карман." },
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, thought: true, text: "Это за доставку. Я же доставил, всё честно." },

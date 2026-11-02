@@ -104,7 +104,7 @@ const stats = [];
 function checkVarName(where, name, kind) {
   if (name.startsWith("meta.") || name.startsWith("thr.")) return;
   if (name.startsWith("calc.")) {
-    if (!["leader", "second", "tie", "top", "true_ready"].includes(name.slice(5))) err(where, `${kind}: неизвестное calc-имя «${name}»`);
+    if (!["leader", "second", "tie", "tie_count", "top", "true_ready", "tied_1", "tied_2", "tied_3", "tied_4"].includes(name.slice(5))) err(where, `${kind}: неизвестное calc-имя «${name}»`);
     return;
   }
   if (!(name in VARS)) err(where, `${kind}: переменная «${name}» не описана в script/_registry.js`);
