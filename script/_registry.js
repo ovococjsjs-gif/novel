@@ -29,6 +29,7 @@ window.VN_VARS = {
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },
   watch_left_taya: { type: "flag", default: false, desc: "День 1: оставил часы деда у Таи" },
   nyura_tap: { type: "flag", default: false, desc: "День 2: починил кран бабе Нюре (отзывается в Дне 3)" },
+  called_deanery: { type: "flag", default: false, desc: "День 4: позвонил в деканат (узнал условия восстановления)" },
   asked_valeria_page: { type: "flag", default: false, desc: "День 3: дочитал страницу про стирание памяти" },
   nika_bubble_tea: { type: "flag", default: false, desc: "День 3: купил Нике бабл-ти" },
   took_valeria_money: { type: "flag", default: false, desc: "День 3: взял 3 000 ₽ «оплаты курьеру» у Инессы" },
