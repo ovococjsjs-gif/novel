@@ -6,6 +6,13 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
+    # Явные типы: на старых Python и в Windows-реестре .webp может быть не прописан
+    extensions_map = {
+        **SimpleHTTPRequestHandler.extensions_map,
+        ".webp": "image/webp",
+        ".mp3": "audio/mpeg",
+        ".js": "text/javascript",
+    }
 
     def end_headers(self):
         self.send_header("Accept-Ranges", "bytes")

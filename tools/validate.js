@@ -63,7 +63,11 @@ if (!sandbox.window.VN_VARS) err("script/_registry.js", "нет реестра �
 // ------------------------------------------------------------------
 // 2. Справочники для проверок стиля
 // ------------------------------------------------------------------
-const NODE_KEYS = new Set([...Core.ENV_KEYS, ...Core.CONTROL_KEYS, "speaker", "text", "thought", "note"]);
+const NODE_KEYS = new Set([...Core.ENV_KEYS, ...Core.CONTROL_KEYS, "speaker", "text", "thought", "note", "lint_ok"]);
+// lint_ok: "nxy" | ["season", "brand", ...] — автор проверил узел глазами, стилевое предупреждение
+// этого вида здесь ложное. Движок поле игнорирует. Коды: nxy, season, brand, church, marker,
+// stamp, simile, length, fp.
+const LINT_CODES = new Set(["nxy", "season", "brand", "church", "marker", "stamp", "simile", "length", "fp"]);
 const OPTION_KEYS = new Set(["label", "effects", "set", "if", "next", "nodes", "jump", "note"]);
 
 const BANNED = [
@@ -84,6 +88,9 @@ const NOT_X_BUT_Y_RE = /(^|[\s«—(])не\s+[^,.!?;:«»]{1,40},\s+а\s+(?!то
 const FIRST_PERSON_RE = /(^|[^а-яё])(я|меня|мне|мной|мой|моя|моё|мое|мои|моего|моей)(?=[^а-яё]|$)/i;
 const NICK_RE = /(граф|барон|князь|маркиз|виконт|герцог)\S*/gi;
 const SIMILE_RE = /(^|[^а-яё])(словно|будто)(?=[^а-яё]|$)/gi;
+// Для --stats: сравнения в речи рассказчика (шире, чем SIMILE_RE: «как будто», «точно», «похож на», «, как …»).
+// Счёт грубый, служит ориентиром для правила «одно сравнение на сцену» (00_decisions.md п. 111).
+const NARR_SIMILE_RE = /(^|[^а-яё])(будто|словно|похож[а-яё]* на)(?=[^а-яё]|$)|(?<!(?:слушал[аи]?|слушая|слышал[аи]?|слышно было|слышно|смотрел[аи]?|глядя|видел[аи]?|заметил[аи]?|[^а-яё]то|помнил[аи]?|знал[аи]?|понял[аи]?|чувствовал[аи]?|наблюдал[аи]?)),\s+как\s+(?!только|раз[^а-яё]|всегда|обычно|прежде|раньше|тогда|ни в ч|и[^а-яё]|будто|правило|можно|нельзя|следует|обещал|учил|договаривались|положено|надо|было|есть|мог|умел|сказал|велел|просил|он[^а-яё]|она[^а-яё]|они[^а-яё]|его|её|их[^а-яё]|он[аио][^а-яё])/gi;
 const SUDDEN_RE = /(внезапно|неожиданно)/gi;
 const A_CHTO_RE = /а что\?/gi;
 
@@ -152,21 +159,22 @@ function checkEnv(where, n) {
   checkSprite(where, n.sprite);
 }
 
-function styleText(where, text, kind) {
+function styleText(where, text, kind, ok) {
   const t = lc(text);
-  BANNED.forEach((w) => t.includes(w) && warn(where, `слово-маркер «${w}»`));
-  BANNED_RE.forEach(([re, name]) => re.test(t) && warn(where, `штамп ${name}`));
+  const on = (code) => !(ok && ok.has(code));
+  if (on("marker")) BANNED.forEach((w) => t.includes(w) && warn(where, `слово-маркер «${w}»`));
+  if (on("stamp")) BANNED_RE.forEach(([re, name]) => re.test(t) && warn(where, `штамп ${name}`));
   const ch = t.match(CHURCH_RE);
-  if (ch) warn(where, `церковная лексика «${ch[2]}»`);
+  if (ch && on("church")) warn(where, `церковная лексика «${ch[2]}»`);
   const se = t.match(SEASON_RE);
-  if (se) warn(where, `не тот сезон: «${se[1]}» (сейчас июль, цветут липы)`);
+  if (se && on("season")) warn(where, `не тот сезон: «${se[1]}» (сейчас июль, цветут липы)`);
   const re = t.match(REAL_RE);
-  if (re) warn(where, `реальное место/бренд: «${re[1]}»`);
-  if (NOT_X_BUT_Y_RE.test(t)) warn(where, "похоже на «не X, а Y»");
-  if (countRe(SIMILE_RE, t) > 1) warn(where, "больше одного «словно/будто» в реплике");
-  if (kind === "narr" && text.length > MAX_NARR) warn(where, `рассказчик: ${text.length} знаков (> ${MAX_NARR})`);
-  if (kind === "line" && text.length > MAX_LINE) warn(where, `реплика: ${text.length} знаков (> ${MAX_LINE})`);
-  if (kind === "narr") {
+  if (re && on("brand")) warn(where, `реальное место/бренд: «${re[1]}»`);
+  if (NOT_X_BUT_Y_RE.test(t) && on("nxy")) warn(where, "похоже на «не X, а Y»");
+  if (countRe(SIMILE_RE, t) > 1 && on("simile")) warn(where, "больше одного «словно/будто» в реплике");
+  if (on("length") && kind === "narr" && text.length > MAX_NARR) warn(where, `рассказчик: ${text.length} знаков (> ${MAX_NARR})`);
+  if (on("length") && kind === "line" && text.length > MAX_LINE) warn(where, `реплика: ${text.length} знаков (> ${MAX_LINE})`);
+  if (kind === "narr" && on("fp")) {
     const fp = t.replace(/«[^»]*»/g, " ").replace(/(^|\n)\s*—[^\n]*/g, " ").match(FIRST_PERSON_RE);
     if (fp) warn(where, `рассказчик в первом лице? «${fp[2]}»`);
   }
@@ -194,6 +202,7 @@ for (const ch of chapters) {
   let suddens = 0;
   let aChto = 0;
   let nicks = 0;
+  let similes = 0;
   let curWeather = ch.weather || "none";
 
   function walk(list, p) {
@@ -224,7 +233,13 @@ for (const ch of chapters) {
         const text = String(n.text);
         words += text.split(/\s+/).filter(Boolean).length;
         const kind = speaker === "Рассказчик" && !n.thought ? "narr" : "line";
-        styleText(W(np), text, kind);
+        let ok = null;
+        if (n.lint_ok !== undefined) {
+          ok = new Set([].concat(n.lint_ok));
+          ok.forEach((c) => !LINT_CODES.has(c) && err(W(np), `lint_ok: неизвестный код «${c}»`));
+        }
+        styleText(W(np), text, kind, ok);
+        if (kind === "narr") similes += countRe(NARR_SIMILE_RE, lc(text));
         suddens += countRe(SUDDEN_RE, lc(text));
         aChto += countRe(A_CHTO_RE, lc(text));
         if (speaker === "Лена") nicks += countRe(NICK_RE, text);
@@ -295,17 +310,18 @@ for (const ch of chapters) {
   });
   if (Array.isArray(ch.next)) ch.next.forEach((r) => r.if !== undefined && checkCondition(W("next"), r.if));
 
-  stats.push({ id: ch.id, nodes, words, choices });
+  stats.push({ id: ch.id, nodes, words, choices, similes });
 }
 
 // ------------------------------------------------------------------
 // 4. Отчёт
 // ------------------------------------------------------------------
 if (STATS) {
-  console.log("\nГлава                         узлов  слов  выборов");
-  stats.forEach((s) => console.log(`${s.id.padEnd(30)}${String(s.nodes).padStart(5)}${String(s.words).padStart(6)}${String(s.choices).padStart(9)}`));
-  const tot = stats.reduce((a, s) => ({ nodes: a.nodes + s.nodes, words: a.words + s.words, choices: a.choices + s.choices }), { nodes: 0, words: 0, choices: 0 });
-  console.log(`${"ИТОГО".padEnd(30)}${String(tot.nodes).padStart(5)}${String(tot.words).padStart(6)}${String(tot.choices).padStart(9)}\n`);
+  console.log("\nГлава                         узлов  слов  выборов  сравн.");
+  stats.forEach((s) => console.log(`${s.id.padEnd(30)}${String(s.nodes).padStart(5)}${String(s.words).padStart(6)}${String(s.choices).padStart(9)}${String(s.similes).padStart(8)}`));
+  const tot = stats.reduce((a, s) => ({ nodes: a.nodes + s.nodes, words: a.words + s.words, choices: a.choices + s.choices, similes: a.similes + s.similes }), { nodes: 0, words: 0, choices: 0, similes: 0 });
+  console.log(`${"ИТОГО".padEnd(30)}${String(tot.nodes).padStart(5)}${String(tot.words).padStart(6)}${String(tot.choices).padStart(9)}${String(tot.similes).padStart(8)}`);
+  console.log("сравн. — сравнения в речи рассказчика (грубый счёт, ориентир: одно на сцену)\n");
 }
 if (errors.length) {
   console.log(`\nОШИБКИ (${errors.length}):`);

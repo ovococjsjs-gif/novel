@@ -18,16 +18,16 @@
   const SPRITES = {
     alexander: {
       emotions: Object.assign(
-        set(C + "alexander/transparent/alexander_{e}.png", ["neutral", "smile", "stressed", "surprised", "thoughtful", "wounded"]),
-        set(C + "alexander/transparent/alexandr_{e}.png", ["determined_anger", "happy", "sad", "shocked", "shocked_terrified", "shy"])
+        set(C + "alexander/transparent/alexander_{e}.webp", ["neutral", "smile", "stressed", "surprised", "thoughtful", "wounded"]),
+        set(C + "alexander/transparent/alexandr_{e}.webp", ["determined_anger", "happy", "sad", "shocked", "shocked_terrified", "shy"])
       ),
       aliases: { serious: "determined_anger" },
       fallback: "neutral"
     },
     alexander_jacket: {
       emotions: Object.assign(
-        set(C + "alexander/transparent/alexander_jacket_{e}.png", ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked", "wounded"]),
-        { rain: C + "alexander/transparent/alexander_courier_rain.png" }
+        set(C + "alexander/transparent/alexander_jacket_{e}.webp", ["neutral", "smile", "thoughtful", "surprised", "shy", "shocked", "wounded"]),
+        { rain: C + "alexander/transparent/alexander_courier_rain.webp" }
       ),
       aliases: {
         courier_rain: "rain",
@@ -40,47 +40,47 @@
       fallback: "neutral"
     },
     mirael_angel: {
-      emotions: set(C + "mirael/transparent/mirael_angel_{e}.png", ["neutral", "happy", "sad", "shy", "surprised", "crying", "determined_anger", "shocked_terrified"]),
+      emotions: set(C + "mirael/transparent/mirael_angel_{e}.webp", ["neutral", "happy", "sad", "shy", "surprised", "crying", "determined_anger", "shocked_terrified"]),
       aliases: {},
       fallback: "neutral"
     },
     mirael_human: {
-      emotions: set(C + "mirael/transparent/mirael_human_{e}.png", ["neutral", "happy", "sad", "shy", "surprised", "crying", "determined_anger", "shocked_terrified"]),
+      emotions: set(C + "mirael/transparent/mirael_human_{e}.webp", ["neutral", "happy", "sad", "shy", "surprised", "crying", "determined_anger", "shocked_terrified"]),
       aliases: {},
       fallback: "neutral"
     },
     valeria: {
-      emotions: set(C + "valeria/transparent/valeria_{e}.png", ["neutral", "amused", "angry", "cold_serious", "contract", "playful_smile", "soft_vulnerable", "surprised", "thoughtful"]),
+      emotions: set(C + "valeria/transparent/valeria_{e}.webp", ["neutral", "amused", "angry", "cold_serious", "contract", "playful_smile", "soft_vulnerable", "surprised", "thoughtful"]),
       aliases: {},
       fallback: "neutral"
     },
     valeria_human: {
-      emotions: set(C + "valeria/transparent/valeria_human_{e}.png", ["neutral", "amused", "angry", "cold_serious", "contract", "playful_smile", "soft_vulnerable", "surprised", "thoughtful"]),
+      emotions: set(C + "valeria/transparent/valeria_human_{e}.webp", ["neutral", "amused", "angry", "cold_serious", "contract", "playful_smile", "soft_vulnerable", "surprised", "thoughtful"]),
       aliases: {},
       fallback: "neutral"
     },
     nika: {
-      emotions: set(C + "nika/transparent/nika_{e}.png", ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"]),
+      emotions: set(C + "nika/transparent/nika_{e}.webp", ["happy", "neutral", "sad", "shy", "teasing", "annoyed", "surprised", "bored"]),
       aliases: {},
       fallback: "neutral"
     },
     lena: {
-      emotions: set(C + "lena/transparent/lena_{e}.png", ["happy", "neutral", "sad", "snide", "tired", "angry", "surprised", "thoughtful", "coffee", "shy"]),
+      emotions: set(C + "lena/transparent/lena_{e}.webp", ["happy", "neutral", "sad", "snide", "tired", "angry", "surprised", "thoughtful", "coffee", "shy"]),
       aliases: {},
       fallback: "tired"
     },
     artem: {
-      emotions: set(C + "artem_shank_{e}.png", ["empty", "happy", "neutral", "sad"]),
+      emotions: set(C + "artem_shank_{e}.webp", ["empty", "happy", "neutral", "sad"]),
       aliases: { smile: "happy", guilty: "sad", worried: "sad", nervous: "neutral" },
       fallback: "neutral"
     },
     dmitry: {
-      emotions: set(C + "dmitry/transparent/dmitry_{e}.png", ["neutral", "serious", "angry", "tired", "smile"]),
+      emotions: set(C + "dmitry/transparent/dmitry_{e}.webp", ["neutral", "serious", "angry", "tired", "smile"]),
       aliases: {},
       fallback: "neutral"
     },
     taya: {
-      emotions: set(C + "taya/transparent/taya_{e}.png", ["neutral", "sad_compassion", "serious", "surprised", "thoughtful", "warm_smile", "laugh", "pocket_watch", "tea", "firm", "shy"]),
+      emotions: set(C + "taya/transparent/taya_{e}.webp", ["neutral", "sad_compassion", "serious", "surprised", "thoughtful", "warm_smile", "laugh", "pocket_watch", "tea", "firm", "shy"]),
       aliases: {},
       fallback: "neutral"
     }
@@ -150,7 +150,7 @@
     if (!bg) return "";
     if (BG_ALIASES[bg]) bg = BG_ALIASES[bg];
     if (bg.includes("/")) return bg;
-    return BG_DIR + (bg.endsWith(".png") || bg.endsWith(".webp") || bg.endsWith(".jpg") ? bg : bg + ".png");
+    return BG_DIR + (bg.endsWith(".png") || bg.endsWith(".webp") || bg.endsWith(".jpg") ? bg : bg + ".webp");
   }
 
   return { SPRITES, SPEAKERS, WEATHER, CAMERA, EFFECTS, BG_DIR, resolveSprite, resolveBg };

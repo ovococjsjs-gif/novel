@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261102_45";
+  const ASSET_VER = "20261102_46";
 
   function withVer(url) {
     if (!url) return "";
@@ -52,7 +52,8 @@
     fullText: "",
     typeTimer: null,
     autoMode: false,
-    autoTimer: null
+    autoTimer: null,
+    entry: null // { chapterId, vars, choicesMade } — состояние на входе в текущую главу (для версий сохранений)
   };
 
   // DOM Elements
@@ -910,6 +911,23 @@
   function chapterIndexById(id) {
     return allChapters().findIndex((c) => c.id === id);
   }
+  // Отпечаток главы: если текст главы поменялся после сохранения, pc в сейве может указывать
+  // не туда. Тогда загрузка начинает главу заново с переменными на входе в неё.
+  const hashCache = {};
+  function chapterHash(id) {
+    if (hashCache[id] === undefined) {
+      const ch = chapterById(id);
+      const src = ch ? JSON.stringify(ch) : "";
+      let h = 0x811c9dc5;
+      for (let i = 0; i < src.length; i++) {
+        h ^= src.charCodeAt(i);
+        h = Math.imul(h, 0x01000193) >>> 0;
+      }
+      hashCache[id] = h.toString(36);
+    }
+    return hashCache[id];
+  }
+
   function compiled(id) {
     if (!compiledCache[id]) {
       const ch = chapterById(id);
@@ -1071,6 +1089,7 @@
         at: Date.now()
       };
       saveMeta();
+      state.entry = { chapterId: id, vars: Object.assign({}, state.vars), choicesMade: Object.assign({}, state.choicesMade) };
     }
     setHud(ch);
     preloadChapterAssets(ch);
@@ -1461,8 +1480,12 @@
     const backlog = state.backlog.slice(-150);
     const base = state.backlog.length - backlog.length;
     const history = state.history.slice(-40).map((f) => Object.assign({}, f, { backlogLen: Math.max(0, f.backlogLen - base) }));
+    let entry = state.entry && state.entry.chapterId === top.chapterId ? state.entry : null;
+    if (!entry && meta.seen[top.chapterId]) entry = Object.assign({ chapterId: top.chapterId }, meta.seen[top.chapterId]);
     return {
       v: 2,
+      chHash: chapterHash(top.chapterId),
+      entry: entry ? { vars: entry.vars, choicesMade: entry.choicesMade } : null,
       label,
       timestamp: new Date().toLocaleString("ru-RU"),
       chapterId: top.chapterId,
@@ -1519,13 +1542,21 @@
       alert("Это сохранение сделано в старой версии игры и не может быть загружено.");
       return;
     }
-    state.backlog = (snap.backlog || []).slice();
-    state.history = (snap.history || []).slice(0, -1);
     titleScreen.classList.add("hidden");
     savesModal.classList.remove("visible");
     choiceOverlay.classList.remove("visible");
+    if (snap.chHash && snap.entry && snap.chHash !== chapterHash(snap.chapterId)) {
+      // Глава изменилась после сохранения: начинаем её заново с состояния на входе.
+      alert("Эта глава обновилась после сохранения. Начнём её с начала, все решения до неё сохранены.");
+      resetRun(snap.entry.vars, snap.entry.choicesMade);
+      enterChapter(snap.chapterId);
+      return;
+    }
+    state.backlog = (snap.backlog || []).slice();
+    state.history = (snap.history || []).slice(0, -1);
     clearSprites();
     if (!restoreFrame(snap.frame)) return;
+    state.entry = snap.entry ? { chapterId: snap.chapterId, vars: snap.entry.vars, choicesMade: snap.entry.choicesMade } : null;
     preloadChapterAssets(chapterById(snap.chapterId));
     run();
   }
@@ -1539,6 +1570,7 @@
 
   function startFromEpisode(id) {
     const seen = meta.seen[id];
+    state.entry = null;
     resetRun(seen && seen.vars, seen && seen.choicesMade);
     titleScreen.classList.add("hidden");
     enterChapter(id);

@@ -1,6 +1,6 @@
 # Базовый промпт для спрайта
 
-Стиль снят с текущих спрайтов (Саша, Лена, Ника, Валерия, Дмитрий). Подставить только блок `[APPEARANCE]`. Лучше прикладывать к запросу один готовый спрайт как референс стиля (например `assets/characters/lena/transparent/lena_neutral.png` или `nika/transparent/nika_neutral.png`) и писать «match the art style of the reference, NOT the character».
+Стиль снят с текущих спрайтов (Саша, Лена, Ника, Валерия, Дмитрий). Подставить только блок `[APPEARANCE]`. Лучше прикладывать к запросу один готовый спрайт как референс стиля (например `assets/characters/lena/transparent/lena_neutral.webp` или `nika/transparent/nika_neutral.webp`) и писать «match the art style of the reference, NOT the character».
 
 ## 1. Дефолтный спрайт (neutral)
 
