@@ -120,7 +120,7 @@ window.VN_CHAPTERS.push({
     {
       if: "promised_mirael",
       then: [
-        { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Я обещал сказать тебе первой. Говорю. Я никуда не иду. Я остаюсь." }
+        { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Мы договаривались: ничего не подпишу, не сказав тебе. Так вот, подписывать я никуда не иду. Я остаюсь." }
       ],
       else: [
         { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Я никуда не иду, Мира. Я остаюсь. Если ты не против." }
