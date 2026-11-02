@@ -2,7 +2,7 @@ window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
   id: "day7_2_stairs",
   day: "ДЕНЬ 7 · ОСТАЛОСЬ 15 ДНЕЙ",
-  title: "Глава II. Лестничная клетка",
+  title: "Глава III. Лестничная клетка",
   subtitle: "Тихая улица · подъезд · ночь, гроза",
   bg: "bg_stairwell_door_night",
   bgm: "The Hollow Stare.mp3",
