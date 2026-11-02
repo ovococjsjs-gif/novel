@@ -73,10 +73,11 @@ html, body {
 }
 
 .swag-logo-img {
+  position: relative;
   display: block;
   height: min(70vh, 86vw * 1180 / 1084);
-  max-width: 86vw;
-  width: auto;
+  aspect-ratio: 1084 / 1180;
+  isolation: isolate;
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 50%, #000 76%, transparent 100%);
   mask-image: radial-gradient(ellipse 70% 68% at 50% 50%, #000 76%, transparent 100%);
@@ -145,6 +146,45 @@ html, body {
   animation: swagFade 0.8s ease 2.6s forwards;
 }
 
+/* Слои логотипа: основа без хвоста + хвост из двух звеньев.
+   Нижнее звено качается от корня (за буквой G), верхнее — от изгиба
+   с запаздыванием, поэтому кончик догоняет хлёстко. */
+.swag-logo-img .swag-layer,
+.swag-logo-img .swag-tail-low {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.swag-tail-low {
+  transform-origin: 87.6% 35.4%;   /* корень хвоста (950, 418) */
+  animation: swagTailLow 2.6s ease-in-out 1.6s infinite;
+}
+
+.swag-tail-up {
+  transform-origin: 93.1% 28%;     /* изгиб (1009, 330) */
+  animation: swagTailUp 2.6s ease-in-out 1.85s infinite;
+}
+
+@keyframes swagTailLow {
+  0%, 100% { transform: rotate(0deg); }
+  22%      { transform: rotate(-5deg); }
+  48%      { transform: rotate(3.5deg); }
+  70%      { transform: rotate(-2deg); }
+  86%      { transform: rotate(1deg); }
+}
+
+@keyframes swagTailUp {
+  0%, 100% { transform: rotate(0deg); }
+  20%      { transform: rotate(-9deg); }
+  45%      { transform: rotate(7deg); }
+  66%      { transform: rotate(-4deg); }
+  84%      { transform: rotate(2deg); }
+}
+
 @keyframes swagSlideIn {
   0%   { opacity: 0; transform: translateY(14vh) scale(0.94); filter: blur(6px) brightness(0.6); }
   60%  { opacity: 1; filter: blur(0) brightness(1.08); }
@@ -169,6 +209,7 @@ html, body {
 
 @media (prefers-reduced-motion: reduce) {
   .swag-logo-img, .swag-sub, .swag-sub .swag-line, .swag-hint { animation-duration: 0.01s; animation-delay: 0s; }
+  .swag-tail-low, .swag-tail-up { animation: none; }
 }
 
 /* =========================================================
