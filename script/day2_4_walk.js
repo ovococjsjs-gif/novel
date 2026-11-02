@@ -185,7 +185,7 @@ window.VN_CHAPTERS.push({
     { text: "Мира подумала и крепко взяла его под локоть. Отпускать она не стала до самого конца мостика." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Как её хоть звали? Я, честно, уже не помню." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Её звали..." },
-    { text: "Мира замолчала и долго смотрела на воду." },
+    { text: "Мира замолчала и стала смотреть на воду." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "surprised", pos: "right" }, text: "Я не помню. Я же помнила всё, даже её заколку. А имени нет. Будто кто-то вынул его аккуратно, а остальное оставил." },
     { speaker: "Александр", text: "Ты головой ударилась, когда падала. У меня после велосипеда тоже полдня всё путалось." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "sad", pos: "right" }, text: "Да. Наверное, головой." },

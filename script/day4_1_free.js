@@ -88,7 +88,7 @@ window.VN_CHAPTERS.push({
     { text: "Он показал ей фото: две чёрные дуги на мокром асфальте." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "surprised", pos: "right" }, text: "Это где?" },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Заречный. Где я в воскресенье в газон ушёл." },
-    { text: "Лена забрала телефон и развела снимок пальцами. Смотрела долго, шевеля губами." },
+    { text: "Лена развела снимок пальцами и зашевелила губами, что-то прикидывая." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "thoughtful", pos: "right" }, text: "Юз. Колёса встали, машину тащило. По разметке метров восемь. Там сорок висит, а он шёл куда быстрее." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "neutral", pos: "right" }, text: "Он тебя видел, Саш. Видел и не успел." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "tired", pos: "right" }, text: "Скинь мне. Сама не знаю зачем." },

@@ -136,7 +136,7 @@ window.VN_CHAPTERS.push({
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Профессиональное. Курьер всегда наполовину на улице. Вторая половина ищет, где припарковаться." },
               { speaker: "Тая", sprite: { char: "taya", emotion: "neutral", pos: "right" }, text: "Бывший курьер." },
-              { text: "Она сказала это мягко, но шутка от этого кончилась." }
+              { text: "Шутка на этом кончилась." }
             ]
           }
         ]
