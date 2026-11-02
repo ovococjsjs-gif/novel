@@ -32,6 +32,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Держу!" },
     { text: "Он стоял у третьего подъезда, руки в карманах." },
     { text: "Мира обернулась и увидела. Руль тут же ушёл вбок, и велосипед повёз её в сирень." },
+    // CG (план, A): cg_d5_lilac_crash — Мира сидит в поломанной сирени, листок в волосах, велосипед на боку. Список: docs/production/assets.md, «CG для Дней 3–7».
     { sprite: "clear", text: "Саша добежал, когда она уже сидела в кусте, с листком в волосах и с выражением глубокого служебного оскорбления." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "determined_anger", pos: "right" }, text: "Ты отпустил." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Отец тоже отпустил. Я тогда доехал до самых гаражей." },

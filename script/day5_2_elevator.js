@@ -21,6 +21,7 @@ window.VN_CHAPTERS.push({
         { speaker: "Ника", sprite: { char: "nika", emotion: "annoyed", pos: "right" }, text: "Ты ничего не видел. Понял? У меня и так из-за тебя выговор почти был." }
       ]
     },
+    // CG (план, A): cg_d5_mirror_lift — зеркальный лифт: десяток Саш в отражениях, Ники в зеркалах нет; на табло «—». Список: docs/production/assets.md, «CG для Дней 3–7».
     { text: "Он вошёл в кабину. Двери закрылись. В зеркальных стенах их стало много: десяток Саш и ни одной Ники. Она в зеркалах не отражалась." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Это папка на Тёму." },
     { speaker: "Ника", sprite: { char: "nika", emotion: "bored", pos: "right" }, text: "Это папка. Просто папка. Бумажки. Я курьер, как ты. Ну, был ты." },

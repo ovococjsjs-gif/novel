@@ -125,7 +125,9 @@
     "Продавец": { cls: "minor", char: null },
     "Соседка": { cls: "minor", char: null },
     "Мужчина в сером": { cls: "minor", char: null },
-    "Приёмщица": { cls: "minor", char: null }
+    "Приёмщица": { cls: "minor", char: null },
+    "Клавдия Ивановна": { cls: "minor", char: null },
+    "Преподаватель": { cls: "minor", char: null }
   };
 
   const WEATHER = ["none", "rain"];

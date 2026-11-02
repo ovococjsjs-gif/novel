@@ -115,6 +115,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "surprised", pos: "right" }, text: "«Пока не надоест» — это сколько?" },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "У всех по-разному. Мне надоедает быстро." },
     { text: "Она записала слово в слово, прямыми буквами, и подчеркнула «пока не лопнут»." },
+    // CG (план, A): cg_d4_lemon — Мира откусывает лимон, держит половинку двумя руками, лицо сморщено. Список: docs/production/assets.md, «CG для Дней 3–7».
     { text: "После ужина Саша разрезал лимон. Мира взяла половинку двумя руками, понюхала и откусила честно, от души." },
     { sprite: { char: "mirael_angel", emotion: "shocked_terrified", pos: "right" }, text: "Лицо у неё сделалось ровно то самое. Глаза зажмурились, нос сморщился, контур не выдержал, и крылья распахнулись на всю кухню. С холодильника посыпались магниты." },
     { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "shocked_terrified", pos: "right" }, text: "Зачем?! Саша, зачем вы это едите?!" },
