@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава II. Проговорка за стаканом с трубочкой",
   subtitle: "Старокупеческий переулок · кафе на Садовой · день",
   bg: "bg_courtyard_arch_day",
-  bgm: "The Great Office Meeting.mp3",
+  bgm: "Bounce Stop.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Он отстёгивал велосипед от решётки, когда на руль сверху спрыгнуло что-то лёгкое и розовое. Велосипед даже не качнулся." },

@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава I. Деньги, виски и молчание",
   subtitle: "Новостройка у реки · квартира Артёма · вечер",
   bg: "bg_artyom_apartment",
-  bgm: "River Fog.mp3",
+  bgm: "Last Chord.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Весь день небо висело низко, серое и тёплое, как мокрое полотенце. К вечеру оно так и не решилось ни на дождь, ни на солнце." },
