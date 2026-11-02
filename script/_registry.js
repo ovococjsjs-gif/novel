@@ -42,6 +42,7 @@ window.VN_VARS = {
   cake_vishnevaya: { type: "flag", default: false, desc: "День 4: отвёз за Гарика торт на Вишнёвую (Дмитрий в Дне 6 знает)" },
   lena_door: { type: "flag", default: false, desc: "День 5: ночью помог Лене закрасить надпись коллекторов на маминой двери" },
   note_valeria: { type: "flag", default: false, desc: "День 6: оставил Валерии записку «Приду. Не за подписью» (она отвечает в голосовом Дня 7)" },
+  promised_dmitry: { type: "flag", default: false, desc: "День 6: пообещал Дмитрию выйти в понедельник в восемь (взял шлем)" },
   took_artem_money: { type: "flag", default: false, desc: "День 5: взял у Артёма 20 000 ₽ «по-братски»" },
   saw_artem_mark: { type: "flag", default: false, desc: "День 5: разглядел метку под ремешком (дал Артёму выговориться)" },
   taya_promise: { type: "flag", default: false, desc: "День 6: пообещал Тае приходить учиться «держать паузу»" },
