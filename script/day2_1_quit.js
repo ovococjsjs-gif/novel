@@ -161,7 +161,6 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Я сегодня последний день. Только что сказал Дмитрию." },
     { text: "Лена щёлкнула клапаном. Ехидство с её лица куда-то делось, и сразу стали видны синяки под глазами." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "thoughtful", pos: "right" }, text: "Сбегаешь." },
-    { text: "Она не спрашивала." },
     {
       choice: {
         id: "d2_lena_flee",
