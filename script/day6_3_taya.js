@@ -115,14 +115,14 @@ window.VN_CHAPTERS.push({
         { bg: "bg_sasha_kitchen_night", bgm: "Holding You at Night.mp3", sprite: "clear", text: "Дома на кухонном столе лежали его деньги, разложенные стопками по номиналу, а рядом листок из маминой тетради. Мира сидела над ним с ручкой и не услышала, как он вошёл." },
         { text: "Сверху было написано: «Что я умею». И ниже, по пунктам, её прямым почерком:" },
         { text: "«1. Варить кофе. Умею. 2. Держать контур. Пока умею. 3. Ждать. Научилась в пятницу. 4. Кататься на велосипеде. Почти. 5. Летать». Пятый пункт был зачёркнут. Аккуратно, по линейке." },
-        { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Это для собеседований. Чтобы в следующий раз не говорить про Хранителя." },
+        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Это для собеседований. Чтобы в следующий раз не говорить про Хранителя." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "А зачем зачеркнула?" },
-        { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Потому что неправда. А на собеседованиях нельзя врать. Это я сегодня поняла." },
+        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Потому что неправда. А на собеседованиях нельзя врать. Это я сегодня поняла." },
         { text: "Саша взял ручку и дописал снизу: «6. Варить пельмени. Одним куском». Мира прочитала, возмущённо фыркнула и отобрала ручку." },
-        { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "determined_anger", pos: "right" }, text: "Так нечестно. Это случайно вышло." },
+        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "determined_anger", pos: "right" }, text: "Так нечестно. Это случайно вышло." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Вам же можно только случайности." },
         { text: "Она открыла рот, закрыла и засмеялась. В этот раз сразу, без опоздания. Потом подвинула к нему стопки." },
-        { if: "took_artem_money", then: [{ speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "sad", pos: "right" }, text: "Тут тридцать одна. Не хватает четырёх. Я пересчитала три раза, они не появились." }], else: [{ speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "sad", pos: "right" }, text: "Тут всё, что есть. Я пересчитала три раза, больше не стало." }] },
+        { if: "took_artem_money", then: [{ speaker: "Мира", sprite: { char: "mirael_human", emotion: "sad", pos: "right" }, text: "Тут тридцать одна. Не хватает четырёх. Я пересчитала три раза, они не появились." }], else: [{ speaker: "Мира", sprite: { char: "mirael_human", emotion: "sad", pos: "right" }, text: "Тут всё, что есть. Я пересчитала три раза, больше не стало." }] },
         { text: "Он сложил листок вчетверо и убрал в нагрудный карман. Мира сделала вид, что не заметила." }
       ]
     },

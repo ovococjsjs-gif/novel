@@ -54,13 +54,13 @@ window.VN_CHAPTERS.push({
       if: "mirael_phone",
       then: [
         { bgm: "Holding You at Night.mp3", bg: "bg_sasha_room_night", text: "Мираэль открыла раньше, чем он вставил ключ. В руке у неё был кнопочный телефон, в другой — листок из маминой тетради." },
-        { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты не отвечал. Я звонила. Я записывала, когда." },
+        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты не отвечал. Я звонила. Я записывала, когда." },
         { text: "На листке аккуратным столбиком шло время. Строчек было восемь. Последняя — десять минут назад, и рядом приписка: «Гудки. Не берёт. Дождь»." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Я телефон на беззвучном... Прости. Я у Тёмы был." }
       ],
       else: [
         { bgm: "Holding You at Night.mp3", bg: "bg_sasha_room_night", text: "Мираэль сидела на полу у входной двери, обхватив колени. Видимо, так и просидела весь вечер." },
-        { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты обещал вечером. Вечер был давно. Я не знала, куда звонить. Мне некуда звонить." },
+        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты обещал вечером. Вечер был давно. Я не знала, куда звонить. Мне некуда звонить." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Мир, прости. Я у Тёмы был. Засиделся." }
       ]
     },
@@ -78,13 +78,13 @@ window.VN_CHAPTERS.push({
                 if: "saw_artem_mark",
                 then: [
                   { speaker: "Александр", text: "И у него на руке что-то. Под часами. Красное, как ожог. Он сказал — аллергия." },
-                  { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "shocked_terrified", pos: "right" }, text: "Метка. Я слышала про такие. Это значит, что он уже весь у них, просто пока живёт." }
+                  { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shocked_terrified", pos: "right" }, text: "Метка. Я слышала про такие. Это значит, что он уже весь у них, просто пока живёт." }
                 ],
                 else: [
-                  { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "shocked_terrified", pos: "right" }, text: "Если у него договор с ней, на нём должен быть знак. Где-то, где не видно. Я слышала про такие." }
+                  { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shocked_terrified", pos: "right" }, text: "Если у него договор с ней, на нём должен быть знак. Где-то, где не видно. Я слышала про такие." }
                 ]
               },
-              { speaker: "Мираэль", text: "Саша. Пообещай, что ты никогда так не будешь выглядеть. Как пустая коробка." }
+              { speaker: "Мира", text: "Саша. Пообещай, что ты никогда так не будешь выглядеть. Как пустая коробка." }
             ]
           },
           {
@@ -92,7 +92,7 @@ window.VN_CHAPTERS.push({
             next: [
               { text: "Он не стал ничего объяснять. Просто шагнул вперёд и обнял её — мокрый, пахнущий дождём и чужим виски." },
               { text: "Мираэль замерла. Потом уткнулась ему в плечо. Контур дрогнул, и за её спиной на миг проступили крылья — светлые, во всю прихожую." },
-              { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "От тебя пахнет, как от Артёма в выпускной." }
+              { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "От тебя пахнет, как от Артёма в выпускной." }
             ]
           }
         ]
@@ -109,17 +109,17 @@ window.VN_CHAPTERS.push({
       if: "calc.leader == 1",
       then: [
         { sprite: "clear", text: "С подоконника тихо скрипнуло. Мира сидела там в темноте, подтянув колени, и крылья свисали в комнату до самого пола." },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Ты пришёл и дрожал. Не от дождя. Что было, кроме Тёмы?" },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Ты пришёл и дрожал. Не от дождя. Что было, кроме Тёмы?" },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Лифт застрял. Между этажами. На табло вместо цифр был прочерк, длинный такой." },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Тебе было страшно?" },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Тебе было страшно?" },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Немного. Я подумал: вот будет номер, если меня спасли от машины, чтобы я умер в лифте с зеркалами. Наверху бы со смеху попадали." },
         { text: "Мира не засмеялась. Она смотрела на него серьёзно и долго, и он уже решил, что шутка вышла плохая." },
         { text: "Потом она вдруг фыркнула в ладонь, а следом засмеялась в голос, так, что крылья затряслись и с подоконника упала прищепка." },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "happy", pos: "right" }, text: "С зеркалами. Наверху бы попадали. Саша, это смешно. Я просто не сразу поняла, что это смешно." },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "happy", pos: "right" }, text: "С зеркалами. Наверху бы попадали. Саша, это смешно. Я просто не сразу поняла, что это смешно." },
         { text: "Она слезла с подоконника и села рядом с ним на пол, прислонившись к дивану. Одно крыло легло ему на плечи, тяжёлое и тёплое." },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Я теперь всё понимаю с опозданием. Шутки. Страх тоже. Наверху всё сразу. Тут надо ждать, пока дойдёт." },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Я теперь всё понимаю с опозданием. Шутки. Страх тоже. Наверху всё сразу. Тут надо ждать, пока дойдёт." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Привыкнешь." },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "shy", pos: "right" }, text: "Не хочу привыкать. Мне нравится, когда доходит." },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "shy", pos: "right" }, text: "Не хочу привыкать. Мне нравится, когда доходит." },
         { text: "Под крылом он уснул быстрее, чем собирался." }
       ]
     },
@@ -161,9 +161,9 @@ window.VN_CHAPTERS.push({
         { text: "На площадке никого не было. Лампа гудела, внизу хлопнула подъездная дверь. А на коврике лежал бумажный пакет, перевязанный узкой полоской тонкой кожи. Точно такой же Лев Аркадьевич подклеивал мех у кукушки." },
         { text: "В пакете был кофе в зёрнах, свежий, ещё тёплый от обжарки. И записка ровным, мелким почерком:" },
         { text: "«Это на утро. На ночь не пей. Т.»" },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "surprised", pos: "right" }, text: "Кто там?" },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "surprised", pos: "right" }, text: "Кто там?" },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Никого. Кофе." },
-        { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Когда ты пришёл, его там не было. Я бы заметила." },
+        { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Когда ты пришёл, его там не было. Я бы заметила." },
         { text: "Саша посмотрел вниз, в пролёт. Лестница уходила в темноту, и где-то на первом этаже, ему показалось, тикали часы. Ровно, в бит. Потом перестали." },
         { text: "Он поставил пакет на кухне, у турки. До утра вся квартира пахла кофе, и спалось от этого почему-то лучше." }
       ]
