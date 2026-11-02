@@ -2,7 +2,7 @@ window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
   id: "day4_3_cuckoo",
   day: "ДЕНЬ 4 · ОСТАЛОСЬ 18 ДНЕЙ",
-  title: "Глава III. Кукушка изнутри",
+  title: "Глава V. Кукушка изнутри",
   subtitle: "Старокупеческий переулок · мастерская Таи · день",
   bg: "bg_taya_workshop_day",
   bgm: "Whipped Tea.mp3",
@@ -43,6 +43,16 @@ window.VN_CHAPTERS.push({
       ],
       else: [
         { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "neutral", pos: "right" }, text: "Деканат, кстати, сегодня работал до трёх. А сейчас без двадцати пять. Просто к слову." }
+      ]
+    },
+    {
+      if: "took_wallet",
+      then: [
+        { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "И ещё. Кошелёк на набережной был бутафорский. Но вы ведь этого не знали, когда клали его в карман." },
+        { text: "Она улыбнулась краешком губ, как улыбаются хорошему ходу соперника." }
+      ],
+      else: [
+        { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "cold_serious", pos: "right" }, text: "И ещё. Вы понесли хозяевам чужой кошелёк и даже не пересчитали. Это скучно, Александр. Но мне понравилось." }
       ]
     },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "playful_smile", pos: "right" }, text: "Идите. Часовщица не любит, когда к ней опаздывают." },

@@ -2,7 +2,7 @@ window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
   id: "day4_2_barbershop",
   day: "ДЕНЬ 4 · ОСТАЛОСЬ 18 ДНЕЙ",
-  title: "Глава II. Барбершоп",
+  title: "Глава III. Барбершоп",
   subtitle: "Мостовой проспект · барбершоп Артёма · день",
   bg: "bg_barbershop_interior",
   bgm: "Last Chord.mp3",

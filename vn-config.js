@@ -117,7 +117,11 @@
     "Гарик": { cls: "minor", char: null },
     "Букинист": { cls: "minor", char: null },
     "Парнишка": { cls: "minor", char: null },
-    "Рыбак": { cls: "minor", char: null }
+    "Рыбак": { cls: "minor", char: null },
+    "Режиссёр": { cls: "minor", char: null },
+    "Петя": { cls: "minor", char: null },
+    "Нина Петровна": { cls: "minor", char: null },
+    "Мальчик": { cls: "minor", char: null }
   };
 
   const WEATHER = ["none", "rain"];

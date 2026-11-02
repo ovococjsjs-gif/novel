@@ -2,7 +2,7 @@ window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
   id: "day4_3_home",
   day: "ДЕНЬ 4 · ОСТАЛОСЬ 18 ДНЕЙ",
-  title: "Глава IV. Цена земного тепла",
+  title: "Глава VI. Цена земного тепла",
   subtitle: "Тихая улица · вечер",
   bg: "bg_sasha_room_night",
   bgm: "River Fog.mp3",
@@ -139,6 +139,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "surprised", pos: "right" }, text: "Почему?" },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Он их не на шаурму давал. Не знаю, на что. Но точно не на шаурму." },
     { text: "Мира кивнула и не стала спрашивать дальше." },
+    { if: "took_wallet", then: [{ text: "Про кошелёк на набережной он рассказывать не стал. Хватало и того, что Мира умела читать по лицу." }] },
     { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Саша. Можно спрошу?" },
     { speaker: "Мира", text: "Ты ушёл с работы из-за меня?" },
     {
