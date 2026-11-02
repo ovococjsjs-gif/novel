@@ -121,7 +121,12 @@ window.VN_CHAPTERS.push({
 | `good_sight` | 5 | `inner_sight` для хорошей концовки |
 | `bad_sight` | −2 | Ниже — плохая концовка маршрута |
 
-- **Вход в маршрут** (День 7) открыт всегда: все 4 варианта доступны независимо от симпатий.
+- **Вход в маршрут** (решение автора 02.11, `../canon/00_decisions.md` п. 31) — по скрытому подсчёту `aff_mirael` / `aff_valeria` / `aff_lena` / `aff_taya` за Дни 0–7:
+  - лидер опережает второго на `route_margin` и больше → `day7_2` ведёт к нему без меню;
+  - разрыв меньше `route_margin` → выбор из двух лидеров (звонят оба);
+  - лидер ниже `route_min` → земной маршрут (Лена).
+  - Пороги `route_margin` и `route_min` добавить в `VN_THRESHOLDS` после выравнивания выборов Дней 1–4. Сейчас перекос: `aff_mirael` встречается в 20 вариантах, `aff_valeria` — в 6.
+- **Сцены-варианты Дней 5–7:** по одной в день, по текущему лидеру (та же функция подсчёта, без меню).
 - **Секретная ветка** — `glitch_count >= 3` и Саша открывает дверь под лестницей.
 - **Хорошая концовка** маршрута X: `aff_X >= thr.good_aff && inner_sight >= thr.good_sight`. Плохая: `inner_sight <= thr.bad_sight`. Иначе нейтральная.
 - **Истинная концовка**: `meta.cleared_mirael_good && meta.cleared_valeria_good && meta.cleared_lena_good && meta.cleared_taya_good && meta.cleared_backrooms`.
