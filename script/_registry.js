@@ -28,6 +28,7 @@ window.VN_VARS = {
   crossed_zarechny: { type: "flag", default: false, desc: "День 2: довёз инсулин через перекрёсток на Заречном" },
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },
   watch_left_taya: { type: "flag", default: false, desc: "День 1: оставил часы деда у Таи" },
+  asked_mama: { type: "flag", default: false, desc: "День 6: попросил денег у мамы (придут в понедельник, День 8)" },
   nyura_tap: { type: "flag", default: false, desc: "День 2: починил кран бабе Нюре (отзывается в Дне 3)" },
   called_deanery: { type: "flag", default: false, desc: "День 4: позвонил в деканат (узнал условия восстановления)" },
   asked_valeria_page: { type: "flag", default: false, desc: "День 3: дочитал страницу про стирание памяти" },
