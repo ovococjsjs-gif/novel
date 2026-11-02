@@ -24,6 +24,8 @@ window.VN_VARS = {
   dasha_honest: { type: "flag", default: false, desc: "Пролог: честно признался Даше, что забыл про платье" },
   rude_complaint: { type: "flag", default: false, desc: "Пролог: отшутился с хамом-клиентом (жалоба доходит до Дмитрия)" },
   saw_taya_d0: { type: "flag", default: false, desc: "Пролог: заметил янтарный свет мастерской" },
+  haircut_d0: { type: "flag", default: false, desc: "Пролог: Артём сам подстриг Сашу (День 4 — «подровнять виски»)" },
+  called_artem_back: { type: "flag", default: false, desc: "Пролог: перезвонил Артёму на голосовое, тот не взял трубку (п. 115)" },
   mirael_phone: { type: "flag", default: false, desc: "День 2: оставил Мираэль старый кнопочный телефон" },
   crossed_zarechny: { type: "flag", default: false, desc: "День 2: довёз инсулин через перекрёсток на Заречном" },
   lena_told_truth: { type: "flag", default: false, desc: "День 2: сказал Лене про «чуть не сбили»" },
