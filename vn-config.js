@@ -91,6 +91,7 @@
     "Рассказчик": { cls: "narrator", char: null },
     "Александр": { cls: "alexander", char: "alexander" },
     "Мираэль": { cls: "mirael", char: "mirael" },
+    "Мира": { cls: "mirael", char: "mirael" }, // с Дня 2, после того как Саша дал ей имя (00_decisions п. 108)
     "Незнакомка": { cls: "mirael", char: "mirael" },
     "Валерия": { cls: "valeria", char: "valeria" },
     "Ника": { cls: "nika", char: "nika" },
