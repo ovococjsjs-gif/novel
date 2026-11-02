@@ -750,7 +750,7 @@ html, body {
 #title-bg-anim {
   position: absolute;
   inset: -4%;
-  background: url('assets/backgrounds/bg_summer_town_day.webp?v=20261102_46') center/cover no-repeat;
+  background: url('assets/backgrounds/bg_summer_town_day.webp?v=20261102_47') center/cover no-repeat;
   animation: menuBgDrift 24s ease-in-out infinite alternate;
   transform: translate3d(var(--px), var(--py), 0) scale(1.05);
   transition: transform 0.25s ease-out;
