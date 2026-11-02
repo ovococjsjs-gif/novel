@@ -121,7 +121,9 @@
     "Режиссёр": { cls: "minor", char: null },
     "Петя": { cls: "minor", char: null },
     "Нина Петровна": { cls: "minor", char: null },
-    "Мальчик": { cls: "minor", char: null }
+    "Мальчик": { cls: "minor", char: null },
+    "Продавец": { cls: "minor", char: null },
+    "Соседка": { cls: "minor", char: null }
   };
 
   const WEATHER = ["none", "rain"];

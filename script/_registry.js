@@ -40,6 +40,7 @@ window.VN_VARS = {
   artem_told_crash: { type: "flag", default: false, desc: "День 4: рассказал Артёму, что его чуть не сбили на Заречном" },
   took_wallet: { type: "flag", default: false, desc: "День 4: сунул в карман найденный на набережной кошелёк (бутафорский, но он этого не знал); Валерия это видела" },
   cake_vishnevaya: { type: "flag", default: false, desc: "День 4: отвёз за Гарика торт на Вишнёвую (Дмитрий в Дне 6 знает)" },
+  lena_door: { type: "flag", default: false, desc: "День 5: ночью помог Лене закрасить надпись коллекторов на маминой двери" },
   took_artem_money: { type: "flag", default: false, desc: "День 5: взял у Артёма 20 000 ₽ «по-братски»" },
   saw_artem_mark: { type: "flag", default: false, desc: "День 5: разглядел метку под ремешком (дал Артёму выговориться)" },
   taya_promise: { type: "flag", default: false, desc: "День 6: пообещал Тае приходить учиться «держать паузу»" },

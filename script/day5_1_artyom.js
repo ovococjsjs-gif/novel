@@ -2,7 +2,7 @@ window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
   id: "day5_1_artyom",
   day: "ДЕНЬ 5 · ОСТАЛОСЬ 17 ДНЕЙ",
-  title: "Глава II. Деньги, виски и молчание",
+  title: "Глава III. Деньги, виски и молчание",
   subtitle: "Новостройка у реки · квартира Артёма · вечер",
   bg: "bg_artyom_apartment",
   bgm: "Last Chord.mp3",
