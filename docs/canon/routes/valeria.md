@@ -177,5 +177,5 @@
 - `aff_valeria`, `sight`;
 - `mirael_trust`, `nika_trust`;
 - `v_mirael_clause`, `v_borisov_secret`;
-- `v_first` (`artem` / `mirael`);
+- `v_first` (1 = `artem` / 2 = `mirael`);
 - выбор на Террасе.

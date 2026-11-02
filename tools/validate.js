@@ -103,6 +103,10 @@ const stats = [];
 
 function checkVarName(where, name, kind) {
   if (name.startsWith("meta.") || name.startsWith("thr.")) return;
+  if (name.startsWith("calc.")) {
+    if (!["leader", "second", "tie", "top", "true_ready"].includes(name.slice(5))) err(where, `${kind}: неизвестное calc-имя «${name}»`);
+    return;
+  }
   if (!(name in VARS)) err(where, `${kind}: переменная «${name}» не описана в script/_registry.js`);
 }
 
@@ -283,7 +287,12 @@ for (const ch of chapters) {
 
   // next главы
   const nexts = typeof ch.next === "string" ? [ch.next] : Array.isArray(ch.next) ? ch.next.map((r) => r.to) : [];
-  nexts.forEach((to) => !chapters.some((c) => c.id === to) && err(W("next"), `следующая глава «${to}» не найдена`));
+  const PLANNED = sandbox.window.VN_PLANNED || [];
+  nexts.forEach((to) => {
+    if (chapters.some((c) => c.id === to)) return;
+    if (PLANNED.includes(to)) warn(W("next"), `следующая глава «${to}» ещё не написана (VN_PLANNED) — игра покажет «Продолжение следует»`);
+    else err(W("next"), `следующая глава «${to}» не найдена`);
+  });
   if (Array.isArray(ch.next)) ch.next.forEach((r) => r.if !== undefined && checkCondition(W("next"), r.if));
 
   stats.push({ id: ch.id, nodes, words, choices });

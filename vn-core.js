@@ -297,5 +297,40 @@
     return idx >= 0 && idx + 1 < chapters.length ? chapters[idx + 1].id : null;
   }
 
-  return { parseCond, evalCond, condVars, compileChapter, resolveChapterNext, ENV_KEYS, CONTROL_KEYS };
+  // ---------------------------------------------------------------
+  // ВЫБОР МАРШРУТА (00_decisions.md п. 31, engine.md §7)
+  // Скрытый подсчёт симпатий Дней 0–7. Номера маршрутов как у переменной route:
+  // 1 Мираэль, 2 Валерия, 3 Лена (Земной), 4 Тая. В условиях доступно как calc.<ключ>:
+  //   calc.leader     — номер лидера; 0, если лидер ниже thr.route_min (слабая связь со всеми)
+  //   calc.second     — номер второго
+  //   calc.tie        — 1, если лидер опережает второго меньше чем на thr.route_margin
+  //   calc.top        — симпатия лидера
+  //   calc.true_ready — 1, если открыта Истинная (хорошие финалы всех четырёх и Секретной)
+  // При равенстве порядок старшинства — по номеру маршрута.
+  // ---------------------------------------------------------------
+  const ROUTE_AFF = [
+    [1, "aff_mirael"],
+    [2, "aff_valeria"],
+    [3, "aff_lena"],
+    [4, "aff_taya"]
+  ];
+  const TRUE_FLAGS = ["mirael_good", "valeria_good", "earth_good", "taya_good", "secret_good"];
+
+  function routeCalc(get, thr) {
+    thr = thr || {};
+    const margin = thr.route_margin !== undefined ? thr.route_margin : 1;
+    const min = thr.route_min !== undefined ? thr.route_min : 3;
+    const list = ROUTE_AFF.map(([id, v]) => ({ id, v: Number(get(v)) || 0 })).sort((a, b) => b.v - a.v || a.id - b.id);
+    const [first, second] = list;
+    const weak = first.v < min;
+    return {
+      leader: weak ? 0 : first.id,
+      second: second.id,
+      tie: !weak && first.v - second.v < margin ? 1 : 0,
+      top: first.v,
+      true_ready: TRUE_FLAGS.every((f) => Number(get("meta.cleared_" + f)) > 0) ? 1 : 0
+    };
+  }
+
+  return { parseCond, evalCond, condVars, compileChapter, resolveChapterNext, routeCalc, ENV_KEYS, CONTROL_KEYS };
 });

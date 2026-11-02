@@ -89,7 +89,6 @@ window.VN_CHAPTERS.push({
         options: [
           {
             label: "«Я ничего не подпишу, не сказав тебе»",
-            effects: { aff_mirael: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Мира. Давай договоримся. Я ничего не подпишу, не сказав тебе. А ты больше ничего от меня не прячешь. Ни пунктов, ни параграфов." },
               { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "shy", pos: "right" }, text: "Это двусторонний договор. Ты понимаешь, что это почти контракт?" },

@@ -82,7 +82,7 @@ window.VN_CHAPTERS.push({
           {
             label: "Дать ему выговориться. Просто слушать",
             set: { saw_artem_mark: true },
-            effects: { inner_sight: 1 },
+            effects: { inner_sight: 1, aff_taya: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Делал. Наверное. Не знаю пока. Расскажи ты." },
               { text: "Артём долго молчал. Потом заговорил — глухо, в стакан." },

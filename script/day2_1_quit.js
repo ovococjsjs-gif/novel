@@ -82,7 +82,6 @@ window.VN_CHAPTERS.push({
           {
             label: "Оставить ей телефон и вбить свой номер",
             set: { mirael_phone: true },
-            effects: { aff_mirael: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Смотри. Зелёная кнопка — позвонить. Тут один номер, мой. Если что-то случится — звонишь." },
               { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "happy", pos: "right" }, text: "А если ничего не случится?" },

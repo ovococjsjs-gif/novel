@@ -145,7 +145,6 @@ window.VN_CHAPTERS.push({
         options: [
           {
             label: "Сказать, что ей идёт",
-            effects: { aff_mirael: 1 },
             next: [
               { bg: "bg_sasha_room_day", speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Тебе идёт. Правда." },
               { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Я в нём на Дашу похожа?" },

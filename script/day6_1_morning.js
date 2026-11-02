@@ -43,7 +43,6 @@ window.VN_CHAPTERS.push({
         options: [
           {
             label: "Поблагодарить её всерьёз",
-            effects: { aff_mirael: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Мира, спасибо. Нет, правда. Ты пошла и попробовала. Я за неделю ни на одно объявление не откликнулся." },
               { speaker: "Мираэль", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Ты только листал. Я видела. Ты листаешь объявления, как я — устав. Чтобы было спокойнее. Делать при этом ничего не надо." },

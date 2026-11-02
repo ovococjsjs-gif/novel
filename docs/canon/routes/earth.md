@@ -189,5 +189,5 @@
 **Флаги маршрута:**
 - `aff_lena`, `sight`, `nika_trust`;
 - `e_promise`, `e_artem_let`;
-- `e_together` / `e_alone` / `e_pass`;
+- `e_together` / `e_alone` / `e_pass` — в реестре одна переменная `e_path` = 1 / 2 / 3;
 - `lena_truth` (примирение в День 20).

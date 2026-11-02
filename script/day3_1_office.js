@@ -68,7 +68,7 @@ window.VN_CHAPTERS.push({
         prompt: "Валерия ждёт, как он себя поведёт.",
         options: [
           {
-            label: "Дерзко: «Следить за людьми — это у вас входит в тариф?»",
+            label: "Дерзко: «Следить за людьми — это у вас входит в тариф?»", effects: { aff_valeria: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "determined_anger", pos: "left" }, text: "Следить за людьми — это у вас в базовом тарифе или за доплату?" },
               { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "Входит. Как и вежливость. Вы пользуетесь первым, я — вторым. Садитесь, Александр." }
@@ -83,7 +83,7 @@ window.VN_CHAPTERS.push({
           },
           {
             label: "Честно сказать, что ему страшно",
-            effects: { inner_sight: 1, aff_valeria: 1 },
+            effects: { inner_sight: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "Скажу сразу, чтобы не делать вид. Мне страшно. Я сюда шёл за тремя тысячами, а пришёл к вам. Колени до сих пор не мои." },
               { text: "Валерия посмотрела на него чуть дольше, чем требовала вежливость. Что-то в её лице на миг потеряло отделку." },
@@ -104,7 +104,7 @@ window.VN_CHAPTERS.push({
         prompt: "Остаток абзаца — пара строчек мелким шрифтом.",
         options: [
           {
-            label: "Дочитать до конца",
+            label: "Дочитать до конца", effects: { aff_valeria: 1 },
             set: { asked_valeria_page: true },
             next: [
               { text: "«…Служебные навыки сохраняются. Сведенія о вверенномъ субъектѣ изымаются полностью. Хранитель возвращается въ строй».", sprite: "clear" },
@@ -146,7 +146,7 @@ window.VN_CHAPTERS.push({
             ]
           },
           {
-            label: "«Что вы возьмёте, если я подпишу?»",
+            label: "«Что вы возьмёте, если я подпишу?»", effects: { aff_valeria: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Цена. Что вы возьмёте, если я подпишу? Без мелкого шрифта." },
               { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "contract", pos: "right" }, text: "Вас. После — целиком, без срока давности." },

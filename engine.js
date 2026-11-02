@@ -949,6 +949,10 @@
     if (name.startsWith("thr.")) {
       return (window.VN_THRESHOLDS || {})[name.slice(4)] || 0;
     }
+    if (name.startsWith("calc.")) {
+      const r = Core.routeCalc((n) => getVar(n), window.VN_THRESHOLDS || {});
+      return r[name.slice(5)] || 0;
+    }
     if (DEV && !(name in (window.VN_VARS || {})) && !warnedVars.has(name)) {
       warnedVars.add(name);
       console.warn(`[VN] переменная «${name}» не описана в script/_registry.js`);
@@ -1373,6 +1377,12 @@
     const p = document.createElement("p");
     p.textContent = cfg.partEndText || `Здесь пока заканчивается написанная часть истории. Вы остановились на главе «${last.title || ""}» (${last.day || ""}).`;
     box.appendChild(p);
+    const routeName = (window.VN_ROUTE_NAMES || {})[state.vars.route];
+    if (routeName) {
+      const r = document.createElement("p");
+      r.textContent = `Ваш маршрут: ${routeName}. Он пишется — сохранение уже ведёт туда.`;
+      box.appendChild(r);
+    }
     if (DEV) {
       const s = document.createElement("p");
       s.className = "end-stats";

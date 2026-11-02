@@ -29,7 +29,6 @@ window.VN_CHAPTERS.push({
         options: [
           {
             label: "«Значит, теперь моя очередь тебя закрывать»",
-            effects: { aff_mirael: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Значит, теперь моя очередь, Мира. Ты двадцать один год меня закрывала. Я как-нибудь восемнадцать дней продержусь." },
               { speaker: "Мираэль", sprite: { char: "mirael_angel", emotion: "shy", pos: "right" }, text: "Ты сегодня под маршрутку чуть не попал." },
