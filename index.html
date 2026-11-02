@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Не смотри на небо</title>
+  <link rel="stylesheet" href="styles.css?v=20261031_19" />
+</head>
+<body>
+  <div id="app">
+    <!-- DEVELOPER SPLASH SCREEN -->
+    <div id="splash-screen">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <filter id="swag-rough">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </svg>
+      <img class="swag-logo-img" src="assets/ui/swag_logo.png?v=20261102_45" alt="$WAG Entertainment" draggable="false">
+      <div class="swag-sub"><span class="swag-line"></span><span class="swag-star">✦</span><span class="swag-word">представляет</span><span class="swag-star">✦</span><span class="swag-line r"></span></div>
+      <div class="swag-hint">Нажмите, чтобы пропустить</div>
+    </div>
+
+    <!-- BACKGROUND & WEATHER -->
+    <div id="bg-layer"></div>
+    <div id="weather-layer"></div>
+    <div id="flash-overlay"></div>
+
+    <!-- CHARACTER SPRITE STAGE -->
+    <div id="sprite-stage">
+      <div id="slot-left" class="char-slot left"></div>
+      <div id="slot-center" class="char-slot center"></div>
+      <div id="slot-right" class="char-slot right"></div>
+    </div>
+
+    <!-- TOP HUD -->
+    <header id="top-hud">
+      <div class="hud-chapter-info">
+        <div id="hud-day" class="hud-day-badge">ДЕНЬ 0 · ПРОЛОГ</div>
+        <div id="hud-title" class="hud-chapter-title">Глава I</div>
+      </div>
+
+      <div class="hud-controls">
+        <div class="bgm-pill">
+          <button id="bgm-toggle" class="hud-btn" style="padding: 4px 10px;">♫ Пауза</button>
+          <span id="bgm-label">Golden Afternoon Light</span>
+          <input id="bgm-volume" type="range" min="0" max="1" step="0.05" value="0.5" title="Громкость музыки" />
+        </div>
+        <button id="btn-auto" class="hud-btn" title="Автоматическое чтение">Авто</button>
+        <button id="btn-chapters" class="hud-btn">Эпизоды</button>
+        <button id="btn-log" class="hud-btn">Журнал</button>
+        <button id="btn-saves" class="hud-btn">Сохранения</button>
+        <button id="btn-settings" class="hud-btn">Настройки</button>
+        <button id="btn-menu" class="hud-btn">Меню</button>
+      </div>
+    </header>
+
+    <!-- DIALOGUE BOX -->
+    <section id="dialogue-wrapper">
+      <div id="dialogue-box">
+        <div id="speaker-tag">Рассказчик</div>
+        <div id="dialogue-text"></div>
+        <div class="dialogue-footer">
+          <span id="progress-label">Эпизод 1 · Сцена 1</span>
+          <div class="nav-arrows">
+            <button id="btn-prev" class="step-btn">← Назад</button>
+            <button id="btn-next" class="step-btn">Далее → (Пробел / Клик)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANCHING CHOICE OVERLAY -->
+    <div id="choice-overlay">
+      <div class="choice-card">
+        <div id="choice-prompt" class="choice-prompt">Сделайте выбор:</div>
+        <div id="choice-list" class="choice-list"></div>
+      </div>
+    </div>
+
+    <!-- CANONICAL ANIMATED TITLE SCREEN -->
+    <div id="title-screen">
+      <div id="title-bg-anim"></div>
+      <div id="title-light-shafts"></div>
+      <div id="title-horizon-glow"></div>
+      <canvas id="menu-leaves-canvas"></canvas>
+      <div id="title-vignette"></div>
+
+      <div class="title-canonical-stage">
+        <div class="title-header-block">
+          <h1 class="title-main" data-text="НЕ СМОТРИ НА НЕБО">НЕ СМОТРИ НА НЕБО</h1>
+          <div class="title-ornament">
+            <span class="ornament-line left"></span>
+            <span class="ornament-gem">❖</span>
+            <span class="ornament-line right"></span>
+          </div>
+        </div>
+
+        <nav class="title-menu" aria-label="Главное меню">
+          <button id="title-start-btn" class="title-btn primary" style="--btn-idx: 0">
+            <span class="btn-diamond">◆</span>
+            <span class="btn-label">Играть</span>
+          </button>
+          <button id="title-continue-btn" class="title-btn" style="--btn-idx: 1">
+            <span class="btn-diamond">◇</span>
+            <span class="btn-label">Продолжить</span>
+            <span id="continue-badge" class="btn-meta"></span>
+          </button>
+          <button id="title-saves-btn" class="title-btn" style="--btn-idx: 2">
+            <span class="btn-diamond">◇</span>
+            <span class="btn-label">Сохранения</span>
+          </button>
+          <button id="title-chapters-btn" class="title-btn" style="--btn-idx: 3">
+            <span class="btn-diamond">◇</span>
+            <span class="btn-label">Эпизоды</span>
+          </button>
+          <button id="title-settings-btn" class="title-btn" style="--btn-idx: 4">
+            <span class="btn-diamond">◇</span>
+            <span class="btn-label">Настройки</span>
+          </button>
+          <button id="title-credits-btn" class="title-btn" style="--btn-idx: 5">
+            <span class="btn-diamond">◇</span>
+            <span class="btn-label">Авторы</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- CHAPTER SELECTOR MODAL -->
+    <div id="chapters-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Эпизоды</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div id="chapters-modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- BACKLOG MODAL -->
+    <div id="log-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Журнал диалогов</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div id="log-modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- SAVES MODAL -->
+    <div id="saves-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Сохранения</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div id="saves-modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">Настройки игры</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div class="modal-body settings-body">
+          <div class="settings-row">
+            <div class="settings-info">
+              <div class="settings-label">Громкость музыки</div>
+              <div class="settings-sub">Фоновый саундтрек сцен и главного меню</div>
+            </div>
+            <div class="settings-control">
+              <input id="set-bgm-vol" type="range" min="0" max="1" step="0.05" value="0.5" />
+              <span id="set-bgm-vol-val" class="settings-val">50%</span>
+              <button id="set-bgm-mute" class="save-action-btn">Вкл / Выкл</button>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-info">
+              <div class="settings-label">Звуки интерфейса</div>
+              <div class="settings-sub">Отклик при наведении и нажатии на кнопки меню и выборов</div>
+            </div>
+            <div class="settings-control">
+              <button id="set-ui-sfx" class="save-action-btn primary">Включены</button>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-info">
+              <div class="settings-label">Скорость появления текста</div>
+              <div class="settings-sub">Темп печати реплик в диалоговом окне</div>
+            </div>
+            <div class="settings-control">
+              <input id="set-text-speed" type="range" min="1" max="4" step="1" value="3" />
+              <span id="set-text-speed-val" class="settings-val">Быстро</span>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-info">
+              <div class="settings-label">Скорость авточтения</div>
+              <div class="settings-sub">Пауза перед переходом к следующей реплике в режиме «Авто»</div>
+            </div>
+            <div class="settings-control">
+              <input id="set-auto-speed" type="range" min="1" max="3" step="1" value="2" />
+              <span id="set-auto-speed-val" class="settings-val">Средне</span>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-info">
+              <div class="settings-label">Непрозрачность диалогового окна</div>
+              <div class="settings-sub">Плотность затемнения подложки текста</div>
+            </div>
+            <div class="settings-control">
+              <input id="set-box-opacity" type="range" min="0.6" max="1" step="0.05" value="0.92" />
+              <span id="set-box-opacity-val" class="settings-val">92%</span>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-info">
+              <div class="settings-label">Режим экрана</div>
+              <div class="settings-sub">Развернуть новеллу на весь экран</div>
+            </div>
+            <div class="settings-control">
+              <button id="set-fullscreen-btn" class="save-action-btn">На весь экран</button>
+              <button id="set-reset-btn" class="save-action-btn">Сбросить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREDITS / ABOUT MODAL -->
+    <div id="credits-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">О проекте · Авторы</div>
+          <button class="modal-close">Закрыть ✕</button>
+        </div>
+        <div class="modal-body credits-body">
+          <div class="credits-logo">$WAG ENTERTAINMENT</div>
+          <div class="credits-game-title">«НЕ СМОТРИ НА НЕБО»</div>
+          <div class="credits-section">
+            <div class="credits-role">Идея, режиссура, арт-дирекшн и музыка</div>
+            <div class="credits-name">$WAG ENTERTAINMENT</div>
+          </div>
+          <div class="credits-section">
+            <div class="credits-role">Сценарий, диалоги и программный движок</div>
+            <div class="credits-name">Разработка в соавторстве</div>
+          </div>
+          <div class="credits-section">
+            <div class="credits-role">Управление</div>
+            <div class="credits-name">Пробел / Enter / Клик — следующая реплика · Стрелка влево — шаг назад · Esc — закрыть окно</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <audio id="bgm-audio" loop preload="auto"></audio>
+  </div>
+
+  <!-- SCRIPT CHAPTERS -->
+  <script src="vn-config.js?v=20261102_45"></script>
+  <script src="vn-core.js?v=20261102_45"></script>
+  <script src="script/_registry.js?v=20261102_45"></script>
+  <script src="script/prologue_1_morning.js?v=20261102_45"></script>
+  <script src="script/prologue_2_city.js?v=20261102_45"></script>
+  <script src="script/prologue_3_barbershop.js?v=20261102_45"></script>
+  <script src="script/prologue_4_depot.js?v=20261102_45"></script>
+  <script src="script/prologue_5_crash.js?v=20261102_45"></script>
+  <script src="script/day1_1_mirael.js?v=20261102_45"></script>
+  <script src="script/day1_2_kitchen.js?v=20261102_45"></script>
+  <script src="script/day1_3_valeria.js?v=20261102_45"></script>
+  <script src="script/day1_4_bridge.js?v=20261102_45"></script>
+  <script src="script/day1_5_taya.js?v=20261102_45"></script>
+  <script src="script/day2_1_quit.js?v=20261102_45"></script>
+  <script src="script/day2_2_shift.js?v=20261102_45"></script>
+  <script src="script/day2_3_zero.js?v=20261102_45"></script>
+  <script src="script/day2_4_walk.js?v=20261102_45"></script>
+  <script src="script/day3_1_office.js?v=20261102_45"></script>
+  <script src="script/day3_2_nika.js?v=20261102_45"></script>
+  <script src="script/day3_3_books.js?v=20261102_45"></script>
+  <script src="script/day3_3_home.js?v=20261102_45"></script>
+  <script src="script/day4_1_free.js?v=20261102_45"></script>
+  <script src="script/day4_2_barbershop.js?v=20261102_45"></script>
+  <script src="script/day4_3_cuckoo.js?v=20261102_45"></script>
+  <script src="script/day4_3_home.js?v=20261102_45"></script>
+  <script src="script/day5_0_bike.js?v=20261102_45"></script>
+  <script src="script/day5_1_artyom.js?v=20261102_45"></script>
+  <script src="script/day5_2_elevator.js?v=20261102_45"></script>
+  <script src="script/day5_3_night.js?v=20261102_45"></script>
+  <script src="script/day6_1_morning.js?v=20261102_45"></script>
+  <script src="script/day6_2_squeeze.js?v=20261102_45"></script>
+  <script src="script/day6_3_taya.js?v=20261102_45"></script>
+  <script src="script/day7_1_voices.js?v=20261102_45"></script>
+  <script src="script/day7_2_stairs.js?v=20261102_45"></script>
+  <script src="engine.js?v=20261102_45"></script>
+</body>
+</html>
