@@ -71,14 +71,14 @@ html, body {
   pointer-events: none;
 }
 
-/* Видео-заставка 720×1280 на чёрном. Показываем полосу кадра y 95–1145,
-   где живёт логотип; screen-бленд растворяет чёрный фон, маска гасит края кадра
-   (буквы в видео упираются в боковые кромки). */
+/* Видео-заставка 1080×1424 на чёрном, кадр показываем целиком.
+   Логотип занимает x 55–1030, y 114–1173; потёки краски стекают до низа кадра.
+   Края слегка гасим градиентом, чтобы стык с чёрным фоном не читался. */
 .swag-stage {
-  --stage-h: min(92vh, calc(86vw * 1050 / 720));
+  --stage-h: min(90vh, calc(88vw * 1424 / 1080));
   position: relative;
   height: var(--stage-h);
-  width: calc(var(--stage-h) * 720 / 1050);
+  width: calc(var(--stage-h) * 1080 / 1424);
   overflow: hidden;
   opacity: 0;
   transform: translateY(6vh) scale(0.96);
@@ -87,13 +87,15 @@ html, body {
 
 .swag-video {
   position: absolute;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: calc(100% * 1280 / 1050);
-  top: calc(-100% * 95 / 1050);
+  height: 100%;
   object-fit: cover;
   background: #000;
   mix-blend-mode: screen;
+  /* фон ролика не чистый чёрный (≈4/255): лёгкий контраст давит его в 0,
+     иначе на мониторе виден серый прямоугольник кадра */
+  filter: contrast(1.06);
   pointer-events: none;
 }
 
@@ -105,8 +107,8 @@ html, body {
   inset: -1px;
   pointer-events: none;
   background:
-    linear-gradient(to right, #000 0%, rgba(0,0,0,0.75) 6%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.75) 94%, #000 100%),
-    linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 9%, rgba(0,0,0,0) 80%, #000 97%);
+    linear-gradient(to right, #000 0%, rgba(0,0,0,0) 4%, rgba(0,0,0,0) 96%, #000 100%),
+    linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 5%, rgba(0,0,0,0) 84%, rgba(0,0,0,0.85) 95%, #000 100%);
 }
 
 .swag-sub { z-index: 2; }
@@ -118,7 +120,7 @@ html, body {
 .swag-sub {
   position: absolute;
   left: 50%;
-  bottom: 6%;
+  bottom: 4%;
   display: flex;
   white-space: nowrap;
   align-items: center;
