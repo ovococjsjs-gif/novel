@@ -111,9 +111,9 @@ window.VN_CHAPTERS.push({
       ]
     },
     { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "А. Да так. Хотел позвать посидеть. Потом передумал." },
-    { text: "Он сказал это слишком быстро и сразу отпил большой глоток." },
+    { text: "Ответил он слишком быстро и сразу отпил большой глоток." },
     { speaker: "Артём", sprite: { char: "artem", emotion: "neutral", pos: "right" }, text: "А ты чего уволился? Мне Соколова написала. Говорит, сам ушёл, никто не гнал." },
-    { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Сам. Надоело ездить по чужим делам." },
+    { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Ага. Надоело ездить по чужим делам." },
     { speaker: "Артём", sprite: { char: "artem", emotion: "sad", pos: "right" }, text: "Правильно. Свалить, пока не поздно. Я вот не свалил." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "surprised", pos: "left" }, text: "Откуда?" },
     { text: "Артём махнул рукой на окна и коробки. На всё сразу." },
