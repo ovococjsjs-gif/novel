@@ -95,7 +95,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "happy", pos: "right" }, text: "Готово. Даша сказала: «ей длинно». Теперь не длинно." },
     { text: "Она встала и повернулась на месте, придерживая подол двумя пальцами. Саша сфотографировал её и отправил сестре." },
     { text: "Ответ пришёл через минуту: «Норм. Кто подшивал? Мама так ровно не умеет»." },
-    { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Я двадцать лет смотрела, как твоя мама подшивает. А ровно научилась сама." },
+    { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Я не торопилась. А у твоей мамы вечно суп на плите." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Ты был у неё." },
     { text: "Мира отложила иголку и ждала, скажет ли он сам." },
     {

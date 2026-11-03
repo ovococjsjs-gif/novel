@@ -45,7 +45,7 @@ window.VN_CHAPTERS.push({
     {
       if: "lena_told_truth",
       then: [
-        { speaker: "Лена", sprite: { char: "lena", emotion: "snide", pos: "right" }, text: "О, маркиз Объездной. Видела я тебя на старом мосту. Крюк в три километра, только бы мне проверку не завалить." },
+        { speaker: "Лена", sprite: { char: "lena", emotion: "snide", pos: "right" }, text: "О, явился. Видела я тебя на старом мосту. Крюк в три километра, только бы мне проверку не завалить." },
         { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Ты же сказала, что проверишь." },
         { speaker: "Лена", text: "Я и проверила. Садись уже, не стой над душой." }
       ],

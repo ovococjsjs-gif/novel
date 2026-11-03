@@ -18,7 +18,7 @@ window.VN_CHAPTERS.push({
     { text: "На белой коже набухла розовая точка. Мира потрогала её пальцем и вдруг перестала улыбаться." },
     { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Значит, я уже из того же, из чего ты. Если комару есть что взять." },
     { text: "Она повела плечами. Крылья шевельнулись тяжело, и она поморщилась." },
-    { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Плечо?" },
+    { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Опять плечо болит?" },
     { speaker: "Мира", text: "Нет. Это другое. Они... ноют. Тепло так. Как рука, которую отлежал, когда кровь возвращается." },
     { speaker: "Мира", text: "Когда ты смеёшься, у них внутри теплеет. А когда тебе плохо, тянет." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "surprised", pos: "left" }, text: "Это же... хорошо? Ну, живое." },

@@ -103,7 +103,7 @@ window.VN_CHAPTERS.push({
     { text: "Через двадцать минут в кастрюле лежал один пельмень. Большой, во всю кастрюлю." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "shy", pos: "right" }, text: "Он слипся. Но зато какой дружный." },
     { text: "Саша разрезал его ножом на куски и съел две тарелки. Было вкусно. Он сам удивился." },
-    { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "А Тёма какой был? Раньше. Я видела только сверху, а сверху все одинаковые, макушки." },
+    { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "А Тёма какой был? Ну, раньше. До салонов." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Громкий. У него всегда был план. В девятом классе план был стать миллионером к двадцати пяти. В десятом открыть барбершоп на Луне. Он стриг весь двор бесплатно, чтобы набить руку, и полдвора потом ходило в кепках." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "И как, стал миллионером?" },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "У него три салона. Наверное, стал. До двадцати пяти успел." },

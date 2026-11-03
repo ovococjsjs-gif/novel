@@ -42,7 +42,7 @@ window.VN_CHAPTERS.push({
     { bg: "bg_sasha_kitchen_day", text: "Она вернулась ближе к полудню." },
     { bgm: "Toast and Tinkling.mp3", bg: "bg_sasha_kitchen_day", text: "Раскрасневшаяся, с газетой объявлений под мышкой и с липовым цветом в волосах." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Сразу говорю: меня никто не видел с крыльями. Я проверяла. Я ходила по объявлениям. Только по тем, где платят сразу, в тот же день." },
-    { speaker: "Александр", sprite: { char: "alexander", emotion: "surprised", pos: "left" }, text: "Ты... что?" },
+    { speaker: "Александр", sprite: { char: "alexander", emotion: "surprised", pos: "left" }, text: "Ты что, работу искала?" },
     { speaker: "Мира", text: "Тебе не хватает на квартиру. Я подумала: я же могу работать. Я всю жизнь работала без выходных." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Мир. Какая работа. У меня шестнадцать дней." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "determined_anger", pos: "right" }, text: "Поэтому я и искала, где платят сегодня. Не через месяц. Эти дни тоже надо где-то спать. Я не хочу, чтобы ты спал на вокзале." },
