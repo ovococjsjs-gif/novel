@@ -390,6 +390,33 @@ html, body {
   height: 102.1vh;
 }
 
+/* Вторая партия (03.11). Гоша — «длинный парень», выше Саши; консьерж плотный, ростом со Льва;
+   Витя чуть ниже Льва; Тамара невысокая и полная; бариста ростом с девушек. */
+.char-slot[data-char-group="tamara"] {
+  top: 24.6vh;
+  height: 85.4vh;
+}
+
+.char-slot[data-char-group="gosha"] {
+  top: 11.9vh;
+  height: 102.5vh;
+}
+
+.char-slot[data-char-group="concierge"] {
+  top: 17.5vh;
+  height: 98.8vh;
+}
+
+.char-slot[data-char-group="vitya"] {
+  top: 16.5vh;
+  height: 99.9vh;
+}
+
+.char-slot[data-char-group="barista"] {
+  top: 20.4vh;
+  height: 89.8vh;
+}
+
 .char-slot.left   { left: 27%; }
 .char-slot.center { left: 50%; }
 .char-slot.right  { left: 73%; }

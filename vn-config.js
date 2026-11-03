@@ -108,6 +108,36 @@
       emotions: set(C + "lev/transparent/lev_{e}.webp", ["neutral", "thoughtful"]),
       aliases: { smile: "neutral", happy: "neutral", sad: "thoughtful" },
       fallback: "neutral"
+    },
+    // Вторая партия (03.11). Тамара: neutral — руки в боки, «ты ел сегодня?»; smile — расплылась в улыбке.
+    tamara: {
+      emotions: set(C + "tamara/transparent/tamara_{e}.webp", ["neutral", "smile"]),
+      aliases: { happy: "smile", warm: "smile", stern: "neutral", worried: "neutral", surprised: "neutral" },
+      fallback: "neutral"
+    },
+    // Гоша, администратор барбершопа: neutral — болтает, телефон в руке; worried — встревожен, косится в сторону.
+    gosha: {
+      emotions: set(C + "gosha/transparent/gosha_{e}.webp", ["neutral", "worried"]),
+      aliases: { smile: "neutral", happy: "neutral", sad: "worried", nervous: "worried", surprised: "worried" },
+      fallback: "neutral"
+    },
+    // Консьерж в доме Артёма: neutral — вежливое внимание; smile — сладкая улыбка «мы за ним присматриваем».
+    concierge: {
+      emotions: set(C + "concierge/transparent/concierge_{e}.webp", ["neutral", "smile"]),
+      aliases: { happy: "smile", sweet: "smile" },
+      fallback: "neutral"
+    },
+    // Витя с барахолки: neutral — вымотан, руки в саже (День 5); smile — отпустило, руки отмыты (День 6).
+    vitya: {
+      emotions: set(C + "vitya/transparent/vitya_{e}.webp", ["neutral", "smile"]),
+      aliases: { tired: "neutral", sad: "neutral", happy: "smile", relieved: "smile" },
+      fallback: "neutral"
+    },
+    // Бариста из кафе на Садовой: neutral — приветливая ухмылка; concerned — встревожена.
+    barista: {
+      emotions: set(C + "barista/transparent/barista_{e}.webp", ["neutral", "concerned"]),
+      aliases: { smile: "neutral", happy: "neutral", worried: "concerned", sad: "concerned", surprised: "concerned" },
+      fallback: "neutral"
     }
   };
 
@@ -124,20 +154,20 @@
     "Артём": { cls: "artem", char: "artem" },
     "Дмитрий": { cls: "dmitry", char: "dmitry" },
     "Тая": { cls: "taya", char: "taya" },
-    // Второстепенные (без спрайтов)
+    // Второстепенные. char: null — спрайта нет
     "Баба Нюра": { cls: "minor", char: "nyura" },
     "Даша": { cls: "minor", char: null },
     "Зоя Павловна": { cls: "minor", char: null },
     "Лев Аркадьевич": { cls: "minor", char: "lev" },
     "Инесса": { cls: "minor", char: "inessa" },
-    "Администратор": { cls: "minor", char: null },
-    "Консьерж": { cls: "minor", char: null },
-    "Бариста": { cls: "minor", char: null },
+    "Администратор": { cls: "minor", char: "gosha" },
+    "Консьерж": { cls: "minor", char: "concierge" },
+    "Бариста": { cls: "minor", char: "barista" },
     "Клиент": { cls: "minor", char: null },
     "Клиентка": { cls: "minor", char: null },
     "Голос": { cls: "minor", char: null },
     "Мама": { cls: "minor", char: null },
-    "Тамара": { cls: "minor", char: null },
+    "Тамара": { cls: "minor", char: "tamara" },
     "Ковалёвский": { cls: "minor", char: null },
     "Гарик": { cls: "minor", char: "garik" },
     "Букинист": { cls: "minor", char: null },
@@ -147,7 +177,8 @@
     "Петя": { cls: "minor", char: null },
     "Нина Петровна": { cls: "minor", char: null },
     "Мальчик": { cls: "minor", char: null },
-    "Продавец": { cls: "minor", char: null },
+    "Продавец": { cls: "minor", char: "vitya" },
+    "Витя": { cls: "minor", char: "vitya" },
     "Соседка": { cls: "minor", char: null },
     "Мужчина в сером": { cls: "minor", char: null },
     "Приёмщица": { cls: "minor", char: null },
