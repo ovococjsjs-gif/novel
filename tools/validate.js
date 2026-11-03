@@ -309,15 +309,19 @@ for (const ch of chapters) {
     const charOf = (speaker) => (Cfg.SPEAKERS[speaker] || {}).char;
     let bg = bgId(ch.bg), weather = ch.weather || "none", rainWarned = "";
     let st = { left: null, center: null, right: null };
-    let scene = { swaps: [], speakers: new Set() };
+    // Подмена в слоте — ошибка, только если вытесненный потом говорит в той же сцене,
+    // а его на экране нет (пинг-понг в одном слоте). Уход одного и приход другого — норма.
+    let scene = { swaps: [], says: [] };
     const flush = () => {
-      scene.swaps.filter((e) => e.jump || (scene.speakers.has(e.from) && scene.speakers.has(e.to)))
+      const pingPong = (e) => scene.swaps.some((e2) => e2.k > e.k && !e2.jump && e2.slot === e.slot && e2.from === e.to && e2.to === e.from);
+      const silenced = (e) => scene.says.some((t) => t.k > e.k && t.char === e.from && !t.visible.has(e.from));
+      scene.swaps.filter((e) => e.jump || pingPong(e) || silenced(e))
         .forEach((e) => warn(W(e.path), e.jump
           ? `спрайт «${e.from}» перескочил на другую сторону (${e.slot})`
-          : `в слоте ${e.slot} «${e.to}» подменил «${e.from}», а оба говорят в этой сцене — поставь их слева и справа`));
-      scene = { swaps: [], speakers: new Set() };
+          : `в слоте ${e.slot} «${e.to}» подменил «${e.from}», а «${e.from}» ещё вернётся в этой сцене — поставь их слева и справа`));
+      scene = { swaps: [], says: [] };
     };
-    comp.code.forEach((ins) => {
+    comp.code.forEach((ins, k) => {
       const n = ins.op === "choice" ? ins.env : ins.node;
       if (!n) return;
       if ((n.bg && bgId(n.bg) !== bg) || n.sprite === "clear") flush();
@@ -341,17 +345,19 @@ for (const ch of chapters) {
           for (const k of ["left", "center", "right"]) if (k !== pos && st[k] && grp(st[k].char) === grp(sp.char)) st[k] = null;
           st[pos] = sp;
         }
-        for (const k of ["left", "center", "right"]) {
-          if (before[k] && st[k] && grp(before[k].char) !== grp(st[k].char)) scene.swaps.push({ path: ins.path, slot: k, from: grp(before[k].char), to: grp(st[k].char) });
+        for (const sk of ["left", "center", "right"]) {
+          if (before[sk] && st[sk] && grp(before[sk].char) !== grp(st[sk].char)) scene.swaps.push({ k, path: ins.path, slot: sk, from: grp(before[sk].char), to: grp(st[sk].char) });
         }
         for (const [a, b] of [["left", "right"], ["right", "left"]]) {
           if (before[a] && st[b] && grp(before[a].char) === grp(st[b].char) && !(st[a] && grp(st[a].char) === grp(before[a].char))) {
-            scene.swaps.push({ path: ins.path, slot: b, from: grp(before[a].char), to: grp(st[b].char), jump: true });
+            scene.swaps.push({ k, path: ins.path, slot: b, from: grp(before[a].char), to: grp(st[b].char), jump: true });
           }
         }
       }
       if (ins.op === "say") {
-        if (n.speaker && !n.thought && charOf(n.speaker)) scene.speakers.add(charOf(n.speaker));
+        if (n.speaker && !n.thought && charOf(n.speaker)) {
+          scene.says.push({ k, char: charOf(n.speaker), visible: new Set(["left", "center", "right"].filter((x) => st[x]).map((x) => grp(st[x].char))) });
+        }
         const key = bg + "|" + weather;
         if (weather === "rain" && !Cfg.isRainBg(bg) && !Cfg.isIndoorBg(bg) && rainWarned !== key) {
           rainWarned = key;
