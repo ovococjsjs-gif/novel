@@ -163,22 +163,24 @@ window.VN_CHAPTERS.push({
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "playful_smile", pos: "right" }, text: "Вопросы у меня платные, Александр. Не тратьте их так рано." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "playful_smile", pos: "right" }, text: "Не обижайтесь. Это я для знакомства. Мы к этому листу ещё вернёмся." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "cold_serious", pos: "right" }, text: "Раз уж вы здесь. Я хочу показать вам ещё одну страницу. Одну. Остальной архив — для клиентов." },
-    { text: "Она достала из ящика лист, плотный и желтоватый, и положила перед ним, не выпуская уголка из пальцев. Текст был мелкий, в старой орфографии, с ятями." },
-    { text: "«…Хранитель, допустившій расхожденіе съ Реестромъ, по завершеніи кассаціоннаго разбора направляется на переплавку памяти…»" },
-    { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Переплавка памяти. Это что значит?" },
-    { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "neutral", pos: "right" }, text: "Там дальше написано. Читайте, я никуда не тороплюсь." },
+    { bg: "cg_d3_latin_page", sprite: "clear", text: "Она достала из ящика лист, плотный и желтоватый, и положила перед ним, не выпуская уголка из пальцев. Текст был мелкий, на латыни. Под одним абзацем кто-то давно вписал перевод рыжими выцветшими чернилами, с ятями." },
+    { text: "«Custos, qui a Registro discrepaverit, peracta cassationis cognitione ad memoriam recoquendam mittitur…»" },
+    { text: "Ниже, от руки: «…Хранитель, допустившій расхожденіе съ Реестромъ, по завершеніи кассаціоннаго разбора направляется на переплавку памяти…»" },
+    { speaker: "Александр", text: "Переплавка памяти. Это что значит?" },
+    { speaker: "Валерия", text: "Там дальше написано. Читайте, я никуда не тороплюсь." },
     {
       choice: {
         id: "d3_page",
-        prompt: "Остаток абзаца — пара строчек мелким шрифтом.",
+        prompt: "Дальше ещё пара строчек латыни и перевод под ними.",
         options: [
           {
             label: "Дочитать до конца", effects: { aff_valeria: 1 },
             set: { asked_valeria_page: true },
             next: [
-              { text: "«…Служебные навыки сохраняются. Сведенія о вверенномъ субъектѣ изымаются полностью. Хранитель возвращается въ строй».", sprite: "clear" },
+              { text: "«…Artes officii servantur. Notitiae de subiecto commisso omnino auferuntur. Custos in ordines redit.»", sprite: "clear" },
+              { text: "И перевод: «…Служебные навыки сохраняются. Свѣдѣнія о ввѣренномъ субъектѣ изымаются полностью. Хранитель возвращается въ строй»." },
               { text: "Он перечитал, прежде чем понял. Потом перечитал ещё, чтобы не ошибиться." },
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "shocked", pos: "left" }, text: "Она меня забудет. Совсем, как будто меня и не было." },
+              { bg: "bg_valeria_office_day", speaker: "Александр", sprite: { char: "alexander", emotion: "shocked", pos: "left" }, text: "Она меня забудет. Совсем, как будто меня и не было." },
               { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "neutral", pos: "right" }, text: "Вся её служба — в переплавку. Чистая и отдохнувшая. Верх очень бережлив." }
             ]
           },
@@ -186,7 +188,7 @@ window.VN_CHAPTERS.push({
             label: "Отодвинуть лист: хватит с него",
             effects: { inner_sight: -1 },
             next: [
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "Знаете, хватит. Я понял общий смысл. Мне на сегодня достаточно старой орфографии." },
+              { bg: "bg_valeria_office_day", speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "Знаете, хватит. Я понял общий смысл. Мне на сегодня хватит и латыни, и ятей." },
               { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "Как скажете. Самое интересное всегда в последних строчках, Александр. Но вы и так это знаете." },
               { text: "Она убрала лист в ящик и повернула ключ." }
             ]
