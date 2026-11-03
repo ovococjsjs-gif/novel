@@ -48,7 +48,7 @@ window.VN_CHAPTERS.push({
               { speaker: "Александр", text: "И все приходят?" },
               { speaker: "Тая", text: "Кто-то приходит. Кто-то потом сидит у меня по четвергам тридцать лет." },
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Лев Аркадьевич тоже про тридцать лет говорил. Тебе тогда сколько было, пять?" },
-              { speaker: "Тая", sprite: { char: "taya", emotion: "laugh", pos: "right" }, text: "Часы неси. И под ноги смотри, маятник мне не урони." }
+              { speaker: "Тая", sprite: { char: "taya", emotion: "laugh", pos: "right" }, text: "Часы держи. И на кочках потише, маятник мне не разбей." }
             ]
           },
           {
