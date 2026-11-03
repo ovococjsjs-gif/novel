@@ -97,7 +97,7 @@ window.VN_CHAPTERS.push({
             effects: { inner_sight: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Тём. Давай сейчас. Я же вижу. Что случилось?" },
-              { text: "Артём на секунду перестал улыбаться. Под улыбкой оказалось лицо человека, который не спал несколько суток." },
+              { text: "Артём на секунду перестал улыбаться, и стало видно, что он не спал несколько суток." },
               { speaker: "Артём", sprite: { char: "artem", emotion: "sad", pos: "right" }, text: "Не здесь, брат. Не при людях. Завтра. Я всё... завтра." }
             ]
           }
@@ -110,7 +110,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Тём, ты меня бесплатно постриг. И теперь ещё доплачиваешь, чтобы я у тебя стригся?" },
     { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "Ну да. Бизнес-модель." },
     { sprite: { right: "clear" }, text: "Он засмеялся, и смех опять оборвался на середине. Артём ушёл в подсобку, не дожидаясь ответа." },
-    { sprite: { char: "gosha", emotion: "worried", pos: "right" }, text: "Саша посмотрел на закрытую дверь и положил купюры на стойку, под расчёску. Администратор всё видел и, кажется, впервые за день промолчал." },
+    { sprite: { char: "gosha", emotion: "worried", pos: "right" }, text: "Саша посмотрел на закрытую дверь и положил купюры на стойку, под расчёску. Администратор всё видел и впервые за день промолчал." },
     { sprite: { char: "gosha", emotion: "neutral", pos: "right" }, text: "На выходе Гоша помахал ему рукой и подмигнул." },
     {
       if: "haircut_d0",
