@@ -1361,3 +1361,39 @@ html, body {
 #dev-panel .dev-actions { margin-top: 4px; }
 #dev-panel button { font: inherit; background: #222; color: #ccc; border: 1px solid #555; cursor: pointer; padding: 1px 6px; }
 .dev-choice-fx { display: block; margin-top: 4px; font: 11px monospace; color: #9fe89f; opacity: 0.85; }
+
+/* Скрыть интерфейс (H): видно только фон, спрайты и CG */
+#top-hud,
+#dialogue-wrapper,
+#dev-panel {
+  transition: opacity 0.25s ease;
+}
+body.ui-hidden #top-hud,
+body.ui-hidden #dialogue-wrapper,
+body.ui-hidden #choice-overlay,
+body.ui-hidden #dev-panel {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#ui-hint {
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  z-index: 20;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(6, 8, 14, 0.55);
+  color: rgba(235, 238, 245, 0.85);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+#ui-hint.show {
+  opacity: 1;
+}
+@media (max-width: 700px) {
+  .key-hint { display: none; }
+}
+

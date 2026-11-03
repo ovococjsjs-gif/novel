@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261103_55";
+  const ASSET_VER = "20261103_56";
 
   function withVer(url) {
     if (!url) return "";
@@ -701,11 +701,19 @@
     if (!bgPath || state.currentBg === bgPath) return;
     state.currentBg = bgPath;
     bgLayer.style.backgroundImage = `url('${withVer(bgPath)}')`;
+    applyWeatherLayer();
+  }
+
+  // Дождь рисуем только на улице. В квартире, подъезде, кабинете слой гасим,
+  // а state.weather не трогаем: вышли на улицу — дождь снова идёт.
+  function applyWeatherLayer() {
+    const rain = state.weather === "rain" && !(Cfg.isIndoorBg && Cfg.isIndoorBg(state.currentBg));
+    weatherLayer.className = rain ? "rain" : "";
   }
 
   function setWeather(mode) {
     state.weather = mode || "none";
-    weatherLayer.className = state.weather === "rain" ? "rain" : "";
+    applyWeatherLayer();
   }
 
   function setCamera(mode) {
@@ -1220,6 +1228,7 @@
     const delayMap = { 1: 3600, 2: 2300, 3: 1300 };
     const baseDelay = delayMap[settings.autoSpeed] || 2300;
     state.autoTimer = setTimeout(() => {
+      if (document.body.classList.contains("ui-hidden")) return; // продолжим, когда интерфейс вернут
       if (state.autoMode && !state.isTyping && !choiceOverlay.classList.contains("visible")) {
         stepForward();
       }
@@ -1729,6 +1738,38 @@
     stepBackward();
   });
 
+  // Скрыть интерфейс (H или кнопка «Скрыть»): посмотреть на фон или CG без окна текста.
+  // Вернуть: H, любая клавиша или клик в любом месте; сюжет при этом не листается.
+  const uiHint = document.getElementById("ui-hint");
+  let uiHintTimer = null;
+  function setUiHidden(on) {
+    const was = document.body.classList.contains("ui-hidden");
+    document.body.classList.toggle("ui-hidden", !!on);
+    if (uiHint) {
+      clearTimeout(uiHintTimer);
+      uiHint.classList.toggle("show", !!on);
+      if (on) uiHintTimer = setTimeout(() => uiHint.classList.remove("show"), 1800);
+    }
+    if (was && !on && state.autoMode && !state.isTyping) scheduleAutoAdvance();
+  }
+  function canHideUi() {
+    return titleScreen.classList.contains("hidden") && !document.querySelector(".modal-backdrop.visible");
+  }
+  const btnHideUi = document.getElementById("btn-hide-ui");
+  if (btnHideUi) {
+    btnHideUi.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (canHideUi()) setUiHidden(true);
+    });
+  }
+  // клик при скрытом интерфейсе только возвращает его
+  document.addEventListener("click", (e) => {
+    if (!document.body.classList.contains("ui-hidden")) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setUiHidden(false);
+  }, true);
+
   if (btnAuto) {
     btnAuto.addEventListener("click", () => {
       state.autoMode = !state.autoMode;
@@ -1780,6 +1821,18 @@
 
   window.addEventListener("keydown", (e) => {
     const anyModal = document.querySelector(".modal-backdrop.visible");
+    if (document.body.classList.contains("ui-hidden")) {
+      if (["Shift", "Control", "Alt", "Meta"].includes(e.key)) return;
+      e.preventDefault();
+      setUiHidden(false);
+      return;
+    }
+    // e.code, чтобы H работала и в русской раскладке
+    if (e.code === "KeyH" && !e.ctrlKey && !e.metaKey && !e.altKey && !e.repeat && canHideUi()) {
+      e.preventDefault();
+      setUiHidden(true);
+      return;
+    }
     if (e.key === "Escape") {
       if (anyModal) {
         anyModal.classList.remove("visible");

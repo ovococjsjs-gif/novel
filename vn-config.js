@@ -163,5 +163,25 @@
     return BG_DIR + (bg.endsWith(".png") || bg.endsWith(".webp") || bg.endsWith(".jpg") ? bg : bg + ".webp");
   }
 
-  return { SPRITES, SPEAKERS, WEATHER, CAMERA, EFFECTS, BG_DIR, resolveSprite, resolveBg };
+  // Фоны в помещении: дождь там не идёт. Погода главы при этом сохраняется,
+  // и на улице дождь снова виден. Новые фоны и CG в помещении дописывать сюда.
+  const INDOOR_BGS = new Set([
+    "bg_apartment_hallway", "bg_artyom_apartment", "bg_artyom_landing", "bg_barbershop_interior",
+    "bg_buffer_corridor", "bg_buffer_crash_imprint", "bg_city_cafe", "bg_depot_office", "bg_elevator_glitch",
+    "bg_open_office", "bg_pastry_shop",
+    "bg_sasha_kitchen_day", "bg_sasha_kitchen_night", "bg_sasha_room_day", "bg_sasha_room_day_rain", "bg_sasha_room_night",
+    "bg_stairwell_day", "bg_stairwell_door_night", "bg_taya_workshop_day", "bg_taya_workshop_night",
+    "bg_valeria_office_day", "bg_valeria_office_night", "bg_valeria_reception_day", "bg_valeria_reception_night",
+    "bg_valeria_salon_day", "bg_valeria_salon_night",
+    "cg_d3_latin_page", "cg_d4_lemon", "cg_d5_mirror_lift", "cg_dress_fitting", "cg_feather_watch",
+    "cg_first_coffee", "cg_sasha_mirror", "cg_valeria_nika_door",
+  ]);
+  function isIndoorBg(bg) {
+    const p = resolveBg(bg);
+    if (!p) return false;
+    const id = p.split("/").pop().replace(/\.(webp|png|jpg)$/, "");
+    return INDOOR_BGS.has(id);
+  }
+
+  return { SPRITES, SPEAKERS, WEATHER, CAMERA, EFFECTS, BG_DIR, INDOOR_BGS, resolveSprite, resolveBg, isIndoorBg };
 });
