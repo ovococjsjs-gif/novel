@@ -5,10 +5,10 @@ window.VN_CHAPTERS.push({
   title: "Глава IV. Часы пошли назад",
   subtitle: "Старокупеческий переулок · мастерская · вечер",
   bg: "bg_courtyard_arch_night",
-  bgm: "Soft Morning Light.mp3",
+  bgm: "Toast and Tinkling.mp3",
   weather: "none",
   nodes: [
-    { bg: "bg_sasha_kitchen_day", bgm: "Toast and Tinkling.mp3", sprite: "clear", text: "Перед выходом Мира усадила его на табуретку посреди кухни и накрыла ему плечи полотенцем." },
+    { bg: "bg_sasha_kitchen_day", sprite: "clear", text: "Перед выходом Мира усадила его на табуретку посреди кухни и накрыла ему плечи полотенцем." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "determined_anger", pos: "right" }, text: "К часовщице ты так не пойдёшь. У тебя за ушами отросло. Я видела сверху, как это делают." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "Сверху не считается." },
     { speaker: "Мира", text: "Сиди ровно." },
@@ -167,7 +167,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", sprite: { char: "alexander", emotion: "determined_anger", pos: "left" }, text: "Я ещё не решил, приду ли." },
     { speaker: "Ника", sprite: { char: "nika", emotion: "teasing", pos: "right" }, text: "Ага. Все так говорят. Потом приходят в пиджаке." },
     { text: "Она откусила яблоко и пропала вместе с ящиком. Огрызок остался лежать на брусчатке." },
-    { bgm: "River Fog.mp3", bg: "bg_courtyard_arch_night", sprite: "clear", text: "Окна на втором этаже дома семь всё ещё горели. В одном из них стояла высокая фигура и смотрела во двор. Когда Саша поднял голову, штора качнулась и закрылась." },
+    { bgm: "Midnight Boardroom.mp3", bg: "bg_courtyard_arch_night", sprite: "clear", text: "Окна на втором этаже дома семь всё ещё горели. В одном из них стояла высокая фигура и смотрела во двор. Когда Саша поднял голову, штора качнулась и закрылась." },
     { note: "Сцены-отклики Дня 6 (04_plot.md): срабатывает одна, под текущего лидера." },
     {
       if: "calc.leader == 1",

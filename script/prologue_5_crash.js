@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава V. Двести метров до конца биографии",
   subtitle: "Заречный перекрёсток · ночь, ливень",
   bg: "bg_rainy_crossroad",
-  bgm: "River Fog.mp3",
+  bgm: "rain_before_edge.mp3",
   weather: "rain",
   nodes: [
     { sprite: "clear", camera: "ride", text: "Город в ливень становился чужим. Фонари стояли в воде по колено, витрины размывало. Навстречу проплыл пустой автобус, ярко освещённый, с одним водителем." },

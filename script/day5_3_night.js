@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава V. Ночной звонок",
   subtitle: "Речная набережная · Тихая улица · ночь",
   bg: "bg_river_embankment_evening",
-  bgm: "River Fog.mp3",
+  bgm: "Late Night Solitude.mp3",
   weather: "rain",
   nodes: [
     { sprite: "clear", text: "После виски садиться на велосипед он не стал и повёл его домой пешком, по набережной. Дождь был мелкий, как из пульверизатора, и фонари стояли в мокрых ореолах." },

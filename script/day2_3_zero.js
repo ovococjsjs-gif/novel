@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава III. Квартира ноль",
   subtitle: "Старокупеческий переулок · арка · мастерская · вечер",
   bg: "bg_summer_town_day",
-  bgm: "workflow.mp3",
+  bgm: "evidence_anxiety.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", camera: "ride", text: "Он затормозил у бордюра и перечитал заказ." },

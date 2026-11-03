@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава VI. Цена земного тепла",
   subtitle: "Тихая улица · вечер",
   bg: "bg_sasha_room_night",
-  bgm: "River Fog.mp3",
+  bgm: "normal_body.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Вечер выдался ясный и тёплый. В открытое окно летели комары и запах чьих-то шашлыков с соседнего двора." },

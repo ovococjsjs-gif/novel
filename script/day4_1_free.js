@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава I. Пустой день",
   subtitle: "Тихая улица · город · Речная набережная · утро",
   bg: "bg_sasha_room_day_rain",
-  bgm: "Soft Morning Light.mp3",
+  bgm: "The Quiet Room.mp3",
   weather: "rain",
   nodes: [
     { sprite: "clear", text: "Утром пошёл дождь. Короткий, тёплый, из тех, что к обеду высыхают без следа. По карнизу стучало, во дворе пахло мокрой липой." },

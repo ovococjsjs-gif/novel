@@ -85,7 +85,8 @@
 | `Holding You at Night.mp3` | **Мираэль, нежная ночная** | Тихое фортепиано со струнными, бережно и грустно | Ночь, она спит или им тяжело, Саша рядом |
 | `Cold Elegance.mp3` | **Валерия** (возможно основная) | Клавесин, викторианский салон, ровная громкость | Появления Валерии, её разговоры с Сашей |
 | `Velvet Shadows.mp3` | **Салон «Валерия и партнёры»** | Джаз-нуар, приглушённая труба | Приёмная, кабинет, салон, ночной маршрут Валерии |
-| `Bounce Stop.mp3` | **Ника** | Быстрый поп с глитчами, обрывается при упоминании Валерии | Ника одна, её болтовня и выходки |
+| `The Great Office Meeting.mp3` | **Ника, рабочая** (основная с 03.11) | Суетливая офисно-демоническая, минор | Ника при исполнении или говорит о работе: ведомость, отчёты, «дело номер ноль», папка на Артёма. По просьбе автора звучит чаще, чем «Bounce Stop» |
+| `Bounce Stop.mp3` | **Ника, весёлая** | Быстрый поп с глитчами, мажор, обрывается при упоминании Валерии | Ника дурачится: первое появление на площадке, бабл-ти, перила ночью до прихода Миры |
 | `Static & Sleeplessnes.mp3` | **Лена** | Сухой бит, шумы эфира, радиоприёмник | Сцены с Леной (точка сбора, обед на ступенях, её маршрут) |
 | `Last Chord.mp3` | **Артём** | Бодрый поп-рок, из которого вынимают гармонию | Барбершоп, сцены с Артёмом. Секрет не раскрывает, только настроение |
 | `Ticking Clocks.mp3` | **Тая** | Тиканье часов как ритм, слегка восточное | Первая встреча с Таей, разговоры о часах и времени |
@@ -101,7 +102,6 @@
 | `workflow.mp3` | Дневная рабочая | Курьерские смены, поездки |
 | `Midnight Boardroom.mp3` | Вечерний джаз | Запасной для Валерии; условия контракта вечером |
 | `terms and leverage_v2.mp3` | Игривая, с духовыми | Дуэли и торг с Валерией |
-| `The Great Office Meeting.mp3` | Суетливая офисно-демоническая | Бюрократия бюро, Ника на работе |
 | `The Meeting That Never.mp3` | Glitchy, нервная | Когда за шутками Ники проступает угроза |
 | `River Fog.mp3` | Мистическая, задумчивая | Ночные размышления, откровения, сбои |
 | `The Hollow Stare.mp3` | Напряжённая, ударные | Кризисы, давление перед выбором |
@@ -163,12 +163,51 @@
 
 Правила: **не больше 3 смен трека на главу** (в длинных главах допустимо больше, если меняется место). Тему персонажа включаем при его появлении, а не на каждую реплику.
 
-### Где стоят темы сейчас (пролог, дни 1–2)
+### Карта музыки по главам (03.11)
 
-- Пролог: Саша (платье в шкафу, квас с Фейнманом), Артём (весь барбершоп), Лена (появление под навесом), «Holding You at Night» (дома после аварии).
-- День 1: «First Steps in the Hall» (первое утро), «Toast and Tinkling» (кухня, кофе, платье), «Cold Elegance» (Валерия в дверях), «Bounce Stop» (Ника на перилах), Саша (мостик в парке), «Ticking Clocks» (мастерская ночью), «Holding You at Night» (отбой).
-- День 2: Саша (дорога в депо), Лена (обед под мостом), «Whipped Tea» (мастерская), «Toast and Tinkling» (вечер дома, «Мира»), «First Steps in the Hall» (ноги в реке), «Holding You at Night» (она уснула).
-- Дни 3–7 переписаны 02.11, музыка в них пока прежняя. Темы по таблице выше — при следующем проходе по звуку.
+Музыку разнообразили 03.11: было 23 трека, стало 39. «River Fog» звучал 17 раз, «workflow» 15, теперь по 5–6. Курьерская «workflow» осталась там, где Саша ещё работает (пролог, день 2) или едет по привычке (день 4). Характер незнакомых треков сверяли по описаниям из старого проекта и по анализу записи: темп, лад, яркость, плотность ударных.
+
+| Глава | Музыка по порядку |
+|---|---|
+| prologue_1 | Soft Morning Light → Unresolved Phrases (платье в шкафу) |
+| prologue_2 | workflow → Unresolved Phrases (квас и Фейнман) → Sunny Afternoon (Мостовой, Артём в витрине) |
+| prologue_3 | Last Chord → timeframe (туча над крышами, последние часы до аварии) |
+| prologue_4 | workflow → Static & Sleeplessnes (Лена под навесом) → rain_before_edge (гроза, последний заказ) |
+| prologue_5 | rain_before_edge (дорога к перекрёстку) → dead_minute (фары) → River Fog (после удара) → Holding You at Night |
+| day1_1 | First Steps in the Hall |
+| day1_2 | Toast and Tinkling → The Hollow Stare (стук в дверь) |
+| day1_3 | The Hollow Stare → Cold Elegance (Валерия) → Bounce Stop (Ника задержалась) → The Quiet After (визитка) |
+| day1_4 | The Quiet After (руки трясутся, когда всё кончилось) → Summer Town Shuffle → Unresolved Phrases (мостик в парке) |
+| day1_5 | River Fog (ночные дворы, арка) → Ticking Clocks → Late Night Solitude (ночью домой) → Holding You at Night |
+| day2_1 | Soft Morning Light → Unresolved Phrases (дорога в депо) → human_statement (увольнение) → Summer Town Shuffle (Гарик делит район) |
+| day2_2 | workflow (последняя смена) → Static & Sleeplessnes (Лена) → rain_before_edge (перекрёсток днём, «в ушах шумел дождь») → workflow (вечер, новый заказ) |
+| day2_3 | evidence_anxiety (заказ в кв. 0) → River Fog (арка) → dead_minute (сбой) → River Fog → Whipped Tea |
+| day2_4 | consequences_b (вернуть шлем) → Toast and Tinkling → normal_body (парк) → First Steps in the Hall (ноги в реке, эклеры) → midnight_apartment (балкон) → Holding You at Night |
+| day3_1 | Soft Morning Light → Sunny Afternoon (Мостовой в полдень) → Velvet Shadows (приёмная) → Cold Elegance (кабинет, лист на латыни) → The Great Office Meeting (ведомость, Ника) |
+| day3_2 | Ticking Clocks (двор Таи) → Bounce Stop (Ника на руле, бабл-ти) → The Great Office Meeting («переработки», дело номер ноль) |
+| day3_3_books | Summer Town Shuffle (букинисты) → Unresolved Phrases (задача на бордюре) → Static & Sleeplessnes (Лена) |
+| day3_3_home | Toast and Tinkling → white_memory (переплавка памяти); ветки: Static & Sleeplessnes (звонок Лене) или foreign_past (Мира помнит приёмник) |
+| day3_4 | Bounce Stop (Ника на перилах) → The Great Office Meeting (с CG: «Ты из контрактного») → midnight_apartment (ночью на кухне, мамина тетрадь) |
+| day4_1 | The Quiet Room (дождливое утро) → workflow (катается по привычке, рябь на стене) → Static & Sleeplessnes (Лена) |
+| day4_1b | Sunny Afternoon (съёмка) → River Fog (фольга как фары) → Sunny Afternoon → name_in_protocol (физфак) |
+| day4_2 | Last Chord |
+| day4_2b | Summer Town Shuffle |
+| day4_3_cuckoo | Cold Elegance (Валерия под аркой) → Whipped Tea (мастерская) |
+| day4_3_home | normal_body (лимон) → Unresolved Phrases (считают деньги) |
+| day5_0 | Soft Morning Light → Toast and Tinkling (учит Миру кататься) |
+| day5_0b | Summer Town Shuffle (барахолка) → Ticking Clocks → Whipped Tea → Toast and Tinkling (колодка во дворе) → paper_trace_memory (к Тёме, старое голосовое) |
+| day5_1 | Last Chord |
+| day5_2 | The Great Office Meeting (Ника с папкой) → The Meeting That Never (лифт встал) → dead_minute (кнопка «—») → The Meeting That Never |
+| day5_3 | Late Night Solitude (пешком по набережной) → Static & Sleeplessnes (Лена, закрашивают дверь) → midnight_apartment (свой подъезд) → Holding You at Night |
+| day6_1 | Soft Morning Light → Toast and Tinkling (Мира с объявлениями) |
+| day6_2 | consequences_a (звонок Зои Павловны) → Cold Elegance (конверт) → Unresolved Phrases (звонок мамы) |
+| day6_2b | Last Chord (барбершоп) → The Hollow Stare (ломбард, запертая дверь) → The Great Office Meeting (Ника на ступенях) → Velvet Shadows (Инесса) → Unresolved Phrases (дома, платье) |
+| day6_3 | Toast and Tinkling (стрижка) → Summer Town Shuffle (вдоль реки) → Ticking Clocks (часы пошли) → Midnight Boardroom (фигура в окне Валерии) → Holding You at Night |
+| day7_0 | River Fog (река на рассвете) |
+| day7_1 | timeframe (туча, как неделю назад) → human_statement (баба Нюра, Зоя Павловна) → Last Chord → paper_trace (Лена раскопала) → consequences_a (хризантемы под сиренью) → rain_before_edge (грозовой вечер) → The Hollow Stare |
+| day7_2 | The Hollow Stare → next_path → по выбору: Golden Afternoon Light, Cold Elegance, Static & Sleeplessnes или Ticking Clocks |
+
+Пока не звучат треки финалов и недели 2: прощания Мираэль, stay_or_go, e07, e08, one_reason, property, next_window_e05, counter form, wings_beneath_skin, The Final Pitch, terms and leverage, Archive Lockdown, restricted_access, layerupdown. Ещё не прослушаны Glass Cathedral, Glass in the Static, The Watcher's Lullaby и The Final Countdown.
 
 ## 4. Задачи по визуалу (шаг 4)
 

@@ -5,11 +5,11 @@ window.VN_CHAPTERS.push({
   title: "Глава V. Кукушка изнутри",
   subtitle: "Старокупеческий переулок · мастерская Таи · день",
   bg: "bg_taya_workshop_day",
-  bgm: "Whipped Tea.mp3",
+  bgm: "Cold Elegance.mp3",
   weather: "none",
   nodes: [
-    { bg: "bg_sadovaya_street", bgm: "workflow.mp3", sprite: "clear", camera: "ride", text: "К пяти он поехал в Старокупеческий. Тая звала в четверг, и это было единственное место в городе, где его сегодня ждали к определённому часу." },
-    { bg: "bg_courtyard_arch_day", bgm: "Cold Elegance.mp3", sprite: "clear", camera: "none", text: "Под аркой Старокупеческого было прохладно. На крыльце седьмого дома стояла Валерия с чашкой кофе, как будто вышла подышать ровно в эту минуту." },
+    { bg: "bg_sadovaya_street", sprite: "clear", camera: "ride", text: "К пяти он поехал в Старокупеческий. Тая звала в четверг, и это было единственное место в городе, где его сегодня ждали к определённому часу." },
+    { bg: "bg_courtyard_arch_day", sprite: "clear", camera: "none", text: "Под аркой Старокупеческого было прохладно. На крыльце седьмого дома стояла Валерия с чашкой кофе, как будто вышла подышать ровно в эту минуту." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "Александр. Вас подстригли. Смело." },
     {
       choice: {

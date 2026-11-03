@@ -5,7 +5,7 @@ window.VN_CHAPTERS.push({
   title: "Глава IV. Мост в старом парке",
   subtitle: "Тихая улица · старый парк · вечер",
   bg: "bg_sasha_kitchen_day",
-  bgm: "River Fog.mp3",
+  bgm: "The Quiet After.mp3",
   weather: "none",
   nodes: [
     { sprite: "clear", text: "Руки затряслись, когда всё уже кончилось. Саша взял на кухне кружку, и кружка застучала о зубы." },
