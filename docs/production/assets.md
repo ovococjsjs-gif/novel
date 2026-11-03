@@ -190,24 +190,24 @@
 | day3_4 | Bounce Stop (Ника на перилах) → The Great Office Meeting (с CG: «Ты из контрактного») → midnight_apartment (ночью на кухне, мамина тетрадь) |
 | day4_1 | The Quiet Room (дождливое утро) → workflow (катается по привычке, рябь на стене) → Static & Sleeplessnes (Лена) |
 | day4_1b | Sunny Afternoon (съёмка) → River Fog (фольга как фары) → Sunny Afternoon → name_in_protocol (физфак) |
-| day4_2 | Last Chord |
+| day4_2 | Last Chord (единственная глава Артёма, где он остался; ещё пролог 3) |
 | day4_2b | Summer Town Shuffle |
 | day4_3_cuckoo | Cold Elegance (Валерия под аркой) → Whipped Tea (мастерская) |
 | day4_3_home | normal_body (лимон) → Unresolved Phrases (считают деньги) |
 | day5_0 | Soft Morning Light → Toast and Tinkling (учит Миру кататься) |
 | day5_0b | Summer Town Shuffle (барахолка) → Ticking Clocks → Whipped Tea → Toast and Tinkling (колодка во дворе) → paper_trace_memory (к Тёме, старое голосовое) |
-| day5_1 | Last Chord |
+| day5_1 | paper_trace_memory (дорога, консьерж, лифт) → The Quiet After (пустая квартира, деньги) → Glass Cathedral (кухня, сковородка, фото, «И.») → Sunny Afternoon (пицца, Гарик, приставка) → human_statement («Останься, Сань») |
 | day5_2 | The Great Office Meeting (Ника с папкой) → The Meeting That Never (лифт встал) → dead_minute (кнопка «—») → The Meeting That Never |
 | day5_3 | Late Night Solitude (пешком по набережной) → Static & Sleeplessnes (Лена, закрашивают дверь) → midnight_apartment (свой подъезд) → Holding You at Night |
 | day6_1 | Soft Morning Light → Toast and Tinkling (Мира с объявлениями) |
 | day6_2 | consequences_a (звонок Зои Павловны) → Cold Elegance (конверт) → Unresolved Phrases (звонок мамы) |
-| day6_2b | Last Chord (барбершоп) → The Hollow Stare (ломбард, запертая дверь) → The Great Office Meeting (Ника на ступенях) → Velvet Shadows (Инесса) → Unresolved Phrases (дома, платье) |
+| day6_2b | The Quiet Room (пустой барбершоп без Тёмы) → The Hollow Stare (ломбард, запертая дверь) → The Great Office Meeting (Ника на ступенях) → Velvet Shadows (Инесса) → Unresolved Phrases (дома, платье) |
 | day6_3 | Toast and Tinkling (стрижка) → Summer Town Shuffle (вдоль реки) → Ticking Clocks (часы пошли) → Midnight Boardroom (фигура в окне Валерии) → Holding You at Night |
 | day7_0 | River Fog (река на рассвете) |
-| day7_1 | timeframe (туча, как неделю назад) → human_statement (баба Нюра, Зоя Павловна) → Last Chord → paper_trace (Лена раскопала) → consequences_a (хризантемы под сиренью) → rain_before_edge (грозовой вечер) → The Hollow Stare |
+| day7_1 | timeframe (туча, как неделю назад) → human_statement (баба Нюра, Зоя Павловна) → evidence_anxiety (консьерж: «Мы за ним присматриваем») → paper_trace (Лена раскопала) → consequences_a (хризантемы под сиренью) → rain_before_edge (грозовой вечер) → The Hollow Stare |
 | day7_2 | The Hollow Stare → next_path → по выбору: Golden Afternoon Light, Cold Elegance, Static & Sleeplessnes или Ticking Clocks |
 
-Пока не звучат треки финалов и недели 2: прощания Мираэль, stay_or_go, e07, e08, one_reason, property, next_window_e05, counter form, wings_beneath_skin, The Final Pitch, terms and leverage, Archive Lockdown, restricted_access, layerupdown. Ещё не прослушаны Glass Cathedral, Glass in the Static, The Watcher's Lullaby и The Final Countdown.
+Пока не звучат треки финалов и недели 2: прощания Мираэль, stay_or_go, e07, e08, one_reason, property, next_window_e05, counter form, wings_beneath_skin, The Final Pitch, terms and leverage, Archive Lockdown, restricted_access, layerupdown. Ещё не прослушаны Glass in the Static, The Watcher's Lullaby и The Final Countdown. Glass Cathedral (03.11) разобран анализом: 40 секунд тихого вступления, потом тёплое, тёмное нарастание, без резких всплесков; стоит в day5_1. У Артёма теперь в каждой сцене свой трек («не обязательно у артема один и тот же трек гонять»).
 
 ## 4. Задачи по визуалу (шаг 4)
 
@@ -248,6 +248,8 @@
 | `cg_d3_balcony_wings.webp` | Ночной балкон. Мира-ангел в дверях, две пары крыльев раскрыты, полотенце висит на крыле. Ника, которую только что втащили обратно, стоит у перил и смотрит на неё | day3_4_nika_night, с «Ника вцепилась в перила…» до «Мира не улыбнулась. Но крылья сложила…» |
 | `cg_d4_lemon.webp` | Вечерняя кухня, вид с места Саши. Мира в человеческом облике, в Дашином платье, кусает половинку лимона, лицо сморщено. На столе макароны с сосисками и мамина тетрадь с ручкой | day4_3_home, «После ужина Саша разрезал лимон» и «Лицо у неё сделалось ровно то самое» |
 | `cg_d5_lilac_crash.webp` | Утро на тихой улице. Мира в человеческом облике сидит в кусте сирени, скрестив руки, лицо оскорблённое; велосипед лежит на боку, Саша бежит к ней | day5_0_bike, с «Саша добежал…» до «Отец тоже отпустил…» |
+| `cg_d4_foil_headlights.webp` | Студенческая съёмка на набережной в полдень: режиссёр в панаме с разделочной доской, камера на треноге, конусы, Петя в курьерской куртке на велосипеде, бежевая легковушка, парень с «журавлём» из швабры бьёт фольгой солнце Пете в лицо (сгенерирован 03.11, ждёт доводки автора) | day4_1b_film, три узла от «поймал солнце куском фольги» до «Саша смотрел на фольгу» |
+| `cg_d5_console.webp` | Вечер в квартире Артёма: Саша и Артём на полу у чёрного дивана с джойстиками, экран во всю стену с ночными гонками и зеброй, две коробки пиццы (одна с ананасами), за панорамным окном река и огни. Артём в домашнем: растянутая серая футболка, треники, босиком, часы на левой руке (сгенерирован 03.11, ждёт доводки автора) | day5_1_artyom, от «Экран во всю стену наконец пригодился» до «Хорошо, что ждут» |
 | `cg_d5_mirror_lift.webp` | Застрявший лифт. Ника сидит на полу у зеркальной стенки, обняв папку, Саша стоит; в зеркалах одни Саши, на табло красный прочерк | day5_2_elevator, с «Ника сползла по зеркальной стенке…» до «Ждите.» |
 
 ### Лист устава на латыни (03.11, идея автора)
@@ -287,7 +289,7 @@
 
 Правила для этих CG:
 
-- Артёма в CG нет. Он может присутствовать только за кадром.
+- Артём в CG появляется только по просьбе автора. Пока такой CG один, `cg_d5_console` (03.11: «можно сделать тоже cg, только артема в домашнем»). Лицо и причёска по спрайту `artem_shank_*`: каштановые волосы на прямой пробор, щетина, зелёные глаза. Спрайт срисован с реального друга автора, сходство держать.
 - Уши у Миры заострённые в обоих обликах, как на спрайтах. В человеческом облике их можно спрятать под волосы (`cg_river_walk`, `cg_d4_lemon`) или оставить на виду (`cg_d5_lilac_crash`, картинка автора). У ангельской формы две пары крыльев.
 - Ника не отражается в зеркалах (`cg_d5_mirror_lift` держится на этом).
 - Как подключить: положить `assets/backgrounds/<файл>.webp` (WebP q94, как остальные CG). На отмеченном узле поставить `bg: "<файл>", sprite: "clear"` и снять комментарий. CG можно держать несколько реплик, пока текст сходится с картинкой: у этих реплик убрать `sprite`. На первой реплике, которая с картинкой расходится, вернуть фон локации и спрайты.
