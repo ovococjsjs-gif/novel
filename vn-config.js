@@ -176,12 +176,26 @@
     "cg_d3_latin_page", "cg_d4_lemon", "cg_d5_mirror_lift", "cg_dress_fitting", "cg_feather_watch",
     "cg_first_coffee", "cg_sasha_mirror", "cg_valeria_nika_door",
   ]);
-  function isIndoorBg(bg) {
+  function bgId(bg) {
     const p = resolveBg(bg);
-    if (!p) return false;
-    const id = p.split("/").pop().replace(/\.(webp|png|jpg)$/, "");
-    return INDOOR_BGS.has(id);
+    return p ? p.split("/").pop().replace(/\.(webp|png|jpg)$/, "") : "";
+  }
+  function isIndoorBg(bg) {
+    return INDOOR_BGS.has(bgId(bg));
   }
 
-  return { SPRITES, SPEAKERS, WEATHER, CAMERA, EFFECTS, BG_DIR, INDOOR_BGS, resolveSprite, resolveBg, isIndoorBg };
+  // Фоны и CG, на которых дождь нарисован: мокрый асфальт, лужи, капли на свету.
+  // Слой дождя движок кладёт только на них (03.11, просьба автора). На сухой улице
+  // дождя нет, даже если у главы weather: "rain", а валидатор про такое место
+  // предупредит. Буфер сюда не входит: там капли застыли, им падать нельзя.
+  // Новые дождливые фоны и CG дописывать сюда.
+  const RAIN_BGS = new Set([
+    "bg_courier_spot", "bg_mostovoy_avenue_storm", "bg_rainy_crossroad",
+    "cg_arch_carry", "cg_awning_thermos", "cg_crash_headlights", "cg_mirael_zebra",
+  ]);
+  function isRainBg(bg) {
+    return RAIN_BGS.has(bgId(bg));
+  }
+
+  return { SPRITES, SPEAKERS, WEATHER, CAMERA, EFFECTS, BG_DIR, INDOOR_BGS, RAIN_BGS, resolveSprite, resolveBg, isIndoorBg, isRainBg };
 });

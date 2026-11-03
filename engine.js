@@ -704,10 +704,11 @@
     applyWeatherLayer();
   }
 
-  // Дождь рисуем только на улице. В квартире, подъезде, кабинете слой гасим,
-  // а state.weather не трогаем: вышли на улицу — дождь снова идёт.
+  // Дождь рисуем только там, где он есть на самой картинке (Cfg.RAIN_BGS).
+  // В квартире, подъезде и на сухой улице слой гасим, а state.weather не трогаем:
+  // сменился фон на дождливый — дождь снова идёт.
   function applyWeatherLayer() {
-    const rain = state.weather === "rain" && !(Cfg.isIndoorBg && Cfg.isIndoorBg(state.currentBg));
+    const rain = state.weather === "rain" && !!(Cfg.isRainBg && Cfg.isRainBg(state.currentBg));
     weatherLayer.className = rain ? "rain" : "";
   }
 

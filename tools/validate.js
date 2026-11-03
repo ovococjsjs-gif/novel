@@ -300,6 +300,68 @@ for (const ch of chapters) {
     if (!ok) err(W(ins.path), `переход «${to}» никуда не ведёт`);
   });
 
+  // Линейный проход по скомпилированному коду: дождь на сухом фоне и спрайты,
+  // которые в одной сцене сменяют друг друга в одном слоте (просьба автора 03.11:
+  // двое в кадре стоят слева и справа, а не подменяют друг друга).
+  {
+    const bgId = (b) => (Cfg.resolveBg(b) || "").split("/").pop().replace(/\.(webp|png|jpg)$/, "");
+    const grp = (c) => String(c).split("_")[0];
+    const charOf = (speaker) => (Cfg.SPEAKERS[speaker] || {}).char;
+    let bg = bgId(ch.bg), weather = ch.weather || "none", rainWarned = "";
+    let st = { left: null, center: null, right: null };
+    let scene = { swaps: [], speakers: new Set() };
+    const flush = () => {
+      scene.swaps.filter((e) => e.jump || (scene.speakers.has(e.from) && scene.speakers.has(e.to)))
+        .forEach((e) => warn(W(e.path), e.jump
+          ? `спрайт «${e.from}» перескочил на другую сторону (${e.slot})`
+          : `в слоте ${e.slot} «${e.to}» подменил «${e.from}», а оба говорят в этой сцене — поставь их слева и справа`));
+      scene = { swaps: [], speakers: new Set() };
+    };
+    comp.code.forEach((ins) => {
+      const n = ins.op === "choice" ? ins.env : ins.node;
+      if (!n) return;
+      if ((n.bg && bgId(n.bg) !== bg) || n.sprite === "clear") flush();
+      if (n.bg) bg = bgId(n.bg);
+      if (n.weather) weather = n.weather;
+      if (n.sprite === "clear") st = { left: null, center: null, right: null };
+      else if (n.sprite && typeof n.sprite === "object") {
+        const before = st;
+        const sp = n.sprite;
+        st = { ...st };
+        if (sp.left || sp.center || sp.right) {
+          if (sp.center && sp.center.char) st = { left: null, right: null, center: sp.center };
+          else {
+            st.center = null;
+            if (sp.left === "clear" || sp.left === null) st.left = null; else if (sp.left && sp.left.char) st.left = sp.left;
+            if (sp.right === "clear" || sp.right === null) st.right = null; else if (sp.right && sp.right.char) st.right = sp.right;
+          }
+        } else if (sp.char) {
+          const pos = sp.pos || "center";
+          if (pos === "center") { st.left = null; st.right = null; } else st.center = null;
+          for (const k of ["left", "center", "right"]) if (k !== pos && st[k] && grp(st[k].char) === grp(sp.char)) st[k] = null;
+          st[pos] = sp;
+        }
+        for (const k of ["left", "center", "right"]) {
+          if (before[k] && st[k] && grp(before[k].char) !== grp(st[k].char)) scene.swaps.push({ path: ins.path, slot: k, from: grp(before[k].char), to: grp(st[k].char) });
+        }
+        for (const [a, b] of [["left", "right"], ["right", "left"]]) {
+          if (before[a] && st[b] && grp(before[a].char) === grp(st[b].char) && !(st[a] && grp(st[a].char) === grp(before[a].char))) {
+            scene.swaps.push({ path: ins.path, slot: b, from: grp(before[a].char), to: grp(st[b].char), jump: true });
+          }
+        }
+      }
+      if (ins.op === "say") {
+        if (n.speaker && !n.thought && charOf(n.speaker)) scene.speakers.add(charOf(n.speaker));
+        const key = bg + "|" + weather;
+        if (weather === "rain" && !Cfg.isRainBg(bg) && !Cfg.isIndoorBg(bg) && rainWarned !== key) {
+          rainWarned = key;
+          warn(W(ins.path), `дождь (weather: rain) на сухом фоне «${bg}» — на экране его не будет; смени фон на дождливый или останови дождь`);
+        }
+      }
+    });
+    flush();
+  }
+
   // next главы
   const nexts = typeof ch.next === "string" ? [ch.next] : Array.isArray(ch.next) ? ch.next.map((r) => r.to) : [];
   const PLANNED = sandbox.window.VN_PLANNED || [];
