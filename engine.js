@@ -1,6 +1,6 @@
 // ДВИЖОК ВИЗУАЛЬНОЙ НОВЕЛЛЫ «НЕ СМОТРИ НА НЕБО» ($WAG ENTERTAINMENT)
 (function () {
-  const ASSET_VER = "20261102_45";
+  const ASSET_VER = "20261103_61";
 
   function withVer(url) {
     if (!url) return "";
@@ -52,7 +52,8 @@
     fullText: "",
     typeTimer: null,
     autoMode: false,
-    autoTimer: null
+    autoTimer: null,
+    entry: null // { chapterId, vars, choicesMade } — состояние на входе в текущую главу (для версий сохранений)
   };
 
   // DOM Elements
@@ -700,11 +701,20 @@
     if (!bgPath || state.currentBg === bgPath) return;
     state.currentBg = bgPath;
     bgLayer.style.backgroundImage = `url('${withVer(bgPath)}')`;
+    applyWeatherLayer();
+  }
+
+  // Дождь рисуем только там, где он есть на самой картинке (Cfg.RAIN_BGS).
+  // В квартире, подъезде и на сухой улице слой гасим, а state.weather не трогаем:
+  // сменился фон на дождливый — дождь снова идёт.
+  function applyWeatherLayer() {
+    const rain = state.weather === "rain" && !!(Cfg.isRainBg && Cfg.isRainBg(state.currentBg));
+    weatherLayer.className = rain ? "rain" : "";
   }
 
   function setWeather(mode) {
     state.weather = mode || "none";
-    weatherLayer.className = state.weather === "rain" ? "rain" : "";
+    applyWeatherLayer();
   }
 
   function setCamera(mode) {
@@ -910,6 +920,23 @@
   function chapterIndexById(id) {
     return allChapters().findIndex((c) => c.id === id);
   }
+  // Отпечаток главы: если текст главы поменялся после сохранения, pc в сейве может указывать
+  // не туда. Тогда загрузка начинает главу заново с переменными на входе в неё.
+  const hashCache = {};
+  function chapterHash(id) {
+    if (hashCache[id] === undefined) {
+      const ch = chapterById(id);
+      const src = ch ? JSON.stringify(ch) : "";
+      let h = 0x811c9dc5;
+      for (let i = 0; i < src.length; i++) {
+        h ^= src.charCodeAt(i);
+        h = Math.imul(h, 0x01000193) >>> 0;
+      }
+      hashCache[id] = h.toString(36);
+    }
+    return hashCache[id];
+  }
+
   function compiled(id) {
     if (!compiledCache[id]) {
       const ch = chapterById(id);
@@ -1071,6 +1098,7 @@
         at: Date.now()
       };
       saveMeta();
+      state.entry = { chapterId: id, vars: Object.assign({}, state.vars), choicesMade: Object.assign({}, state.choicesMade) };
     }
     setHud(ch);
     preloadChapterAssets(ch);
@@ -1201,6 +1229,7 @@
     const delayMap = { 1: 3600, 2: 2300, 3: 1300 };
     const baseDelay = delayMap[settings.autoSpeed] || 2300;
     state.autoTimer = setTimeout(() => {
+      if (document.body.classList.contains("ui-hidden")) return; // продолжим, когда интерфейс вернут
       if (state.autoMode && !state.isTyping && !choiceOverlay.classList.contains("visible")) {
         stepForward();
       }
@@ -1461,8 +1490,12 @@
     const backlog = state.backlog.slice(-150);
     const base = state.backlog.length - backlog.length;
     const history = state.history.slice(-40).map((f) => Object.assign({}, f, { backlogLen: Math.max(0, f.backlogLen - base) }));
+    let entry = state.entry && state.entry.chapterId === top.chapterId ? state.entry : null;
+    if (!entry && meta.seen[top.chapterId]) entry = Object.assign({ chapterId: top.chapterId }, meta.seen[top.chapterId]);
     return {
       v: 2,
+      chHash: chapterHash(top.chapterId),
+      entry: entry ? { vars: entry.vars, choicesMade: entry.choicesMade } : null,
       label,
       timestamp: new Date().toLocaleString("ru-RU"),
       chapterId: top.chapterId,
@@ -1519,13 +1552,21 @@
       alert("Это сохранение сделано в старой версии игры и не может быть загружено.");
       return;
     }
-    state.backlog = (snap.backlog || []).slice();
-    state.history = (snap.history || []).slice(0, -1);
     titleScreen.classList.add("hidden");
     savesModal.classList.remove("visible");
     choiceOverlay.classList.remove("visible");
+    if (snap.chHash && snap.entry && snap.chHash !== chapterHash(snap.chapterId)) {
+      // Глава изменилась после сохранения: начинаем её заново с состояния на входе.
+      alert("Эта глава обновилась после сохранения. Начнём её с начала, все решения до неё сохранены.");
+      resetRun(snap.entry.vars, snap.entry.choicesMade);
+      enterChapter(snap.chapterId);
+      return;
+    }
+    state.backlog = (snap.backlog || []).slice();
+    state.history = (snap.history || []).slice(0, -1);
     clearSprites();
     if (!restoreFrame(snap.frame)) return;
+    state.entry = snap.entry ? { chapterId: snap.chapterId, vars: snap.entry.vars, choicesMade: snap.entry.choicesMade } : null;
     preloadChapterAssets(chapterById(snap.chapterId));
     run();
   }
@@ -1539,6 +1580,7 @@
 
   function startFromEpisode(id) {
     const seen = meta.seen[id];
+    state.entry = null;
     resetRun(seen && seen.vars, seen && seen.choicesMade);
     titleScreen.classList.add("hidden");
     enterChapter(id);
@@ -1697,6 +1739,38 @@
     stepBackward();
   });
 
+  // Скрыть интерфейс (H или кнопка «Скрыть»): посмотреть на фон или CG без окна текста.
+  // Вернуть: H, любая клавиша или клик в любом месте; сюжет при этом не листается.
+  const uiHint = document.getElementById("ui-hint");
+  let uiHintTimer = null;
+  function setUiHidden(on) {
+    const was = document.body.classList.contains("ui-hidden");
+    document.body.classList.toggle("ui-hidden", !!on);
+    if (uiHint) {
+      clearTimeout(uiHintTimer);
+      uiHint.classList.toggle("show", !!on);
+      if (on) uiHintTimer = setTimeout(() => uiHint.classList.remove("show"), 1800);
+    }
+    if (was && !on && state.autoMode && !state.isTyping) scheduleAutoAdvance();
+  }
+  function canHideUi() {
+    return titleScreen.classList.contains("hidden") && !document.querySelector(".modal-backdrop.visible");
+  }
+  const btnHideUi = document.getElementById("btn-hide-ui");
+  if (btnHideUi) {
+    btnHideUi.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (canHideUi()) setUiHidden(true);
+    });
+  }
+  // клик при скрытом интерфейсе только возвращает его
+  document.addEventListener("click", (e) => {
+    if (!document.body.classList.contains("ui-hidden")) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setUiHidden(false);
+  }, true);
+
   if (btnAuto) {
     btnAuto.addEventListener("click", () => {
       state.autoMode = !state.autoMode;
@@ -1748,6 +1822,18 @@
 
   window.addEventListener("keydown", (e) => {
     const anyModal = document.querySelector(".modal-backdrop.visible");
+    if (document.body.classList.contains("ui-hidden")) {
+      if (["Shift", "Control", "Alt", "Meta"].includes(e.key)) return;
+      e.preventDefault();
+      setUiHidden(false);
+      return;
+    }
+    // e.code, чтобы H работала и в русской раскладке
+    if (e.code === "KeyH" && !e.ctrlKey && !e.metaKey && !e.altKey && !e.repeat && canHideUi()) {
+      e.preventDefault();
+      setUiHidden(true);
+      return;
+    }
     if (e.key === "Escape") {
       if (anyModal) {
         anyModal.classList.remove("visible");

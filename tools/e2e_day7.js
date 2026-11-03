@@ -1,4 +1,4 @@
-// E2E-проверка развилки Дня 7 в браузере (6 сценариев). Нужен запущенный server.py на :8080.
+// E2E-проверка развилки Дня 7 в браузере (7 сценариев, включая ничью трёх). Нужен запущенный server.py на :8080.
 // Установка: mkdir -p /tmp/pp && cd /tmp/pp && npm i puppeteer-core@23 @sparticuz/chromium@131 && cp <repo>/tools/e2e_day7.js .
 // Запуск:    cd /tmp/pp && AWS_EXECUTION_ENV=AWS_Lambda_nodejs22.x LD_LIBRARY_PATH=/tmp/al2023/lib node e2e_day7.js
 const chromium = require("@sparticuz/chromium");
@@ -8,6 +8,7 @@ const S = [
   { name: "лидер Мираэль", vars: { aff_mirael: 6, aff_lena: 3 }, pick: /Пройти мимо/ },
   { name: "лидер Тая", vars: { aff_taya: 7, aff_mirael: 4 }, pick: /Пройти мимо/ },
   { name: "ничья Валерия/Лена", vars: { aff_valeria: 5, aff_lena: 5, aff_mirael: 2 }, pick: /Пройти мимо|салон/ },
+  { name: "ничья трёх М/В/Л", vars: { aff_mirael: 5, aff_valeria: 5, aff_lena: 5, aff_taya: 2 }, pick: /Пройти мимо|к Лене/ },
   { name: "пассивный", vars: { aff_mirael: 1 }, pick: /Пройти мимо/ },
   { name: "дверь+сбои", vars: { aff_mirael: 6, glitch_1: true, glitch_2: true, glitch_count: 2 }, pick: /Открыть дверь/ },
   { name: "Истинная", vars: { aff_mirael: 6 }, meta: { cleared_mirael_good: 1, cleared_valeria_good: 1, cleared_earth_good: 1, cleared_taya_good: 1, cleared_secret_good: 1 }, pick: /Пройти мимо/ },

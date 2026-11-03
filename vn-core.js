@@ -306,6 +306,9 @@
   //   calc.tie        — 1, если лидер опережает второго меньше чем на thr.route_margin
   //   calc.top        — симпатия лидера
   //   calc.true_ready — 1, если открыта Истинная (хорошие финалы всех четырёх и Секретной)
+  //   calc.tied_1..4  — 1, если маршрут входит в группу лидеров при ничьей (для меню на лестнице:
+  //                     показываются все, кто отстаёт от лидера меньше чем на thr.route_margin)
+  //   calc.tie_count  — сколько маршрутов в этой группе (0 без ничьей)
   // При равенстве порядок старшинства — по номеру маршрута.
   // ---------------------------------------------------------------
   const ROUTE_AFF = [
@@ -323,13 +326,20 @@
     const list = ROUTE_AFF.map(([id, v]) => ({ id, v: Number(get(v)) || 0 })).sort((a, b) => b.v - a.v || a.id - b.id);
     const [first, second] = list;
     const weak = first.v < min;
-    return {
+    const tie = !weak && first.v - second.v < margin ? 1 : 0;
+    const group = tie ? list.filter((r) => first.v - r.v < margin) : [];
+    const out = {
       leader: weak ? 0 : first.id,
       second: second.id,
-      tie: !weak && first.v - second.v < margin ? 1 : 0,
+      tie,
+      tie_count: group.length,
       top: first.v,
       true_ready: TRUE_FLAGS.every((f) => Number(get("meta.cleared_" + f)) > 0) ? 1 : 0
     };
+    ROUTE_AFF.forEach(([id]) => {
+      out["tied_" + id] = group.some((r) => r.id === id) ? 1 : 0;
+    });
+    return out;
   }
 
   return { parseCond, evalCond, condVars, compileChapter, resolveChapterNext, routeCalc, ENV_KEYS, CONTROL_KEYS };
