@@ -92,7 +92,7 @@ window.VN_CHAPTERS.push({
         ]
       }
     },
-    { sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Мира стала складывать полотенце, хотя мокрое полотенце складывать было незачем." },
+    { sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Мира стала складывать мокрое полотенце." },
     { speaker: "Мира", text: "Воскресенье." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Это прогноз. Прогнозы можно." },
     { speaker: "Мира", text: "Она почти всегда угадывает. Ника сама сказала." },
