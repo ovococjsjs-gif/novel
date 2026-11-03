@@ -417,6 +417,12 @@ html, body {
   height: 89.8vh;
 }
 
+/* Зоя Павловна: восемьдесят второй год, маленькая и прямая, чуть выше Тамары. */
+.char-slot[data-char-group="zoya"] {
+  top: 23.6vh;
+  height: 86.2vh;
+}
+
 .char-slot.left   { left: 27%; }
 .char-slot.center { left: 50%; }
 .char-slot.right  { left: 73%; }

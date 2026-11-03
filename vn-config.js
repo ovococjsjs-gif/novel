@@ -138,6 +138,12 @@
       emotions: set(C + "barista/transparent/barista_{e}.webp", ["neutral", "concerned"]),
       aliases: { smile: "neutral", happy: "neutral", worried: "concerned", sad: "concerned", surprised: "concerned" },
       fallback: "neutral"
+    },
+    // Зоя Павловна, хозяйка квартиры (День 7, «в парадной блузке, с папкой»): neutral — держится официально; sad — виновато смотрит в пол.
+    zoya: {
+      emotions: set(C + "zoya/transparent/zoya_{e}.webp", ["neutral", "sad"]),
+      aliases: { worried: "sad", guilty: "sad", smile: "neutral", happy: "neutral" },
+      fallback: "neutral"
     }
   };
 
@@ -157,7 +163,7 @@
     // Второстепенные. char: null — спрайта нет
     "Баба Нюра": { cls: "minor", char: "nyura" },
     "Даша": { cls: "minor", char: null },
-    "Зоя Павловна": { cls: "minor", char: null },
+    "Зоя Павловна": { cls: "minor", char: "zoya" },
     "Лев Аркадьевич": { cls: "minor", char: "lev" },
     "Инесса": { cls: "minor", char: "inessa" },
     "Администратор": { cls: "minor", char: "gosha" },
