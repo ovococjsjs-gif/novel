@@ -17,14 +17,14 @@
 ```js
 window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
-  id: "day2_2_zero",                       // = имя файла
+  id: "day2_3_zero",                       // = имя файла
   day: "ДЕНЬ 2 · ОСТАЛОСЬ 20 ДНЕЙ",        // метка в HUD
   title: "Квартира ноль",
   subtitle: "Старокупеческий переулок · 14:10",
   bg: "bg_summer_town_day",                // короткое имя или полный путь
   bgm: "workflow.mp3",
   weather: "none",
-  next: "day2_3_walk",                     // необязательно, см. ниже
+  next: "day2_4_walk",                     // необязательно, см. ниже
   nodes: [ /* узлы */ ]
 });
 ```
@@ -226,7 +226,7 @@ node tools/validate.js            # ошибки + предупреждения
 node tools/validate.js --quiet    # только ошибки
 node tools/validate.js --stats    # объём по главам и грубый счёт сравнений рассказчика (ориентир п. 111)
 node tools/validate.js --strict   # предупреждения тоже валят проверку
-node tools/validate.js day2_2_zero day2_3_walk   # только эти главы
+node tools/validate.js day2_3_zero day2_4_walk   # только эти главы
 ```
 
 Баланс и маршрутизация:
