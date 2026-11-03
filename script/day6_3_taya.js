@@ -97,7 +97,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Не знаю. Наверное. Я их пятый год каждое утро завожу." },
     { text: "Он положил часы обратно на сукно, и Тая накрыла их колпаком. Стрелка за стеклом шла дальше, уже без него." },
     { text: "Она заварила тот же чай, с дымком, и Саша грел ладони о пиалу." },
-    { speaker: "Тая", sprite: { char: "taya", emotion: "tea", pos: "right" }, text: "У тебя что-то случилось сегодня. Не с часами." },
+    { speaker: "Тая", sprite: { char: "taya", emotion: "tea", pos: "right" }, text: "У тебя что-то случилось сегодня, и не с часами." },
     {
       choice: {
         id: "d6_taya_talk",

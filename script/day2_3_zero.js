@@ -62,7 +62,7 @@ window.VN_CHAPTERS.push({
         { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Мне сейчас заказ пришёл в квартиру ноль. В вашей арке." },
         { speaker: "Тая", sprite: { char: "taya", emotion: "thoughtful", pos: "right" }, text: "И ты отказался." },
         { speaker: "Александр", text: "А надо было принять?" },
-        { speaker: "Тая", text: "Надо было прийти сюда. Ты пришёл." }
+        { speaker: "Тая", text: "Надо было прийти сюда. Вот ты и пришёл." }
       ]
     },
     { text: "Улун она заварила другой, тёмный, с дымком. Пиалу поставила прямо ему в руки, чтобы он не мог отказаться." },
@@ -109,7 +109,7 @@ window.VN_CHAPTERS.push({
             effects: { aff_taya: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Приду. Только предупреждаю: пружины я теряю профессионально." },
-              { speaker: "Тая", sprite: { char: "taya", emotion: "laugh", pos: "right" }, text: "Тогда начнём с того, что будем их искать. Это полезнее, чем кажется." }
+              { speaker: "Тая", sprite: { char: "taya", emotion: "laugh", pos: "right" }, text: "Тогда начнём с того, что будем их искать. Тоже работа." }
             ]
           },
           {
@@ -118,7 +118,7 @@ window.VN_CHAPTERS.push({
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Двадцать дней — и я буду сидеть с пинцетом над кукушками?" },
               { text: "Тая подняла на него глаза." },
-              { speaker: "Тая", sprite: { char: "taya", emotion: "thoughtful", pos: "right" }, text: "Красивая фраза. По-моему, ты её сегодня уже говорил. Только про что-то другое." },
+              { speaker: "Тая", sprite: { char: "taya", emotion: "thoughtful", pos: "right" }, text: "Красивая фраза. По-моему, ты её сегодня уже говорил, только про что-то другое." },
               { speaker: "Александр", text: "...Утром. Про работу." }
             ]
           },
