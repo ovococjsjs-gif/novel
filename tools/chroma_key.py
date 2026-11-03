@@ -9,6 +9,11 @@
 
 Использование:
   python tools/chroma_key.py in_green.png out.png [--ref old_transparent.png] [--key blue]
+  python tools/chroma_key.py emo_green.png out.png --ref base_transparent.png --align-from base_green.png
+
+--align-from: для эмоций, сделанных правкой дефолта на том же холсте. Сдвиг и масштаб
+считаются по силуэту дефолта, а не по самой эмоции. Иначе поднятая рука расширяет рамку
+и всю фигуру уводит вбок (03.11, Гарик: тело съехало на 19 px).
 
 Нужны pillow, numpy, opencv-python-headless.
 """
@@ -85,12 +90,13 @@ def bbox(alpha, thr=0.5):
     return xs.min(), ys.min(), xs.max(), ys.max()
 
 
-def align_to_ref(rgba, ref_rgba):
-    """Масштаб/сдвиг так, чтобы фигура совпала по высоте, макушке и центру с эталоном."""
+def align_to_ref(rgba, ref_rgba, src_box=None):
+    """Масштаб/сдвиг так, чтобы фигура совпала по высоте, макушке и центру с эталоном.
+    src_box — рамка, по которой считать сдвиг (по умолчанию рамка самой фигуры)."""
     H, W = ref_rgba.shape[:2]
     a = rgba[..., 3] / 255.0
     ra = ref_rgba[..., 3] / 255.0
-    x0, y0, x1, y1 = bbox(a)
+    x0, y0, x1, y1 = src_box if src_box is not None else bbox(a)
     rx0, ry0, rx1, ry1 = bbox(ra)
     s = (ry1 - ry0) / max(1, (y1 - y0))
     cx, rcx = (x0 + x1) / 2, (rx0 + rx1) / 2
@@ -120,27 +126,35 @@ def main():
     ap.add_argument("dst")
     ap.add_argument("--ref")
     ap.add_argument("--key", default="green", choices=["green", "blue"])
+    ap.add_argument("--align-from", help="зелёный исходник дефолта: сдвиг/масштаб брать по его силуэту")
     ap.add_argument("--neutral-despill", action="store_true",
                     help="снять оттенок ключа со всех почти-серых пикселей (для персонажей без "
                          "зелёного в палитре: Мираэль, белые перья). НЕ для Саши — серо-зелёные глаза")
     args = ap.parse_args()
 
-    rgb = np.asarray(Image.open(args.src).convert("RGB")).astype(np.float32)
-    alpha, band, k = key_alpha(rgb, args.key)
-    rgb = despill(rgb, alpha, band, args.key)
-    if args.neutral_despill:
-        r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
-        if args.key == "green":
-            m = (np.abs(r - b) < 40) & (g > np.maximum(r, b))
-            rgb[..., 1] = np.where(m, np.maximum(r, b), g)
-        else:
-            m = (np.abs(r - g) < 40) & (b > np.maximum(r, g))
-            rgb[..., 2] = np.where(m, np.maximum(r, g), b)
-    rgba = np.rint(np.dstack([rgb, alpha * 255.0]).clip(0, 255)).astype(np.uint8)
+    def cut(path):
+        rgb = np.asarray(Image.open(path).convert("RGB")).astype(np.float32)
+        alpha, band, k = key_alpha(rgb, args.key)
+        rgb = despill(rgb, alpha, band, args.key)
+        if args.neutral_despill:
+            r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+            if args.key == "green":
+                m = (np.abs(r - b) < 40) & (g > np.maximum(r, b))
+                rgb[..., 1] = np.where(m, np.maximum(r, b), g)
+            else:
+                m = (np.abs(r - g) < 40) & (b > np.maximum(r, g))
+                rgb[..., 2] = np.where(m, np.maximum(r, g), b)
+        return np.rint(np.dstack([rgb, alpha * 255.0]).clip(0, 255)).astype(np.uint8), k
+
+    rgba, k = cut(args.src)
     info = f"key={k:.0f}"
     if args.ref:
         ref = np.asarray(Image.open(args.ref).convert("RGBA"))
-        rgba, s = align_to_ref(rgba, ref)
+        box = None
+        if args.align_from:
+            base, _ = cut(args.align_from)
+            box = bbox(base[..., 3] / 255.0)
+        rgba, s = align_to_ref(rgba, ref, box)
         info += f" scale={s:.3f}"
     Image.fromarray(rgba, "RGBA").save(args.dst, optimize=True)
     print(args.dst, info)
