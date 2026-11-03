@@ -368,6 +368,61 @@ html, body {
   height: 92.8vh;
 }
 
+/* Второстепенные (03.11). Холст 896×1200, фигура от 4% до 98% высоты.
+   Нюра маленькая и сутулая, Инесса ростом с Валерию, Гарик и Лев Аркадьевич почти с Сашу. */
+.char-slot[data-char-group="nyura"] {
+  top: 29.3vh;
+  height: 80.3vh;
+}
+
+.char-slot[data-char-group="inessa"] {
+  top: 18.2vh;
+  height: 95.7vh;
+}
+
+.char-slot[data-char-group="garik"] {
+  top: 13.8vh;
+  height: 104.3vh;
+}
+
+.char-slot[data-char-group="lev"] {
+  top: 15.9vh;
+  height: 102.1vh;
+}
+
+/* Вторая партия (03.11). Гоша — «длинный парень», выше Саши; консьерж плотный, ростом со Льва;
+   Витя чуть ниже Льва; Тамара невысокая и полная; бариста ростом с девушек. */
+.char-slot[data-char-group="tamara"] {
+  top: 24.6vh;
+  height: 85.4vh;
+}
+
+.char-slot[data-char-group="gosha"] {
+  top: 11.9vh;
+  height: 102.5vh;
+}
+
+.char-slot[data-char-group="concierge"] {
+  top: 17.5vh;
+  height: 98.8vh;
+}
+
+.char-slot[data-char-group="vitya"] {
+  top: 16.5vh;
+  height: 99.9vh;
+}
+
+.char-slot[data-char-group="barista"] {
+  top: 20.4vh;
+  height: 89.8vh;
+}
+
+/* Зоя Павловна: восемьдесят второй год, маленькая и прямая, чуть выше Тамары. */
+.char-slot[data-char-group="zoya"] {
+  top: 23.6vh;
+  height: 86.2vh;
+}
+
 .char-slot.left   { left: 27%; }
 .char-slot.center { left: 50%; }
 .char-slot.right  { left: 73%; }
@@ -750,7 +805,7 @@ html, body {
 #title-bg-anim {
   position: absolute;
   inset: -4%;
-  background: url('assets/backgrounds/bg_summer_town_day.png?v=20261031_5') center/cover no-repeat;
+  background: url('assets/backgrounds/bg_summer_town_day.webp?v=20261103_51') center/cover no-repeat;
   animation: menuBgDrift 24s ease-in-out infinite alternate;
   transform: translate3d(var(--px), var(--py), 0) scale(1.05);
   transition: transform 0.25s ease-out;
@@ -1361,3 +1416,39 @@ html, body {
 #dev-panel .dev-actions { margin-top: 4px; }
 #dev-panel button { font: inherit; background: #222; color: #ccc; border: 1px solid #555; cursor: pointer; padding: 1px 6px; }
 .dev-choice-fx { display: block; margin-top: 4px; font: 11px monospace; color: #9fe89f; opacity: 0.85; }
+
+/* Скрыть интерфейс (H): видно только фон, спрайты и CG */
+#top-hud,
+#dialogue-wrapper,
+#dev-panel {
+  transition: opacity 0.25s ease;
+}
+body.ui-hidden #top-hud,
+body.ui-hidden #dialogue-wrapper,
+body.ui-hidden #choice-overlay,
+body.ui-hidden #dev-panel {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#ui-hint {
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  z-index: 20;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(6, 8, 14, 0.55);
+  color: rgba(235, 238, 245, 0.85);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+#ui-hint.show {
+  opacity: 1;
+}
+@media (max-width: 700px) {
+  .key-hint { display: none; }
+}
+

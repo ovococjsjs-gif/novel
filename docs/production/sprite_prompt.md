@@ -1,6 +1,6 @@
 # Базовый промпт для спрайта
 
-Стиль снят с текущих спрайтов (Саша, Лена, Ника, Валерия, Дмитрий). Подставить только блок `[APPEARANCE]`. Лучше прикладывать к запросу один готовый спрайт как референс стиля (например `assets/characters/lena/transparent/lena_neutral.png` или `nika/transparent/nika_neutral.png`) и писать «match the art style of the reference, NOT the character».
+Стиль снят с текущих спрайтов (Саша, Лена, Ника, Валерия, Дмитрий). Подставить только блок `[APPEARANCE]`. Лучше прикладывать к запросу один готовый спрайт как референс стиля (например `assets/characters/lena/transparent/lena_neutral.webp` или `nika/transparent/nika_neutral.webp`) и писать «match the art style of the reference, NOT the character».
 
 ## 1. Дефолтный спрайт (neutral)
 
@@ -26,7 +26,9 @@ Same character, same outfit, same art style, same canvas size, same scale and sa
 
 ## 3. Заметки
 
-- Фон белый для оригинала, потом стандартный пайплайн: замена фона на #00FF00 → `tools/chroma_key.py`. Если в одежде или глазах есть зелёный (Тая — оливковый кардиган) — фон #0000FF и `--key blue`.
+- Новых персонажей можно сразу рисовать на ровном #00FF00 (в промпте: «perfectly flat pure chroma-key green (#00FF00) background… No green color anywhere on the character»). Так сделаны второстепенные 03.11, шаг замены фона не нужен.
+- Эмоции вырезать с `--align-from <зелёный дефолт>`, иначе при поднятой руке фигура съезжает вбок (см. `assets.md`, «03.11 — второстепенные»).
+- Фон белый для старых оригиналов, потом стандартный пайплайн: замена фона на #00FF00 → `tools/chroma_key.py`. Если в одежде или глазах есть зелёный (Тая — оливковый кардиган) — фон #0000FF и `--key blue`.
 - Генератор любит дорисовывать надписи на бейджах и логотипы: в `[APPEARANCE]` писать «plain, no text/logo».
 - Кожу при правках держать фразой «keep the skin tone exactly as in the reference, do not darken» — генератор склонен её затемнять.
 - Реальные бренды, символика, оружие, сигареты (кроме канона Лены) — не просить.
