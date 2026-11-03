@@ -83,6 +83,31 @@
       emotions: set(C + "taya/transparent/taya_{e}.webp", ["neutral", "sad_compassion", "serious", "surprised", "thoughtful", "warm_smile", "laugh", "pocket_watch", "tea", "firm", "shy"]),
       aliases: {},
       fallback: "neutral"
+    },
+    // Второстепенные (03.11, просьба автора: у тех, кто появляется в сюжете не один раз, — по 2–3 спрайта).
+    // Баба Нюра: neutral — прищур «ну-ну», smile — по-доброму, worried — рука на сердце.
+    nyura: {
+      emotions: set(C + "nyura/transparent/nyura_{e}.webp", ["neutral", "smile", "worried"]),
+      aliases: { happy: "smile", warm: "smile", sad: "worried", surprised: "worried", suspicious: "neutral" },
+      fallback: "neutral"
+    },
+    // Инесса: neutral — вежливая улыбка, happy — щебечет, руки у груди, confused — растерянно моргает.
+    inessa: {
+      emotions: set(C + "inessa/transparent/inessa_{e}.webp", ["neutral", "happy", "confused"]),
+      aliases: { smile: "happy", sad: "confused", surprised: "confused", worried: "confused" },
+      fallback: "neutral"
+    },
+    // Гарик: neutral — ухмылка до ушей, upset — досада, чешет затылок.
+    garik: {
+      emotions: set(C + "garik/transparent/garik_{e}.webp", ["neutral", "upset"]),
+      aliases: { happy: "neutral", smile: "neutral", sad: "upset", angry: "upset", worried: "upset" },
+      fallback: "neutral"
+    },
+    // Лев Аркадьевич: neutral — добрая полуулыбка, thoughtful — вспоминает, глаза опущены.
+    lev: {
+      emotions: set(C + "lev/transparent/lev_{e}.webp", ["neutral", "thoughtful"]),
+      aliases: { smile: "neutral", happy: "neutral", sad: "thoughtful" },
+      fallback: "neutral"
     }
   };
 
@@ -100,11 +125,11 @@
     "Дмитрий": { cls: "dmitry", char: "dmitry" },
     "Тая": { cls: "taya", char: "taya" },
     // Второстепенные (без спрайтов)
-    "Баба Нюра": { cls: "minor", char: null },
+    "Баба Нюра": { cls: "minor", char: "nyura" },
     "Даша": { cls: "minor", char: null },
     "Зоя Павловна": { cls: "minor", char: null },
-    "Лев Аркадьевич": { cls: "minor", char: null },
-    "Инесса": { cls: "minor", char: null },
+    "Лев Аркадьевич": { cls: "minor", char: "lev" },
+    "Инесса": { cls: "minor", char: "inessa" },
     "Администратор": { cls: "minor", char: null },
     "Консьерж": { cls: "minor", char: null },
     "Бариста": { cls: "minor", char: null },
@@ -114,7 +139,7 @@
     "Мама": { cls: "minor", char: null },
     "Тамара": { cls: "minor", char: null },
     "Ковалёвский": { cls: "minor", char: null },
-    "Гарик": { cls: "minor", char: null },
+    "Гарик": { cls: "minor", char: "garik" },
     "Букинист": { cls: "minor", char: null },
     "Парнишка": { cls: "minor", char: null },
     "Рыбак": { cls: "minor", char: null },

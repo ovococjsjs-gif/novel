@@ -155,7 +155,7 @@ window.VN_CHAPTERS.push({
       }
     },
     { bgm: "Sunny Afternoon.mp3", text: "В дверь позвонили. Артём дёрнулся так, что плеснул виски на джинсы, и только потом вспомнил про пиццу." },
-    { bg: "bg_artyom_landing", sprite: { left: { char: "alexander", emotion: "neutral" }, right: "clear" }, text: "Открывать пошёл Саша. На площадке стоял Гарик, красный и потный, с новым оранжевым коробом за спиной." },
+    { bg: "bg_artyom_landing", sprite: { left: { char: "alexander", emotion: "neutral" }, right: { char: "garik", emotion: "neutral" } }, text: "Открывать пошёл Саша. На площадке стоял Гарик, красный и потный, с новым оранжевым коробом за спиной." },
     { speaker: "Гарик", text: "Саня?! А ты тут чего? Я думал, олигарх какой заказал. Последний этаж, ананасы." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Олигарх и заказал. Он за дверью, стесняется." },
     { speaker: "Гарик", text: "Передай олигарху, что у него в лифте зеркала, я там сам себя испугался. Всё, полетел. Мне ещё на твою гору." },

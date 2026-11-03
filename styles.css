@@ -368,6 +368,28 @@ html, body {
   height: 92.8vh;
 }
 
+/* Второстепенные (03.11). Холст 896×1200, фигура от 4% до 98% высоты.
+   Нюра маленькая и сутулая, Инесса ростом с Валерию, Гарик и Лев Аркадьевич почти с Сашу. */
+.char-slot[data-char-group="nyura"] {
+  top: 29.3vh;
+  height: 80.3vh;
+}
+
+.char-slot[data-char-group="inessa"] {
+  top: 18.2vh;
+  height: 95.7vh;
+}
+
+.char-slot[data-char-group="garik"] {
+  top: 13.8vh;
+  height: 104.3vh;
+}
+
+.char-slot[data-char-group="lev"] {
+  top: 15.9vh;
+  height: 102.1vh;
+}
+
 .char-slot.left   { left: 27%; }
 .char-slot.center { left: 50%; }
 .char-slot.right  { left: 73%; }
