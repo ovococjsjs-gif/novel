@@ -23,8 +23,11 @@ FD = os.environ.get("FONTS", os.path.join(HERE, "fonts")) + "/"
 OW, OH = 1678, 937  # размер готовых CG
 
 base0 = Image.open(BASE).convert("RGB")
-S = OW / base0.width
-base = base0.resize((OW, OH), Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.2, percent=40, threshold=2))
+S = OW / 1376.0  # все замеры ниже сняты в кадре шириной 1376 и масштабируются под 1678
+if base0.size == (OW, OH):
+    base = base0  # основа уже в размере CG (апскейл автора) — не трогаем
+else:
+    base = base0.resize((OW, OH), Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.2, percent=40, threshold=2))
 B = np.asarray(base).astype(np.float32)
 
 # ---------- маска листа и руки ----------
@@ -38,25 +41,42 @@ paperish = cv2.morphologyEx(paperish, cv2.MORPH_CLOSE, np.ones((15, 15), np.uint
 paperish = cv2.morphologyEx(paperish, cv2.MORPH_OPEN, np.ones((9, 9), np.uint8))
 n, lbl, st, _ = cv2.connectedComponentsWithStats(paperish)
 pm = (lbl == 1 + np.argmax(st[1:, cv2.CC_STAT_AREA])).astype(np.uint8)
-# кожа: краснее бумаги (a* выше), оттенок ближе к красному
-skin = ((A.astype(int) > 138) & (L > 90)).astype(np.uint8)
-skin = cv2.morphologyEx(skin, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+# строгая маска руки — только для поиска краёв листа
+sk = ((A.astype(int) > 138) & (L > 90)).astype(np.uint8)
+sk = cv2.morphologyEx(sk, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+nS, lblS, stS, _ = cv2.connectedComponentsWithStats(sk)
+hand_strict = np.zeros_like(sk)
+for i in range(1, nS):
+    x, y, w, h, a = stS[i]
+    if a > 4000 and x + w > OW * 0.5:
+        hand_strict[lblS == i] = 1
+hand_strict = cv2.dilate(hand_strict, np.ones((9, 9), np.uint8))
+# полная маска руки — чтобы текст уходил под пальцы
+# кожа: краснее бумаги (a* у бумаги 128–131, у кожи 135–155)
+skin = ((A.astype(int) > 133) & (L > 80)).astype(np.uint8)
+skin = cv2.morphologyEx(skin, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
 n2, lbl2, st2, _ = cv2.connectedComponentsWithStats(skin)
 hand = np.zeros_like(skin)
 for i in range(1, n2):
     x, y, w, h, a = st2[i]
-    if a > 4000 and x + w > OW * 0.5:  # крупное пятно справа — рука
+    if a > 4000 and x + w > OW * 0.5:  # крупное пятно справа — рука (вместе со столом, тексту это не мешает)
         hand[lbl2 == i] = 1
-hand = cv2.dilate(hand, np.ones((9, 9), np.uint8))
-sleeve = ((L < 120) & (Ss < 40)).astype(np.uint8)  # серый манжет
-occl = np.clip(hand + 0, 0, 1)
+# блики на ногтях и костяшках выпадают из маски — заливаем мелкие дыры
+inv = (1 - hand).astype(np.uint8)
+n3, lbl3, st3, _ = cv2.connectedComponentsWithStats(inv, connectivity=4)
+for i in range(1, n3):
+    x, y, w, h, a = st3[i]
+    if a < 5000 and x > 0 and y > 0 and x + w < OW and y + h < OH:
+        hand[lbl3 == i] = 1
+hand = cv2.morphologyEx(hand, cv2.MORPH_CLOSE, np.ones((7, 7), np.uint8))
+hand = cv2.dilate(hand, np.ones((7, 7), np.uint8))  # с контуром пальцев
+occl = hand.copy()
 
 # ---------- края листа ----------
-ys, xs = np.nonzero(pm & (1 - hand))
 def boundary_rows(y0, y1, side):
     pts = []
     for y in range(y0, y1, 4):
-        r = np.nonzero(pm[y] & (1 - hand[y]))[0]
+        r = np.nonzero(pm[y] & (1 - hand_strict[y]))[0]
         if len(r) > 20:
             pts.append(((r.min() if side == "L" else r.max()), y))
     return np.array(pts, float)
@@ -171,7 +191,7 @@ def paragraph(draw, text, font, y, lh, x0=ML, width=TW, indent=0, fill=255):
         y += lh
     return y
 
-y = 62
+y = 80
 # колонтитул
 head = "STATUTUM CANCELLARIAE SUPERIORIS"
 w = dp.textlength(head, font=f_head) / K
@@ -293,4 +313,10 @@ R = ink(R, hw_, (122, 64, 34), 0.82)
 R = ink(R, zero, (28, 30, 44), 0.85)
 out = Image.fromarray(np.clip(R, 0, 255).astype(np.uint8))
 out.save(OUT)
+if os.environ.get("DEBUG"):
+    dbg = np.asarray(out).copy()
+    dbg[hand > 0] = (dbg[hand > 0] * 0.5 + np.array([0, 160, 255]) * 0.5).astype(np.uint8)
+    dbg_im = Image.fromarray(dbg); d = ImageDraw.Draw(dbg_im)
+    d.polygon([tuple(p) for p in quad], outline=(255, 0, 0))
+    dbg_im.save(os.path.splitext(OUT)[0] + "_debug.png")
 print("saved", OUT)
