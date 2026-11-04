@@ -1,5 +1,9 @@
 # Базовый промпт для спрайта
 
+> **04.11 — единый стиль.** Актуальный эталон: hand-drawn спрайты **Александра**.
+> Универсальный промпт, папка приёма и manifest: [`sprites_redraw/`](../../sprites_redraw/README.md)
+> (`UNIVERSAL_PROMPT.md`, `manifest.csv`, `_style_reference/`). Новый стиль-лок вытесняет прежнюю смесь стилей.
+
 Стиль снят с текущих спрайтов (Саша, Лена, Ника, Валерия, Дмитрий). Подставить только блок `[APPEARANCE]`. Лучше прикладывать к запросу один готовый спрайт как референс стиля (например `assets/characters/lena/transparent/lena_neutral.webp` или `nika/transparent/nika_neutral.webp`) и писать «match the art style of the reference, NOT the character».
 
 ## 1. Дефолтный спрайт (neutral)

@@ -1,0 +1,115 @@
+character_key,folder,emotion,file_stem,green_drop_file,ready_drop_file,engine_path,chroma_key,notes
+alexander,alexander,neutral,alexander_neutral,green/alexander/alexander_neutral.png,ready/alexander/alexander_neutral.png,assets/characters/alexander/transparent/alexander_neutral.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,smile,alexander_smile,green/alexander/alexander_smile.png,ready/alexander/alexander_smile.png,assets/characters/alexander/transparent/alexander_smile.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,stressed,alexander_stressed,green/alexander/alexander_stressed.png,ready/alexander/alexander_stressed.png,assets/characters/alexander/transparent/alexander_stressed.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,surprised,alexander_surprised,green/alexander/alexander_surprised.png,ready/alexander/alexander_surprised.png,assets/characters/alexander/transparent/alexander_surprised.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,thoughtful,alexander_thoughtful,green/alexander/alexander_thoughtful.png,ready/alexander/alexander_thoughtful.png,assets/characters/alexander/transparent/alexander_thoughtful.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,wounded,alexander_wounded,green/alexander/alexander_wounded.png,ready/alexander/alexander_wounded.png,assets/characters/alexander/transparent/alexander_wounded.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,determined_anger,alexandr_determined_anger,green/alexander/alexandr_determined_anger.png,ready/alexander/alexandr_determined_anger.png,assets/characters/alexander/transparent/alexandr_determined_anger.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,happy,alexandr_happy,green/alexander/alexandr_happy.png,ready/alexander/alexandr_happy.png,assets/characters/alexander/transparent/alexandr_happy.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,sad,alexandr_sad,green/alexander/alexandr_sad.png,ready/alexander/alexandr_sad.png,assets/characters/alexander/transparent/alexandr_sad.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,shocked,alexandr_shocked,green/alexander/alexandr_shocked.png,ready/alexander/alexandr_shocked.png,assets/characters/alexander/transparent/alexandr_shocked.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,shocked_terrified,alexandr_shocked_terrified,green/alexander/alexandr_shocked_terrified.png,ready/alexander/alexandr_shocked_terrified.png,assets/characters/alexander/transparent/alexandr_shocked_terrified.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander,alexander,shy,alexandr_shy,green/alexander/alexandr_shy.png,ready/alexander/alexandr_shy.png,assets/characters/alexander/transparent/alexandr_shy.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,neutral,alexander_jacket_neutral,green/alexander/alexander_jacket_neutral.png,ready/alexander/alexander_jacket_neutral.png,assets/characters/alexander/transparent/alexander_jacket_neutral.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,smile,alexander_jacket_smile,green/alexander/alexander_jacket_smile.png,ready/alexander/alexander_jacket_smile.png,assets/characters/alexander/transparent/alexander_jacket_smile.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,thoughtful,alexander_jacket_thoughtful,green/alexander/alexander_jacket_thoughtful.png,ready/alexander/alexander_jacket_thoughtful.png,assets/characters/alexander/transparent/alexander_jacket_thoughtful.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,surprised,alexander_jacket_surprised,green/alexander/alexander_jacket_surprised.png,ready/alexander/alexander_jacket_surprised.png,assets/characters/alexander/transparent/alexander_jacket_surprised.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,shy,alexander_jacket_shy,green/alexander/alexander_jacket_shy.png,ready/alexander/alexander_jacket_shy.png,assets/characters/alexander/transparent/alexander_jacket_shy.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,shocked,alexander_jacket_shocked,green/alexander/alexander_jacket_shocked.png,ready/alexander/alexander_jacket_shocked.png,assets/characters/alexander/transparent/alexander_jacket_shocked.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,wounded,alexander_jacket_wounded,green/alexander/alexander_jacket_wounded.png,ready/alexander/alexander_jacket_wounded.png,assets/characters/alexander/transparent/alexander_jacket_wounded.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+alexander_jacket,alexander,rain,alexander_courier_rain,green/alexander/alexander_courier_rain.png,ready/alexander/alexander_courier_rain.png,assets/characters/alexander/transparent/alexander_courier_rain.webp,green,серо-зелёные глаза -> БЕЗ --neutral-despill
+mirael_angel,mirael,neutral,mirael_angel_neutral,green/mirael/mirael_angel_neutral.png,ready/mirael/mirael_angel_neutral.png,assets/characters/mirael/transparent/mirael_angel_neutral.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,happy,mirael_angel_happy,green/mirael/mirael_angel_happy.png,ready/mirael/mirael_angel_happy.png,assets/characters/mirael/transparent/mirael_angel_happy.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,sad,mirael_angel_sad,green/mirael/mirael_angel_sad.png,ready/mirael/mirael_angel_sad.png,assets/characters/mirael/transparent/mirael_angel_sad.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,shy,mirael_angel_shy,green/mirael/mirael_angel_shy.png,ready/mirael/mirael_angel_shy.png,assets/characters/mirael/transparent/mirael_angel_shy.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,surprised,mirael_angel_surprised,green/mirael/mirael_angel_surprised.png,ready/mirael/mirael_angel_surprised.png,assets/characters/mirael/transparent/mirael_angel_surprised.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,crying,mirael_angel_crying,green/mirael/mirael_angel_crying.png,ready/mirael/mirael_angel_crying.png,assets/characters/mirael/transparent/mirael_angel_crying.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,determined_anger,mirael_angel_determined_anger,green/mirael/mirael_angel_determined_anger.png,ready/mirael/mirael_angel_determined_anger.png,assets/characters/mirael/transparent/mirael_angel_determined_anger.webp,green,белые перья/платье -> --neutral-despill
+mirael_angel,mirael,shocked_terrified,mirael_angel_shocked_terrified,green/mirael/mirael_angel_shocked_terrified.png,ready/mirael/mirael_angel_shocked_terrified.png,assets/characters/mirael/transparent/mirael_angel_shocked_terrified.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,neutral,mirael_human_neutral,green/mirael/mirael_human_neutral.png,ready/mirael/mirael_human_neutral.png,assets/characters/mirael/transparent/mirael_human_neutral.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,happy,mirael_human_happy,green/mirael/mirael_human_happy.png,ready/mirael/mirael_human_happy.png,assets/characters/mirael/transparent/mirael_human_happy.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,sad,mirael_human_sad,green/mirael/mirael_human_sad.png,ready/mirael/mirael_human_sad.png,assets/characters/mirael/transparent/mirael_human_sad.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,shy,mirael_human_shy,green/mirael/mirael_human_shy.png,ready/mirael/mirael_human_shy.png,assets/characters/mirael/transparent/mirael_human_shy.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,surprised,mirael_human_surprised,green/mirael/mirael_human_surprised.png,ready/mirael/mirael_human_surprised.png,assets/characters/mirael/transparent/mirael_human_surprised.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,crying,mirael_human_crying,green/mirael/mirael_human_crying.png,ready/mirael/mirael_human_crying.png,assets/characters/mirael/transparent/mirael_human_crying.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,determined_anger,mirael_human_determined_anger,green/mirael/mirael_human_determined_anger.png,ready/mirael/mirael_human_determined_anger.png,assets/characters/mirael/transparent/mirael_human_determined_anger.webp,green,белые перья/платье -> --neutral-despill
+mirael_human,mirael,shocked_terrified,mirael_human_shocked_terrified,green/mirael/mirael_human_shocked_terrified.png,ready/mirael/mirael_human_shocked_terrified.png,assets/characters/mirael/transparent/mirael_human_shocked_terrified.webp,green,белые перья/платье -> --neutral-despill
+valeria,valeria,neutral,valeria_neutral,green/valeria/valeria_neutral.png,ready/valeria/valeria_neutral.png,assets/characters/valeria/transparent/valeria_neutral.webp,green,
+valeria,valeria,amused,valeria_amused,green/valeria/valeria_amused.png,ready/valeria/valeria_amused.png,assets/characters/valeria/transparent/valeria_amused.webp,green,
+valeria,valeria,angry,valeria_angry,green/valeria/valeria_angry.png,ready/valeria/valeria_angry.png,assets/characters/valeria/transparent/valeria_angry.webp,green,
+valeria,valeria,cold_serious,valeria_cold_serious,green/valeria/valeria_cold_serious.png,ready/valeria/valeria_cold_serious.png,assets/characters/valeria/transparent/valeria_cold_serious.webp,green,
+valeria,valeria,contract,valeria_contract,green/valeria/valeria_contract.png,ready/valeria/valeria_contract.png,assets/characters/valeria/transparent/valeria_contract.webp,green,
+valeria,valeria,playful_smile,valeria_playful_smile,green/valeria/valeria_playful_smile.png,ready/valeria/valeria_playful_smile.png,assets/characters/valeria/transparent/valeria_playful_smile.webp,green,
+valeria,valeria,soft_vulnerable,valeria_soft_vulnerable,green/valeria/valeria_soft_vulnerable.png,ready/valeria/valeria_soft_vulnerable.png,assets/characters/valeria/transparent/valeria_soft_vulnerable.webp,green,
+valeria,valeria,surprised,valeria_surprised,green/valeria/valeria_surprised.png,ready/valeria/valeria_surprised.png,assets/characters/valeria/transparent/valeria_surprised.webp,green,
+valeria,valeria,thoughtful,valeria_thoughtful,green/valeria/valeria_thoughtful.png,ready/valeria/valeria_thoughtful.png,assets/characters/valeria/transparent/valeria_thoughtful.webp,green,
+valeria_human,valeria,neutral,valeria_human_neutral,green/valeria/valeria_human_neutral.png,ready/valeria/valeria_human_neutral.png,assets/characters/valeria/transparent/valeria_human_neutral.webp,green,
+valeria_human,valeria,amused,valeria_human_amused,green/valeria/valeria_human_amused.png,ready/valeria/valeria_human_amused.png,assets/characters/valeria/transparent/valeria_human_amused.webp,green,
+valeria_human,valeria,angry,valeria_human_angry,green/valeria/valeria_human_angry.png,ready/valeria/valeria_human_angry.png,assets/characters/valeria/transparent/valeria_human_angry.webp,green,
+valeria_human,valeria,cold_serious,valeria_human_cold_serious,green/valeria/valeria_human_cold_serious.png,ready/valeria/valeria_human_cold_serious.png,assets/characters/valeria/transparent/valeria_human_cold_serious.webp,green,
+valeria_human,valeria,contract,valeria_human_contract,green/valeria/valeria_human_contract.png,ready/valeria/valeria_human_contract.png,assets/characters/valeria/transparent/valeria_human_contract.webp,green,
+valeria_human,valeria,playful_smile,valeria_human_playful_smile,green/valeria/valeria_human_playful_smile.png,ready/valeria/valeria_human_playful_smile.png,assets/characters/valeria/transparent/valeria_human_playful_smile.webp,green,
+valeria_human,valeria,soft_vulnerable,valeria_human_soft_vulnerable,green/valeria/valeria_human_soft_vulnerable.png,ready/valeria/valeria_human_soft_vulnerable.png,assets/characters/valeria/transparent/valeria_human_soft_vulnerable.webp,green,
+valeria_human,valeria,surprised,valeria_human_surprised,green/valeria/valeria_human_surprised.png,ready/valeria/valeria_human_surprised.png,assets/characters/valeria/transparent/valeria_human_surprised.webp,green,
+valeria_human,valeria,thoughtful,valeria_human_thoughtful,green/valeria/valeria_human_thoughtful.png,ready/valeria/valeria_human_thoughtful.png,assets/characters/valeria/transparent/valeria_human_thoughtful.webp,green,
+nika,nika,happy,nika_happy,green/nika/nika_happy.png,ready/nika/nika_happy.png,assets/characters/nika/transparent/nika_happy.webp,green,
+nika,nika,neutral,nika_neutral,green/nika/nika_neutral.png,ready/nika/nika_neutral.png,assets/characters/nika/transparent/nika_neutral.webp,green,
+nika,nika,sad,nika_sad,green/nika/nika_sad.png,ready/nika/nika_sad.png,assets/characters/nika/transparent/nika_sad.webp,green,
+nika,nika,shy,nika_shy,green/nika/nika_shy.png,ready/nika/nika_shy.png,assets/characters/nika/transparent/nika_shy.webp,green,
+nika,nika,teasing,nika_teasing,green/nika/nika_teasing.png,ready/nika/nika_teasing.png,assets/characters/nika/transparent/nika_teasing.webp,green,
+nika,nika,annoyed,nika_annoyed,green/nika/nika_annoyed.png,ready/nika/nika_annoyed.png,assets/characters/nika/transparent/nika_annoyed.webp,green,
+nika,nika,surprised,nika_surprised,green/nika/nika_surprised.png,ready/nika/nika_surprised.png,assets/characters/nika/transparent/nika_surprised.webp,green,
+nika,nika,bored,nika_bored,green/nika/nika_bored.png,ready/nika/nika_bored.png,assets/characters/nika/transparent/nika_bored.webp,green,
+lena,lena,happy,lena_happy,green/lena/lena_happy.png,ready/lena/lena_happy.png,assets/characters/lena/transparent/lena_happy.webp,green,
+lena,lena,neutral,lena_neutral,green/lena/lena_neutral.png,ready/lena/lena_neutral.png,assets/characters/lena/transparent/lena_neutral.webp,green,
+lena,lena,sad,lena_sad,green/lena/lena_sad.png,ready/lena/lena_sad.png,assets/characters/lena/transparent/lena_sad.webp,green,
+lena,lena,snide,lena_snide,green/lena/lena_snide.png,ready/lena/lena_snide.png,assets/characters/lena/transparent/lena_snide.webp,green,
+lena,lena,tired,lena_tired,green/lena/lena_tired.png,ready/lena/lena_tired.png,assets/characters/lena/transparent/lena_tired.webp,green,
+lena,lena,angry,lena_angry,green/lena/lena_angry.png,ready/lena/lena_angry.png,assets/characters/lena/transparent/lena_angry.webp,green,
+lena,lena,surprised,lena_surprised,green/lena/lena_surprised.png,ready/lena/lena_surprised.png,assets/characters/lena/transparent/lena_surprised.webp,green,
+lena,lena,thoughtful,lena_thoughtful,green/lena/lena_thoughtful.png,ready/lena/lena_thoughtful.png,assets/characters/lena/transparent/lena_thoughtful.webp,green,
+lena,lena,coffee,lena_coffee,green/lena/lena_coffee.png,ready/lena/lena_coffee.png,assets/characters/lena/transparent/lena_coffee.webp,green,
+lena,lena,shy,lena_shy,green/lena/lena_shy.png,ready/lena/lena_shy.png,assets/characters/lena/transparent/lena_shy.webp,green,
+artem,artem,empty,artem_shank_empty,green/artem/artem_shank_empty.png,ready/artem/artem_shank_empty.png,assets/characters/artem_shank_empty.webp,green,
+artem,artem,happy,artem_shank_happy,green/artem/artem_shank_happy.png,ready/artem/artem_shank_happy.png,assets/characters/artem_shank_happy.webp,green,
+artem,artem,neutral,artem_shank_neutral,green/artem/artem_shank_neutral.png,ready/artem/artem_shank_neutral.png,assets/characters/artem_shank_neutral.webp,green,
+artem,artem,sad,artem_shank_sad,green/artem/artem_shank_sad.png,ready/artem/artem_shank_sad.png,assets/characters/artem_shank_sad.webp,green,
+dmitry,dmitry,neutral,dmitry_neutral,green/dmitry/dmitry_neutral.png,ready/dmitry/dmitry_neutral.png,assets/characters/dmitry/transparent/dmitry_neutral.webp,green,
+dmitry,dmitry,serious,dmitry_serious,green/dmitry/dmitry_serious.png,ready/dmitry/dmitry_serious.png,assets/characters/dmitry/transparent/dmitry_serious.webp,green,
+dmitry,dmitry,angry,dmitry_angry,green/dmitry/dmitry_angry.png,ready/dmitry/dmitry_angry.png,assets/characters/dmitry/transparent/dmitry_angry.webp,green,
+dmitry,dmitry,tired,dmitry_tired,green/dmitry/dmitry_tired.png,ready/dmitry/dmitry_tired.png,assets/characters/dmitry/transparent/dmitry_tired.webp,green,
+dmitry,dmitry,smile,dmitry_smile,green/dmitry/dmitry_smile.png,ready/dmitry/dmitry_smile.png,assets/characters/dmitry/transparent/dmitry_smile.webp,green,
+taya,taya,neutral,taya_neutral,green/taya/taya_neutral.png,ready/taya/taya_neutral.png,assets/characters/taya/transparent/taya_neutral.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,sad_compassion,taya_sad_compassion,green/taya/taya_sad_compassion.png,ready/taya/taya_sad_compassion.png,assets/characters/taya/transparent/taya_sad_compassion.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,serious,taya_serious,green/taya/taya_serious.png,ready/taya/taya_serious.png,assets/characters/taya/transparent/taya_serious.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,surprised,taya_surprised,green/taya/taya_surprised.png,ready/taya/taya_surprised.png,assets/characters/taya/transparent/taya_surprised.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,thoughtful,taya_thoughtful,green/taya/taya_thoughtful.png,ready/taya/taya_thoughtful.png,assets/characters/taya/transparent/taya_thoughtful.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,warm_smile,taya_warm_smile,green/taya/taya_warm_smile.png,ready/taya/taya_warm_smile.png,assets/characters/taya/transparent/taya_warm_smile.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,laugh,taya_laugh,green/taya/taya_laugh.png,ready/taya/taya_laugh.png,assets/characters/taya/transparent/taya_laugh.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,pocket_watch,taya_pocket_watch,green/taya/taya_pocket_watch.png,ready/taya/taya_pocket_watch.png,assets/characters/taya/transparent/taya_pocket_watch.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,tea,taya_tea,green/taya/taya_tea.png,ready/taya/taya_tea.png,assets/characters/taya/transparent/taya_tea.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,firm,taya_firm,green/taya/taya_firm.png,ready/taya/taya_firm.png,assets/characters/taya/transparent/taya_firm.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+taya,taya,shy,taya_shy,green/taya/taya_shy.png,ready/taya/taya_shy.png,assets/characters/taya/transparent/taya_shy.webp,blue,оливковый кардиган/зелёный глаз -> --key blue
+nyura,nyura,neutral,nyura_neutral,green/nyura/nyura_neutral.png,ready/nyura/nyura_neutral.png,assets/characters/nyura/transparent/nyura_neutral.webp,green,
+nyura,nyura,smile,nyura_smile,green/nyura/nyura_smile.png,ready/nyura/nyura_smile.png,assets/characters/nyura/transparent/nyura_smile.webp,green,
+nyura,nyura,worried,nyura_worried,green/nyura/nyura_worried.png,ready/nyura/nyura_worried.png,assets/characters/nyura/transparent/nyura_worried.webp,green,
+inessa,inessa,neutral,inessa_neutral,green/inessa/inessa_neutral.png,ready/inessa/inessa_neutral.png,assets/characters/inessa/transparent/inessa_neutral.webp,green,
+inessa,inessa,happy,inessa_happy,green/inessa/inessa_happy.png,ready/inessa/inessa_happy.png,assets/characters/inessa/transparent/inessa_happy.webp,green,
+inessa,inessa,confused,inessa_confused,green/inessa/inessa_confused.png,ready/inessa/inessa_confused.png,assets/characters/inessa/transparent/inessa_confused.webp,green,
+garik,garik,neutral,garik_neutral,green/garik/garik_neutral.png,ready/garik/garik_neutral.png,assets/characters/garik/transparent/garik_neutral.webp,green,
+garik,garik,upset,garik_upset,green/garik/garik_upset.png,ready/garik/garik_upset.png,assets/characters/garik/transparent/garik_upset.webp,green,
+lev,lev,neutral,lev_neutral,green/lev/lev_neutral.png,ready/lev/lev_neutral.png,assets/characters/lev/transparent/lev_neutral.webp,green,
+lev,lev,thoughtful,lev_thoughtful,green/lev/lev_thoughtful.png,ready/lev/lev_thoughtful.png,assets/characters/lev/transparent/lev_thoughtful.webp,green,
+tamara,tamara,neutral,tamara_neutral,green/tamara/tamara_neutral.png,ready/tamara/tamara_neutral.png,assets/characters/tamara/transparent/tamara_neutral.webp,green,
+tamara,tamara,smile,tamara_smile,green/tamara/tamara_smile.png,ready/tamara/tamara_smile.png,assets/characters/tamara/transparent/tamara_smile.webp,green,
+gosha,gosha,neutral,gosha_neutral,green/gosha/gosha_neutral.png,ready/gosha/gosha_neutral.png,assets/characters/gosha/transparent/gosha_neutral.webp,green,
+gosha,gosha,worried,gosha_worried,green/gosha/gosha_worried.png,ready/gosha/gosha_worried.png,assets/characters/gosha/transparent/gosha_worried.webp,green,
+concierge,concierge,neutral,concierge_neutral,green/concierge/concierge_neutral.png,ready/concierge/concierge_neutral.png,assets/characters/concierge/transparent/concierge_neutral.webp,green,
+concierge,concierge,smile,concierge_smile,green/concierge/concierge_smile.png,ready/concierge/concierge_smile.png,assets/characters/concierge/transparent/concierge_smile.webp,green,
+vitya,vitya,neutral,vitya_neutral,green/vitya/vitya_neutral.png,ready/vitya/vitya_neutral.png,assets/characters/vitya/transparent/vitya_neutral.webp,green,
+vitya,vitya,smile,vitya_smile,green/vitya/vitya_smile.png,ready/vitya/vitya_smile.png,assets/characters/vitya/transparent/vitya_smile.webp,green,
+barista,barista,neutral,barista_neutral,green/barista/barista_neutral.png,ready/barista/barista_neutral.png,assets/characters/barista/transparent/barista_neutral.webp,green,
+barista,barista,concerned,barista_concerned,green/barista/barista_concerned.png,ready/barista/barista_concerned.png,assets/characters/barista/transparent/barista_concerned.webp,green,
+zoya,zoya,neutral,zoya_neutral,green/zoya/zoya_neutral.png,ready/zoya/zoya_neutral.png,assets/characters/zoya/transparent/zoya_neutral.webp,green,
+zoya,zoya,sad,zoya_sad,green/zoya/zoya_sad.png,ready/zoya/zoya_sad.png,assets/characters/zoya/transparent/zoya_sad.webp,green,
