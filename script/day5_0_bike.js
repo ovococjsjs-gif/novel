@@ -107,7 +107,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "И как, стал миллионером?" },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "У него три салона. Наверное, стал. До двадцати пяти успел." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "happy", pos: "right" }, text: "Значит, план сбылся." },
-    { text: "Саша кивнул. Про вчерашнее серое лицо Тёмы и его голос, бодрый до звона, он промолчал." },
+    { text: "Саша кивнул. Про вчерашнее серое лицо Тёмы и его нарочито бодрый голос он промолчал." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Ты вечером к Артёму?" },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "К восьми. Он сказал, разговор есть." },
     { speaker: "Мира", sprite: { char: "mirael_human", emotion: "neutral", pos: "right" }, text: "Возвращайся вечером. Не ночью. Вечером." },

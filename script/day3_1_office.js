@@ -101,7 +101,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Инесса", sprite: { char: "inessa", emotion: "neutral", pos: "left" }, text: "Проходите, Александр Сергеевич. Вас ждут." },
     { bgm: "Cold Elegance.mp3", bg: "bg_valeria_office_day", sprite: "clear", text: "Кабинет был тёмный, в дереве и книгах, с зелёной лампой на столе. Из окна — крыши и водонапорная башня. Обычный провинциальный вид, если не знать, кто смотрит на него каждый день." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "playful_smile", pos: "right" }, text: "Александр. Вы пунктуальны. Для человека, который вчера уволился, — даже трогательно." },
-    { speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "Откуда вы знаете?" },
+    { speaker: "Александр", sprite: { char: "alexander", emotion: "stressed", pos: "left" }, text: "И это вы знаете?" },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "neutral", pos: "right" }, text: "Это несложно. Я подумала, вам пригодится подработка. Квартирная хозяйка ждёт в субботу, а у вас, насколько я понимаю, некомплект." },
     { text: "Она сказала это тоном прогноза погоды: к вечеру душно, возможны осадки." },
     {
@@ -157,7 +157,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Валерия", text: "Обычно к концу жизни он у людей длиннее самой жизни. Ваш пока короткий. Вы просто не успели накопить." },
     { text: "Она закрыла папку и оставила на ней ладонь. У Саши горели уши. Про задачник не знал никто, даже Лена. Про кран знала только баба Нюра." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "determined_anger", pos: "left" }, text: "А у вас такой есть?" },
-    { text: "Валерия чуть приподняла бровь. Об этом её спрашивали нечасто." },
+    { text: "Валерия чуть приподняла бровь и помолчала." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "thoughtful", pos: "right" }, text: "Есть. Один пункт. Очень давно." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "И какой?" },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "playful_smile", pos: "right" }, text: "Вопросы у меня платные, Александр. Не тратьте их так рано." },
@@ -199,7 +199,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Хорошо. А другие варианты? Есть же какие-то другие исходы. Апелляции, исключения, я не знаю..." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "playful_smile", pos: "right" }, text: "Для клиентов, Александр. Я же сказала." },
     { speaker: "Александр", text: "Тогда давайте так. Я задаю один вопрос, вы отвечаете честно. А я подумаю, стоит ли становиться клиентом." },
-    { text: "Валерия откинулась в кресле. Торговаться она любила больше, чем выигрывать." },
+    { text: "Валерия откинулась в кресле. По лицу было видно: торговаться ей интереснее, чем выигрывать." },
     { speaker: "Валерия", sprite: { char: "valeria_human", emotion: "amused", pos: "right" }, text: "Один вопрос и честный ответ. Это щедро с моей стороны. Запомните, что я была щедрой." },
     {
       choice: {

@@ -103,7 +103,7 @@ window.VN_CHAPTERS.push({
             effects: { aff_nika: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Я ничего не слышал, у меня наушник. Связь плохая." },
-              { speaker: "Ника", sprite: { char: "nika", emotion: "shy", pos: "right" }, text: "...Спасибо. Ты нормальный. Для смертного с вайбом обречённого." }
+              { speaker: "Ника", sprite: { char: "nika", emotion: "shy", pos: "right" }, text: "...Спасибо. Ты нормальный. Для смертного с видом «уже в титрах»." }
             ]
           },
           {
@@ -111,7 +111,7 @@ window.VN_CHAPTERS.push({
             effects: { aff_nika: -1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Буду молчать. Если в следующий раз расскажешь ещё что-нибудь." },
-              { speaker: "Ника", sprite: { char: "nika", emotion: "annoyed", pos: "right" }, text: "Фу. Ред флаг. Ты сейчас разговариваешь как она. Тебе это говорили?" }
+              { speaker: "Ника", sprite: { char: "nika", emotion: "annoyed", pos: "right" }, text: "Фу. Крипово. Ты сейчас разговариваешь как она. Тебе это говорили?" }
             ]
           }
         ]

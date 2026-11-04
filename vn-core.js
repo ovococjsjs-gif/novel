@@ -219,10 +219,11 @@
         if (labels[n.label] !== undefined) problems.push({ path, msg: `метка «${n.label}» повторяется` });
         labels[n.label] = code.length;
       }
-      if (n.set || n.effects) emit({ op: "set", set: n.set || null, effects: n.effects || null, path });
-
       if (n.if !== undefined) {
         const br = emit({ op: "branch", cond: n.if, target: -1, path });
+        // F2 (04.11): set/effects условного узла применяем внутри then-ветки — только при истинном условии.
+        // До branch эффекты сработали бы безусловно.
+        if (n.set || n.effects) emit({ op: "set", set: n.set || null, effects: n.effects || null, path });
         list(n.then || [], path + ".then");
         if (n.else) {
           const g = emit({ op: "goto", target: -1, path });
@@ -234,6 +235,8 @@
         }
         return;
       }
+
+      if (n.set || n.effects) emit({ op: "set", set: n.set || null, effects: n.effects || null, path });
 
       if (n.choice) {
         const c = n.choice;
