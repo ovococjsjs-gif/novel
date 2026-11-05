@@ -51,7 +51,7 @@ window.VN_CHAPTERS.push({
               { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "На Заречном. Последний заказ, на Речную. Какой-то дурак вылетел со старой трассы, я в газон ушёл. Еле живой, короче." },
               { text: "Артём побледнел. Это было видно даже под барберским светом, который всех делает загорелыми." },
               { speaker: "Артём", sprite: { char: "artem", emotion: "empty", pos: "right" }, text: "На Заречном." },
-              { text: "Он помолчал. Потом через силу улыбнулся." },
+              { text: "Он помолчал, потом натянуто улыбнулся." },
               { speaker: "Артём", sprite: { char: "artem", emotion: "neutral", pos: "right" }, text: "Ну... Заречный большой. Там вечно кто-то гоняет. Хорошо, что в газон, брат. Газон — это хорошо." }
             ]
           },
@@ -89,7 +89,7 @@ window.VN_CHAPTERS.push({
             label: "«Приду»",
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Приду. Шаурма с меня. Ну, теперь уже с тебя, я безработный." },
-              { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "Безработный? Ты? Слушай, это же отлично! Это же... ладно. Завтра. Всё завтра." }
+              { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "Да ладно, неужели бросил свою доставку? Слушай, тогда тем более — завтра вечером всё и обсудим!" }
             ]
           },
           {
@@ -97,7 +97,7 @@ window.VN_CHAPTERS.push({
             effects: { inner_sight: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Тём. Давай сейчас. Я же вижу. Что случилось?" },
-              { text: "Артём на секунду перестал улыбаться, и стало видно, что он не спал несколько суток." },
+              { text: "Улыбка на миг сошла с лица Артёма, и стало видно, что он не спал несколько суток." },
               { speaker: "Артём", sprite: { char: "artem", emotion: "sad", pos: "right" }, text: "Не здесь, брат. Не при людях. Завтра. Я всё... завтра." }
             ]
           }
