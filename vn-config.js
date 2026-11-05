@@ -194,7 +194,7 @@
 
   const WEATHER = ["none", "rain"];
   const CAMERA = ["none", "normal", "ride", "shake"];
-  const EFFECTS = ["flash"];
+  const EFFECTS = ["flash", "title_drop"];
 
   const BG_DIR = "assets/backgrounds/";
 

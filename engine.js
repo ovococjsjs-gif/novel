@@ -200,6 +200,30 @@
         gain.connect(audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.09);
+      } else if (type === "title_drop") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(55, now + 2.4);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.14, now + 0.25);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 2.55);
+
+        const chime = audioCtx.createOscillator();
+        const cGain = audioCtx.createGain();
+        chime.type = "triangle";
+        chime.frequency.setValueAtTime(440, now + 0.18);
+        chime.frequency.exponentialRampToValueAtTime(436, now + 2.3);
+        cGain.gain.setValueAtTime(0.001, now + 0.18);
+        cGain.gain.linearRampToValueAtTime(0.045, now + 0.45);
+        cGain.gain.exponentialRampToValueAtTime(0.001, now + 2.35);
+        chime.connect(cGain);
+        cGain.connect(audioCtx.destination);
+        chime.start(now + 0.18);
+        chime.stop(now + 2.4);
       }
     } catch (e) {}
   }
@@ -1203,6 +1227,48 @@
     progressLabel.textContent = `Эпизод ${idx + 1}/${total} · ${pct}%`;
   }
 
+  const titleDropOverlay = document.getElementById("title-drop-overlay");
+  let titleDropTimer = null;
+
+  function hideTitleDrop() {
+    if (titleDropTimer) {
+      clearTimeout(titleDropTimer);
+      titleDropTimer = null;
+    }
+    document.body.classList.remove("title-drop-active");
+    if (titleDropOverlay) {
+      titleDropOverlay.classList.remove("active", "revealed");
+      titleDropOverlay.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function showTitleDrop() {
+    if (!titleDropOverlay) return;
+    if (state.typeTimer) clearInterval(state.typeTimer);
+    if (state.autoTimer) clearTimeout(state.autoTimer);
+    if (titleDropTimer) clearTimeout(titleDropTimer);
+    document.body.classList.add("title-drop-active");
+    titleDropOverlay.classList.remove("active", "revealed");
+    void titleDropOverlay.offsetWidth;
+    titleDropOverlay.classList.add("active");
+    titleDropOverlay.setAttribute("aria-hidden", "false");
+    playUiSound("title_drop");
+    state.isTyping = true;
+    titleDropTimer = setTimeout(() => {
+      titleDropTimer = null;
+      titleDropOverlay.classList.add("revealed");
+      state.isTyping = false;
+      scheduleAutoAdvance();
+    }, 2150);
+  }
+
+  if (titleDropOverlay) {
+    titleDropOverlay.addEventListener("click", (e) => {
+      e.stopPropagation();
+      stepForward();
+    });
+  }
+
   function renderSay(node, comp) {
     choiceOverlay.classList.remove("visible");
     applyEnv(node);
@@ -1211,7 +1277,14 @@
     speakerTag.textContent = node.thought ? `${speaker} (мысли)` : speaker;
     speakerTag.className = spCls;
     updateSprites(node.sprite, speaker);
-    typeText(node.text || "", !!node.thought, speaker);
+    if (node.effect === "title_drop") {
+      dialogueText.textContent = node.text || "";
+      state.fullText = node.text || "";
+      showTitleDrop();
+    } else {
+      hideTitleDrop();
+      typeText(node.text || "", !!node.thought, speaker);
+    }
     updateProgress(comp);
     state.backlog.push({ speaker: node.thought ? `${speaker} (мысли)` : speaker, text: node.text || "" });
     updateDevPanel();
@@ -1275,6 +1348,11 @@
   function finishTyping() {
     if (!state.isTyping) return;
     if (state.typeTimer) clearInterval(state.typeTimer);
+    if (titleDropTimer) {
+      clearTimeout(titleDropTimer);
+      titleDropTimer = null;
+      if (titleDropOverlay) titleDropOverlay.classList.add("revealed");
+    }
     dialogueText.textContent = state.fullText;
     state.isTyping = false;
     scheduleAutoAdvance();
@@ -1289,6 +1367,7 @@
   }
 
   function showChoice(ins) {
+    hideTitleDrop();
     choicePrompt.textContent = ins.choice.prompt || "Что сделать?";
     choiceList.innerHTML = "";
     let shown = ins.options
@@ -1431,6 +1510,7 @@
   }
 
   function openTitleScreen() {
+    hideTitleDrop();
     state.autoMode = false;
     if (btnAuto) btnAuto.classList.remove("active");
     if (state.autoTimer) clearTimeout(state.autoTimer);

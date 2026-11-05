@@ -119,9 +119,9 @@ window.VN_CHAPTERS.push({
       if: "mirael_phone",
       then: [
         { bgm: "Holding You at Night.mp3", bg: "bg_sasha_room_night", text: "Мира открыла, едва он достал ключ. В руке у неё был кнопочный телефон, в другой — листок из маминой тетради." },
-        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты не отвечал. Я звонила. Я записывала, когда." },
+        { speaker: "Мира", sprite: { char: "mirael_human", emotion: "crying", pos: "right" }, text: "Ты совсем не брал трубку — я набирала снова и снова и записывала время." },
         { text: "На листке столбиком было записано время, восемь строчек. Последняя — десять минут назад, с припиской: «Гудки. Не берёт. Дождь»." },
-        { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Я телефон на беззвучном... Прости. Я у Тёмы был." }
+        { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Прости, оставил телефон на беззвучном, пока сидел у Тёмы." }
       ],
       else: [
         { bgm: "Holding You at Night.mp3", bg: "bg_sasha_room_night", text: "Мира сидела на полу у входной двери, обхватив колени, и встала, только когда он вошёл." },

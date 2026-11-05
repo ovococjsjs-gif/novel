@@ -45,7 +45,7 @@ window.VN_CHAPTERS.push({
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Подожди. Ты боишься, что не сможешь меня защитить. Или что без этого ты не знаешь, кто ты?" },
               { text: "Мира замолчала и почесала укус. Над крышами зажигалась первая звезда." },
-              { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Второе. Я всю жизнь — твой Хранитель. Если я никого не храню, то я... платье Даши и комариный укус." },
+              { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Второе. Всю жизнь была твоим Хранителем. А если никого не храню, то от меня остаётся только платье Даши и комариный укус." },
               { speaker: "Александр", text: "Ну, это тоже немало. Платье хорошее." }
             ]
           },
@@ -95,7 +95,7 @@ window.VN_CHAPTERS.push({
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "neutral", pos: "left" }, text: "Сама спроси." },
               { text: "Он протянул телефон Мире. Она взяла его бережно, как стакан с водой." },
-              { speaker: "Мира", sprite: { char: "mirael_human", emotion: "happy", pos: "right" }, text: "Здравствуй, Даша. Я Мира. Я давно присматриваю за твоим братом. Платье верну чистым." },
+              { speaker: "Мира", sprite: { char: "mirael_human", emotion: "happy", pos: "right" }, text: "Здравствуй, Даша. Меня зовут Мира, я давно присматриваю за твоим братом. Платье обязательно верну чистым." },
               { speaker: "Даша", text: "Давно? Это сколько — давно? Саша! Почему я ничего не знаю?!" },
               { text: "Саша забрал телефон, пока Мира не начала отвечать точно, в годах." }
             ]
@@ -153,7 +153,7 @@ window.VN_CHAPTERS.push({
             effects: { inner_sight: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Нет. Из-за себя. Мне дай повод — я соскочу. С факультета, с работы. Ты была поводом. Удобным." },
-              { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Я знаю. Я была рядом, когда ты уходил с факультета. Ты тогда тоже сказал, что из-за денег." },
+              { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "Помню: когда ты забирал документы с факультета, я стояла рядом. Ты тогда тоже всем говорил, что уходишь из-за денег." },
               { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "shy", pos: "right" }, text: "Спасибо, что сейчас не сказал «из-за тебя». Мне было бы тяжело это нести." }
             ]
           },

@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Не смотри на небо</title>
+  <link rel="icon" href="assets/ui/app_icon.ico" />
   <link rel="stylesheet" href="styles.css?v=20261103_61" />
 </head>
 <body>
@@ -72,6 +73,32 @@
     </section>
 
     <div id="ui-hint">Интерфейс скрыт · H или клик — вернуть</div>
+
+    <!-- CINEMATIC TITLE DROP OVERLAY -->
+    <div id="title-drop-overlay" aria-hidden="true">
+      <div class="td-vignette"></div>
+      <div class="td-horizon-flare"></div>
+      <div class="td-stage">
+        <div class="td-ornament top">
+          <span class="td-line left"></span>
+          <span class="td-gem">✦</span>
+          <span class="td-line right"></span>
+        </div>
+        <h2 class="td-main-title" data-text="НЕ СМОТРИ НА НЕБО">
+          <span class="td-word" style="--w:0">НЕ</span>
+          <span class="td-word" style="--w:1">СМОТРИ</span>
+          <span class="td-word" style="--w:2">НА</span>
+          <span class="td-word" style="--w:3">НЕБО</span>
+        </h2>
+        <div class="td-ornament bottom">
+          <span class="td-line left"></span>
+          <span class="td-gem">❖</span>
+          <span class="td-line right"></span>
+        </div>
+        <div class="td-subtitle">ДЕНЬ 0 · 22:58</div>
+      </div>
+      <div class="td-hint">Нажмите Пробел или кликните, чтобы продолжить</div>
+    </div>
 
     <!-- BRANCHING CHOICE OVERLAY -->
     <div id="choice-overlay">
