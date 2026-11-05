@@ -149,7 +149,7 @@ window.VN_CHAPTERS.push({
             label: "Отшутиться: асфальт оказался твёрже",
             effects: { inner_sight: -1 },
             next: [
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Встретился с асфальтом. Асфальт победил по очкам." },
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Поспорил на повороте с мокрым асфальтом — он победил по очкам." },
               { speaker: "Лена", sprite: { char: "lena", emotion: "snide", pos: "right" }, text: "Ладонями вверх навернулся? Талант. Ты бы хоть врал правдоподобнее, я ж физик." },
               { text: "Кофе она всё-таки налила, только в бумажный стаканчик." }
             ]
@@ -169,8 +169,8 @@ window.VN_CHAPTERS.push({
             label: "«Да. Сбегаю»",
             effects: { inner_sight: 1, aff_lena: 1 },
             next: [
-              { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Да. Сбегаю. Я вообще по этой части специалист, ты же знаешь." },
-              { speaker: "Лена", sprite: { char: "lena", emotion: "tired", pos: "right" }, text: "Знаю. Первый раз ты хоть признался. Записать, что ли." },
+              { speaker: "Александр", sprite: { char: "alexander", emotion: "sad", pos: "left" }, text: "Угадываешь с полуслова — я ведь по части побегов давно специалист." },
+              { speaker: "Лена", sprite: { char: "lena", emotion: "tired", pos: "right" }, text: "Надо же, впервые вслух признался — хоть в календаре отмечай." },
               { speaker: "Лена", text: "Беги тогда хоть в какую-нибудь сторону. А то ты обычно бегаешь по кругу." }
             ]
           },

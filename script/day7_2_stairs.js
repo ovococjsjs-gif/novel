@@ -128,8 +128,8 @@ window.VN_CHAPTERS.push({
       ]
     },
     { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "neutral", pos: "right" }, text: "По уставу я должна сказать, что это неразумно." },
-    { speaker: "Александр", text: "А не по уставу?" },
-    { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "crying", pos: "right" }, text: "А не по уставу я сейчас заплачу." },
+    { speaker: "Александр", text: "А если забыть про инструкции?" },
+    { speaker: "Мира", sprite: { char: "mirael_angel", emotion: "crying", pos: "right" }, text: "Тогда я сейчас просто разревусь." },
     { sprite: { char: "mirael_angel", emotion: "crying", pos: "right" }, text: "Она всё-таки заплакала, и крылья развернулись во всю комнату, сшибая с полки будильник." },
     { text: "Будильник закатился под кровать и зазвонил оттуда, обиженно и не вовремя. Доставать его никто не полез." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Давай свой пункт об убежище. Только с правильным номером." },
@@ -189,6 +189,6 @@ window.VN_CHAPTERS.push({
     { text: "Часы на полках тикали вразнобой, и только дедовские молчали. От их тишины было спокойно, будто кто-то наконец перестал считать." },
     { speaker: "Тая", sprite: { char: "taya", emotion: "tea", pos: "right" }, text: "Пей. Потом будем слушать. Теперь у нас есть время." },
     { jump: "week_end", sprite: "clear" },
-    { label: "week_end", sprite: "clear", note: "Конец Недели 1. Дальше — маршруты (Акт II), см. next главы." }
+    { label: "week_end", effect: "title_drop", sprite: "clear", text: "НЕ СМОТРИ НА НЕБО", note: "Конец Недели 1. Дальше — маршруты (Акт II), см. next главы." }
   ]
 });

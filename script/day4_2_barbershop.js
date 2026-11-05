@@ -89,7 +89,7 @@ window.VN_CHAPTERS.push({
             label: "«Приду»",
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "smile", pos: "left" }, text: "Приду. Шаурма с меня. Ну, теперь уже с тебя, я безработный." },
-              { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "Безработный? Ты? Слушай, это же отлично! Это же... ладно. Завтра. Всё завтра." }
+              { speaker: "Артём", sprite: { char: "artem", emotion: "happy", pos: "right" }, text: "Да ладно, неужели бросил свою доставку? Слушай, тогда тем более — завтра вечером всё и обсудим!" }
             ]
           },
           {
@@ -97,7 +97,7 @@ window.VN_CHAPTERS.push({
             effects: { inner_sight: 1 },
             next: [
               { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Тём. Давай сейчас. Я же вижу. Что случилось?" },
-              { text: "Артём на секунду перестал улыбаться, и стало видно, что он не спал несколько суток." },
+              { text: "Улыбка на миг сошла с лица Артёма, и стало видно, что он не спал несколько суток." },
               { speaker: "Артём", sprite: { char: "artem", emotion: "sad", pos: "right" }, text: "Не здесь, брат. Не при людях. Завтра. Я всё... завтра." }
             ]
           }
