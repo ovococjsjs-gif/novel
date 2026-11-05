@@ -2,7 +2,7 @@ window.VN_CHAPTERS = window.VN_CHAPTERS || [];
 window.VN_CHAPTERS.push({
   id: "prologue_5_crash",
   day: "ДЕНЬ 0 · ПРОЛОГ",
-  title: "Глава V. Двести метров до конца биографии",
+  title: "Глава V. Двести метров",
   subtitle: "Заречный перекрёсток · ночь, ливень",
   bg: "bg_rainy_crossroad",
   bgm: "rain_before_edge.mp3",

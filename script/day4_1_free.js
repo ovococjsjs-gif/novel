@@ -97,12 +97,12 @@ window.VN_CHAPTERS.push({
     { speaker: "Лена", sprite: { char: "lena", emotion: "neutral", pos: "right" }, text: "Он тебя видел, Саш. Видел и не успел." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "tired", pos: "right" }, text: "Скинь мне. Сама не знаю зачем." },
     { speaker: "Лена", sprite: { char: "lena", emotion: "tired", pos: "right" }, text: "Ты влип. Я вижу. Не знаю во что, и ты, похоже, не скажешь. Но влип." },
-    { speaker: "Лена", sprite: { char: "lena", emotion: "neutral", pos: "right" }, text: "Да. Дмитрий просил передать. Место неделю держит. Сказал: «Он дурак, но быстрый»." },
+    { speaker: "Лена", sprite: { char: "lena", emotion: "neutral", pos: "right" }, text: "Кстати. Дмитрий просил передать. Место держит до понедельника. Сказал: «Он дурак, но быстрый»." },
     { speaker: "Лена", text: "Это у него высшая форма нежности, если что. Мне он такого за два года не сказал." },
     {
       choice: {
         id: "d4_place",
-        prompt: "Место держат неделю.",
+        prompt: "Место держат до понедельника.",
         options: [
           {
             label: "«Подумаю»",

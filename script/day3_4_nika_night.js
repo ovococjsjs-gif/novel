@@ -43,6 +43,7 @@ window.VN_CHAPTERS.push({
     { speaker: "Александр", text: "С кем?" },
     { speaker: "Ника", sprite: { char: "nika", emotion: "teasing", pos: "left" }, text: "С собой. Она всегда с собой спорит. Пишет в блокноте: такой-то подпишет к такому-то дню, и подчёркивает. И почти всегда угадывает." },
     { speaker: "Ника", text: "Твоё число я видела. Воскресенье." },
+    { speaker: "Мира", text: "Ника." },
     { speaker: "Ника", sprite: { char: "nika", emotion: "surprised", pos: "left" }, text: "Это не считается! Прогнозы можно. У нас прогнозы даже в столовой на стене висят." },
     { text: "Мира подобрала с пола полотенце и аккуратно сложила его вчетверо." },
     {
@@ -92,7 +93,7 @@ window.VN_CHAPTERS.push({
         ]
       }
     },
-    { sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Мира стала складывать мокрое полотенце." },
+    { sprite: { char: "mirael_angel", emotion: "sad", pos: "right" }, text: "Мира держала сложенное полотенце обеими руками." },
     { speaker: "Мира", text: "Воскресенье." },
     { speaker: "Александр", sprite: { char: "alexander", emotion: "thoughtful", pos: "left" }, text: "Это прогноз. Прогнозы можно." },
     { speaker: "Мира", text: "Она почти всегда угадывает. Ника сама сказала." },
